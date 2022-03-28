@@ -1,57 +1,57 @@
 // =================================================== Functions ===================================================
 /*
-functions in simple, are blocks of code that can be reused over and over.
+Functions in simple, are blocks of code that can be reused over and over.
 */
 
-// example a simple logger function, that can be used to log a persons name.
+// Example a simple logger function, that can be used to log a persons name.
 
-//es5
+//Es5
 function logger2() {
   console.log("My name is alexis");
 }
 
-//es6
+//Es6
 const logger = () => {
   console.log("My name is alexa");
 };
 
-// to use the function (calling/running/invoking the function) we use the functions name and () parenthesis
+// To use the function (calling/running/invoking the function) we use the functions name and () parenthesis
 // each time we call the function, the code inside that function will be executed.
 logger2();
 logger();
 logger();
 logger();
 
-// functions are able to receive data and return data back.
+// Functions are able to receive data and return data back.
 
-// example 1
-// this function has a parameter 'name' that will be used inside of this function which returns a console.log
+// Example 1.
+// This function has a parameter 'name' that will be used inside of this function which returns a console.log
 const logUserName = (name) => {
   console.log(`My name is ${name}`);
 };
 
-// prompt used to get users name and stored in a variable
+// Prompt used to get users name and stored in a variable
 const personName = prompt("Please type in your first name");
 
-// when calling the function we pass in 'personName' variable as an argument for our function to use.
+// When calling the function we pass in 'personName' variable as an argument for our function to use.
 logUserName(personName);
 
-// example 2.
+// Example 2.
 const fruitProcesssor = (applesQty, orangesQty) => {
   const fruit = `Juice with ${applesQty} apples and ${orangesQty} oranges`;
   return fruit;
 };
 
-// storing the return value from our function (fruit)
+// Storing the return value from our function (fruit)
 const appleJuice = fruitProcesssor(5, 0);
-// using stored value from function (appleJuice)
+// Using stored value from function (appleJuice)
 console.log(appleJuice);
 
 // =================================================================================================================
 
 // ===================================== Function Declarations vs. Expressions =====================================
 
-// function declaration
+// Function declaration
 function calcAge(birthYear) {
   return 2037 - birthYear;
 }
@@ -59,7 +59,7 @@ function calcAge(birthYear) {
 const age1 = calcAge(1991);
 console.log(age1);
 
-// function expression
+// Function expression
 const calcAge2 = function (birthYear) {
   return 2037 - birthYear;
 };
@@ -94,12 +94,12 @@ const calcAge3 = function (birthYear) {
 // we can omit the parenthesis if we only have one argument and the curly braces with implicit returns if the body only contains a single expression
 const calcAge4 = (birthYear) => 2037 - birthYear;
 
-// if you have multiple arguments or no arguments you need to use parentheses around the arguments
-// if the body of the function requires additional lines of processing we have to use the curly braces {} and the 'return'
+// If you have multiple arguments or no arguments you need to use parenthesis around the arguments
+// If the body of the function requires additional lines of processing we have to use the curly braces {} and the 'return'
 
-// example 1
-const yearsUntilRetirement = (birthYear) => {
-  //only one argument so no parentheses needed
+// Example 1.
+const yearsUntilRetirement = birthYear => {
+  // Only one argument so no parenthesis needed
   const age = 2037 - birthYear;
   const retirement = 65 - age;
 
@@ -108,9 +108,9 @@ const yearsUntilRetirement = (birthYear) => {
 
 console.log(`Years until retirement: ${yearsUntilRetirement(1991)}`);
 
-// example 2
+// Example 2.
 const yearsUntilRetirement2 = (birthYear, firstName) => {
-  // multiple arguments parenthesis needed
+  // Multiple arguments parenthesis needed
   const age = 2037 - birthYear;
   const retirement = 65 - age;
 
@@ -125,7 +125,7 @@ console.log(yearsUntilRetirement2(2000, "Neo"));
 // =================================================================================================================
 
 // ======================================= Functions calling other functions =======================================
-// using one function to call another function
+// Using one function to call another function
 
 // Example 1.
 // 'addTip' function will take an 'amount' as an argument, and then return the amount of tip that should be added.
@@ -145,20 +145,20 @@ const addTotalBill = (total) => {
   return `Your total bill including tip: ${totalBill}`;
 };
 
-// calling function
+// Calling function
 console.log(addTotalBill(150));
 
 // =================================================================================================================
 
-// =================================================== excercise ===================================================
+// =================================================== Exercise ===================================================
 
-// create a function which calculates a teams average score
-// create a function which checks which team wins, but only wins if their avg score is double than the other teams avg score
+// Create a function which calculates a teams average score
+// Create a function which checks which team wins, but only wins if their avg score is double than the other teams avg score
 
 const calcAverage = (a, b, c) => (a + b + c) / 3;
 
 const checkWinner = (team1, team1Data, team2, team2Data) => {
-  // win only if team1 score is double than team2
+  // Win only if team1 score is double than team2
   if (team1Data >= team2Data * 2) {
     console.log(`${team1} wins 🎉 (${team1Data} - ${team2Data})`);
   } else if (team2Data >= team1Data * 2) {
@@ -215,7 +215,7 @@ checkWinner(Dolphines, Koalas);
 // ================================================ Intro to Arrays ================================================
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#examples
 
-// lets store each friend in a variable, if we had multiple variables for each friend (eg.50 friends) this can become very cumbersome.
+// Lets store each friend in a variable, if we had multiple variables for each friend (eg.50 friends) this can become very cumbersome.
 const friend1 = "Michael";
 const friend2 = "Steven";
 const friend3 = "Peter";
@@ -247,7 +247,7 @@ console.log(fruit[fruit.length - 1]); // Lemon
 console.log(friendsList.length);
 console.log(fruit.length);
 
-// mutate an item inside of array with bracket notation
+// Mutate an item inside of array with bracket notation
 // In JavaScript, arrays aren't primitives which allow us to mutate values (All primitives are immutable, cannot be altered)
 friendsList[0] = "Alysia";
 console.log(friendsList);
@@ -258,7 +258,7 @@ const imogen = ["Imogen", lastName, 2022 - 1989, friendsList]; // in each positi
 console.log(imogen);
 console.log(imogen[3][2]); // friendlist // peter
 
-// excercise
+// Exercise
 // use calcAge5 function to get age
 const calcAge5 = (birthYear) => 2022 - birthYear;
 
@@ -414,7 +414,7 @@ console.log(imogen1.firstName, imogen1.lastName);
 // Retrive data with 'bracket notation'
 console.log(imogen1["firstName"]);
 
-/* the difference between bracket notation and dot notation is 
+/* The difference between bracket notation and dot notation is 
 in the bracket notation, we can actually put any expression... that we'd like,
 so we don't have to explicitly write the string here, but instead we can compute it from some operation
 */
@@ -468,10 +468,10 @@ console.log(imogen1.age);
 console.log(imogen1.age);
 console.log(imogen1.age);
 
-// test
+// Test
 console.log(imogen1.canDrive());
 
-// exercise
+// Exercise
 const mark = {
   fullName: "Mark Miller",
   height: 1.69,
@@ -506,7 +506,7 @@ if (mark.calcBmi() > john.calcBmi()) {
 // ============================================= Iteration The for Loop ============================================
 
 /*
-loops are a fundamental aspect of every programe lanague
+Loops are a fundamental aspect of every programe lanague
 they basically allow us to automate repetitive tasks.
 */
 
@@ -516,8 +516,9 @@ console.log("lifting weights rep 3 🏋️‍♂️");
 
 // If we wanted to log each rep seen above it is not very dry, this is where loops are handy
 
-// For loop
 /* 
+For loop
+
 for ([initialExpression]; [conditionExpression]; [incrementExpression])
   statement
 */
@@ -546,14 +547,14 @@ for (let i = 0; i < jakesArray.length; i++) {
   // Filling types array
   types[i] = typeof jakesArray[i]; // types at position of [i]
 
-  // filling type array with push method
+  // Filling type array with push method
   types2.push(typeof jakesArray[i]);
 }
 
 console.log(types);
 console.log(types2);
 
-// example 2.
+// Example 2.
 const birthYears = [1991, 2007, 1969, 1985, 1989];
 const birthAge = [];
 
@@ -606,7 +607,7 @@ const alexaArray = [
 for (let i = alexaArray.length - 1; i >= 0; i--) {
   console.log(alexaArray[i]);
 
-  /* position of i starts at alexaArray.length (5 - 1)
+  /* Position of i starts at alexaArray.length (5 - 1)
   console.log(alexaArray[4])
   console.log(alexaArray[3])
   console.log(alexaArray[2])
@@ -706,7 +707,7 @@ const calculateTip = (amount) => {
 
 const calcAvg = (arr) => {
   let total = 0;
-  //loop through arr list and add the index value of i to total
+  // Loop through arr list and add the index value of i to total
   for (let i = 0; i < arr.length; i++) {
     // total = total + arr[i]; same as below
     total += arr[i];
@@ -737,6 +738,5 @@ console.log("Bills + Tips list:", totalBillAmount);
 
 console.log(`Average Tips amount: ${calcAvg(tipsList1)}`);
 console.log(`Average bill amount 💰 ${calcAvg(billsList)}`);
-
 
 // =================================================================================================================
