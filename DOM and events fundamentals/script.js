@@ -62,3 +62,63 @@ btnCheck.addEventListener("click", function () {
 
 // =======================================================================================================================================
 */
+
+// ========================================================= Actual game logic ===========================================================
+
+// get random number
+const getSecretNumber = () => {
+  return Math.trunc(Math.random() * 20 + 1);
+}
+
+// set random number
+let secretNumber = getSecretNumber();
+console.log(secretNumber)
+
+// Initial Score 
+let score = Number(document.querySelector(".score").textContent); 
+
+// initial highscore
+let highscore = 0;
+
+// functions 
+const incrementScore = () => {
+  score ++;
+  // Show updated score
+  document.querySelector(".score").textContent = score;
+}
+
+const decrementScore = () => {
+  score --;
+  // Show updated score
+  document.querySelector(".score").textContent = score;
+}
+
+document.querySelector(".check").addEventListener("click", function () {
+  const guess = Number(document.querySelector(".guess").value);
+  
+  if (!guess) {
+    console.log("Please enter input");
+    
+  } else if (guess === secretNumber && score > 1) {
+    document.querySelector(".number").textContent = secretNumber;
+    document.querySelector(".message").textContent = "Correct 🎉🎉🎉";
+    document.querySelector(".guess").value = "";
+    incrementScore();
+    // get a new secret number
+    secretNumber = getRandomNumber();
+    console.log("New number is ", secretNumber)
+
+  } else if (score === 1){
+    document.querySelector(".message").textContent = "You Lose! 😂";
+    document.querySelector(".score").textContent = 0;
+
+  } else if (guess > secretNumber) {
+    document.querySelector(".message").textContent = "Too High 😥";
+    decrementScore();
+
+  } else if (guess < secretNumber) {
+    document.querySelector(".message").textContent = "Too Low 😅";
+    decrementScore();
+  }
+})
+
