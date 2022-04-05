@@ -14,7 +14,7 @@
 11. Switch statement
 12. Statements and Expressions
 13. The Conditional (Ternary) Operator
-
+#
 ## Javascript-Fundamentals part 2
 1. Functions
 2. Function Declarations vs. Expressions
@@ -25,9 +25,21 @@
 7. Iteration The for Loop
 8. Looping backwards and loops in loops
 9. While loop
-
+#
 ## Developer Skills
 1. Steps to solving problems
-
+#
 ## DOM and Events fundamentals
-1. Guess my number game
+1. Selecting element
+2. Setting content
+3. Manipulating CSS styles
+4. Click events
+5. Guess my number game  
+    #
+    ### Project 2 Modal window
+    1. Selecting multiple elements
+    2. Element.classList
+    3. contains()
+    4. Handling keypress events  
+    #
+    ### Project 3 Pig game
