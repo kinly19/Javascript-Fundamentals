@@ -43,3 +43,5 @@
     4. Handling keypress events  
     #
     ### Project 3 Pig game
+    1. toggle()
+    2. Pig game logic
