@@ -45,3 +45,6 @@
     ### Project 3 Pig game
     1. toggle()
     2. Pig game logic
+#
+## Behind the Scenes
+1. Scope
