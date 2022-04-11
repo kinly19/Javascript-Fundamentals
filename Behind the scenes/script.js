@@ -31,6 +31,8 @@ The 3 types of scope
 
 ======================================================================================================================================*/
 
+// ======================================================= Example of scoping ========================================================
+// Example of scoping
 // calcAge function is defined in a - global scope
 // calcAge function has its own scope
 function calcAge (birthYear) {
@@ -43,7 +45,7 @@ function calcAge (birthYear) {
   // console.log(lastName); // 'lastName' would not be found in the global scope and will return an error
 
   function printAge () {
-    let output = `${firstName} You are ${age}, born in ${birthYear}`; // javascript will look for 'firstName' in the outer scope (global on line 81)
+    let output = `${firstName} You are ${age}, born in ${birthYear}`; // javascript will look for 'firstName' in the outer scope (global on line 83)
     const canAccessMe = "i am an outer scoped variable";
     console.log(output);
 
@@ -100,3 +102,136 @@ we could not call 'printAge' function in the outter scope (global scope).
 // Global scope
 //  Child scope of its parent scope and a parent of its child scope
 //    Child scope of its parent scope
+
+// ===================================================================================================================================
+
+/* ============================================================= Hoisting ============================================================ 
+
+1. Hoisting - Makes some types of variables accessible/usable in the code before they are actually decalred. 
+"Variables lifted to the top of their scope"
+
+How it works behind the scenes before execution, code is scanned for variable declarations, and for each variable, 
+a new propery is created in the variable enviroment object.
+
+2. How hoisting works for different variable types
+
+Function declarations
+hoisted
+initial value - actual function
+scope - block (strict mode)
+
+var variables
+hoisted
+inital value - underfined
+scope - function
+
+let and const variables
+not hoisted
+initial value - uninitialized, TDZ 
+scope - block 
+
+function expressions and arrows 
+hoisting depends if they were created using var or const or let
+
+======================================================================================================================================*/
+
+/* ===================================================== TDZ (Temporal dead zone) ====================================================
+
+3. Temporal dead zone (TDZ) - variables cannot be read/written until they have been declared. If no initial value is specified on declaration, 
+the variable is initialized with a value of undefined. Accessing the variable before the declaration results in a ReferenceError.
+The variable is said to be in a "temporal dead zone" (TDZ) from the start of the block until the declaration has completed.
+
+let and const variable get their own Temporal Dead Zone that starts at the beginning of the scope until the line where it is defined.
+And the variable is only safe to use after..... the TDZ.
+
+Example.
+const myName = "Sarah";
+if (myName === "Sarah") {
+  console.log(`Sam is a ${job}`); - 'job' variable is in a TDZ zone (returns referenceError: cannot access 'job' before initialization)
+  const age = 2022 - 1990'
+  console.log(age);
+
+  const job = "Teacher"; - where 'job' variable is declared
+  job variable will only be safe to use after it has been defined.
+}
+
+Why TDZ - Makes it easier to avoid and catch errors: Accessing variables before declaration is bad practice and should be avoided.
+
+Makes 'const' variables actually work, Const should never be reassigned. And so it's only assigned when execution
+actually reaches the declaration.
+
+======================================================================================================================================*/
+
+// =================================================== Example of hoisting and TDZ ====================================================
+
+// TDZ starts
+// console.log(me); // Hoisted - underfined
+// console.log(job); // TDZ - ReferenceError Cannot access 'job' before initialization
+// console.log(year); // TDZ - ReferenceError Cannot access 'year' before initialization (TDZ)
+
+var me = "Alyssia";
+// TDZ ends
+let job = "Teacher";
+const year = 1991; 
+
+// Example of hoisting functions
+
+console.log(addDecl(1,2)) // Hoisted - 3
+// console.log(addExpr(1,2)) // Hoisted - undefined - addExpr is not a function (calling an undefined function)
+// console.log(addArrow(1,2)) // TDZ - ReferenceError Cannot access 'addArrow' before initialization
+
+function addDecl(a,b) {
+  return a + b;
+}
+
+var addExpr = function (a,b) {
+  return a + b
+}
+
+const addArrow = (a,b) => {
+  return a + b
+}
+
+const addArrow2 = (a,b) => a + b;
+
+// ===================================================================================================================================
+
+// ================================================= Example pitfalls of hoisting ====================================================
+
+/*
+Even though 'numProducts' is equal to 10 it still runs 'deleteShoppingCart' function even though it shouldnt. 
+This happens because of the way hoisting works with 'var' variables.
+'numProducts' gets hoisted to undefined and because underfined is a falsy value it triggers our if block which runs 'deleteShoppingCart' function.
+*/
+
+if (!numProducts) deleteShoppingCart(); // run if falsy
+
+// Hoisted
+var numProducts = 10; 
+
+function deleteShoppingCart() {
+  console.log("All items deleted");
+}
+
+/* 
+Above is just a small example of what could happen when using var variables and the bugs you could run into.
+The best practice would be to use 'const' over 'var' or use 'let' if you really need to change the variable later. 
+
+In order to write code cleaner... you should declare your variables at the top of each scope and 
+always declare all your functions first and use them only after the declaration (delcare first before using) like seen below.
+*/
+
+// Declared before using
+const numProducts2 = 10;
+
+function deleteShoppingCart2 () {
+  console.log("All your items have been deleted");
+}
+
+// Or
+const deleteShoppingCart3 = () => console.log("All items deleted");
+
+// Using after declaring
+if (!numProducts) deleteShoppingCart2(); 
+
+// ===================================================================================================================================
