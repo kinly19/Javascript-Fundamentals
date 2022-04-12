@@ -235,3 +235,150 @@ const deleteShoppingCart3 = () => console.log("All items deleted");
 if (!numProducts) deleteShoppingCart2(); 
 
 // ===================================================================================================================================
+
+/* ========================================================== This keyword =========================================================== 
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+
+'this' keyword/variable: Special variable that is created for every execution content (every function). 
+Takes the value of (points to) the "owner" of the function in which the 'this' keyword is used. 
+
+'this' is NOT static, it depends on how... the function is called, and its value is only assigned when the function is actually called.
+
+4 different ways a function can be called
+
+1. Method
+    this = <object that is calling the method>
+
+2. Simple function call
+    this = underfined (in strict mode! otherwise window in the browser)
+
+3. Arrow functions
+    this = <this of surrounding function (lexical this)>
+
+    Arrow functions dont get their own 'this' keyword. If you use 'the this variable' in an arrow function,
+    it will simply be the 'this' keyword of the surrounding function. The parent scope of the function ('lexical this keyword')
+
+4. Event listeners this = <DOM element that the handler is attached to>
+
+'this' will never point to the function in which we are using it. Also, the 'this' keyword will never point to the variable environment
+of the function.
+
+
+=====================================================================================================================================*/ 
+
+// ================================================= Example of the 'This' keyword ====================================================
+
+// Golbal
+console.log(this); // Window
+
+// Function call 
+const calcAge2 = function () {
+  console.log(this);
+}
+calcAge2(); // undefined or window in sloppy mode
+
+// Arrow functions
+const calcAge3 = () => {
+  console.log(this);
+}
+calcAge3(); // Window - ('lexical this ) of parent function 
+// 'this' inside an arrow function would have the same value as it did right before the arrow function was assigned. (global)
+
+// Method
+const alyssia = {
+  firstName: "Alyssia",
+  birthYear: 1990,
+  calcAge: function () {
+    console.log(this);
+    console.log(2022 - this.birthYear)
+  }
+}
+// When we have a method call the 'this' keywords always points to the object.. which calls... the method
+alyssia.calcAge() // alyssia object
+
+// The 'this' keyword will not point at the object in which we wrote the method, but where we call the method
+// Example 2. 
+const matilda = {
+  birthYear: 2017,
+}
+/* 
+Method borrowing, also known as function borrowing, is, as its name implies, 
+a way for an object to use the methods of another object without redefining that same method.
+*/
+matilda.calcAge = alyssia.calcAge;
+// Even though the calcAge function is written inside of 'alyssia' object, the 'this' keyword now points to 'matilda' object
+// When we have a method... call the 'this' keywords always points to the object.. which calls the method.
+matilda.calcAge();
+
+// ===================================================================================================================================
+
+// ====================================== Keyword 'this' regular functions vs. arrow functions =======================================
+
+var firstName2 = "Imogen"
+
+const sasha = {
+  firstName2: "Sasha",
+  year: 1990,
+  calcAge: function () {
+    console.log(this);
+    console.log(2022 - this.year);
+    
+    /*
+    const isMillennial = function () {
+      console.log(this);
+      if (this.year >= 1981 && this.year <= 1996) {
+        console.log("You are a millennial");
+      }
+    };
+    isMillennial(); // 'this' = undefined (Notes line 253)
+    */
+
+    /*
+    Preserve the keyword 'this' to use inside of a regular function.
+
+    const self = this; // or that
+    const isMillennial2 = function () {
+      console.log(self);
+      if (self.year >= 1981 && self.year <= 1996) {
+        console.log("You are a millennial");
+      }
+    };
+    isMillennial2() // 'this' = Sasha object
+    */
+
+    // Arrow function 
+    const isMillennial3 = () => {
+      console.log(this);
+      if (this.year >= 1981 && this.year <= 1996) {
+        console.log("You are a millennial");
+      }
+    }
+    isMillennial3() // 'this' = Sasha object (Notes line 257)
+  },
+
+  greet: () => console.log(`Hey ${this.firstName2}`),
+}
+
+// The arrow functions keyword 'this' will point to the global (browser window), the windows object has no property of firstName, results to undefinded.
+sasha.greet(); // hey undefined
+
+/*
+Side note
+This behaviour above with arrow functions can be pretty dangerous, had we declared firstName2 with a 'var', variables declared with 'var'
+actually create properties on the global object...
+Calling this arrow function, the keyword 'this' would point to the global objects property of firstName2
+
+sasha.greet() // hey Imogen
+*/
+
+// Dont use arrow functions as methods use normal regular function expressions instead.
+
+// Calling a function inside of a method (without preserving 'this')
+sasha.calcAge(); // undefined (see notes 253)
+// Calling a function inside of a method (perserving 'this')
+sasha.calcAge(); // You are a millennial
+// Calling an arrow function inside of a method
+sasha.calcAge() // You are a millennial
+
+// ===================================================================================================================================
