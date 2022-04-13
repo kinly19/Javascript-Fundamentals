@@ -48,9 +48,13 @@
 #
 ## Behind the Scenes
 1. Scope
-  * Example of scoping
+    * Example of scoping
 2. Hoisting
-  * Example of hoisting
 3. TDZ (Temporal dead zone)
-  * Example of TDZ
+    * Example of hoisting and TDZ
 4. Pitfalls of hoisting
+#
+## Data Structures Operators
+1. Arrays destructuring
+2. Object destructuring
+3. The Spread Operator
