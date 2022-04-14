@@ -127,7 +127,7 @@ const {name, openingHours, categories} = restaurant2;
 console.log(name, openingHours, categories);
 
 // Setting defualt values (for sun)
-const {fri, sat, sun = {open: "Closed", close: "Closed"}} = openingHours; // Dont need to do restaurant2.openingHours can point directly to the object
+const {fri, sat, sun = {open: "Closed", close: "Closed"}} = openingHours; // Dont need to do restaurant2.openingHours because of line 126
 console.log(fri, sat, sun);
 
 // Nested objects
@@ -160,22 +160,162 @@ restaurant2.delivery2({
 })
 // ==================================================================================================================================
 
+// ==================================================== The spread operator (...) ===================================================
+/*
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+Spread syntax (...)
+Spread syntax can be used when all elements from an object or array need to be included in a list of some kind
+
+The spread operator takes all the elements from the array and it also doesn't create new variables, we can only use it in places where we would otherwise 
+write values separated... by commas.
+
+*/
+
+const arr1 = [7, 8, 9];
+const arr2 = [10, 11, 12]; 
+
+// Without spread operator
+const newArr1 = [1, 2, arr1[0], arr1[1], arr1[2]];
+console.log(newArr1);
+
+const newArr2 = [1, 2];
+arr1.map(item => newArr2.push(item));
+console.log(newArr2);
+
+// Spread operator
+const newArr3 = [1, 2, ...arr1]; // expands 'arr1' array into all of its individual... elements
+console.log(newArr3); // The whole array
+
+// Whenever we need the elements of an array individually..., then we can use the spread operator.
+console.log(...newArr3); // returns each item inside the array individually
+
+// Create new array
+const newArray = [...arr1, 5];
+console.log(newArray);
+
+// Copy an array (shallow copy); 
+const arr1Copy = [...arr1]; 
+
+// Join arrays
+const arrJoin = [...arr1, ...arr2];
+console.log(arrJoin);
 
 
+// The spread operator works on all so-called iterables
+// Iterables: arrays, strings, maps, sets, but not objects
+const string = "Javascript";
+console.log(...string); // J a v a s c r i p t 
 
+// We can only use the spread operator when building an array, or when we pass values into a function.
+// Example below wont work , because this (${...string}) is not a place that expects multiple values separated by a comma
+// console.log(`${...string} is cool`) // returns error
 
+// Multiple values separated by a comma are usually only expected when we pass arguments into a function, or when we build a new array.
 
+// Functions
+const printFavColor = (col1, col2, col3) => {
+  console.log(`Your three favourite colors are: ${col1}, ${col2} and ${col3}`);
+}
 
+// const colors = [prompt("Lets get your favourite colors, Color 1"), prompt("Color 2"), prompt("Color 3")];
+const yourColors = ["red", "Yellow", "Green"];
+console.log(yourColors);
 
+// Without spread operator, pass in each argument separately
+printFavColor(yourColors[0], yourColors[1], yourColors[2]);
 
+// Use spread operator to spread arguments
+printFavColor(...yourColors);
 
+// Objects
+const obj1 = {
+  firstName: "Alyssia",
+  age: 30,
+  occupation: "Developer"
+}
 
+// We can create a new object, use spread operator to spread each objects properties (copy all the properties from obj1 into this new object)
+const obj2 = {...obj1, location: "London"};
+console.log(obj2);
+// obj2 {age: 30, firstName: "Alyssia", location: "London", occupation: "Developer"}
 
+// Another example
+let obj3 = { foo: 'bar', x: 42 };
+let obj4 = { foo: 'baz', y: 13 };
 
+let clonedObj = { ...obj1 };
+// Object { foo: "bar", x: 42 }
 
+let mergedObj = { ...obj1, ...obj2 };
+// Object { foo: "baz", x: 42, y: 13 }
 
+// ==================================================================================================================================
 
+// =================================================== Rest Pattern and Parameters ==================================================
+/*
+The main difference between rest and spread is that the rest operator puts the rest of some specific user-supplied values into a JavaScript array. 
+But the spread syntax expands iterables into individual elements.
+*/
 
+// Spread because right of assignment operator
+const spread = [1, 2, ...[3, 4]];
+
+// Rest because left of assignment operator
+const [a1, b1, ...others] = [1, 2, 3, 4, 5];
+console.log(a1, b1, others);
+// 1 2 [3, 4, 5]
+
+// Rest and Spread
+// others = [3, 4, 5]
+const [c1, c2, , ...more] = [...others, 6, 7, 8];
+console.log(c1, c2, more);
+// 3 4 [6, 7, 8]
+
+// A rest element must be last in a destructuring pattern, cant do below
+// const [...more, d1, d2 ] = [1, 2, 3, 4, 5];
+
+// Objects 
+// The remaining elements will be collected into a new object
+
+const obj5 = {
+  firstName: "Imogen",
+  lastName: "Warren",
+  age: 25,
+  location: "London",
+  canDrive: true,
+}
+
+const {firstName, lastName, age, ...travel} = obj5;
+console.log(firstName, lastName, age, travel);
+// Imogen Warren 25 {location: 'London', canDrive: true}
+
+// Functions rest parameters
+// This function will put all our arguments into an array for us
+const add = (...numbers) => {
+  let sum = 0
+  for (let i = 0; i < numbers.length; i++){
+    sum += numbers[i];
+  }
+  console.log(sum)
+}
+
+const values = [5, 5, 2];
+add(2, 5, 3, ...values); // 22
+add(...values); // 12 
+
+// Same as above without the rest parameter, but we have to pass an array into the function arguments when calling
+const add2 = (numArr) => {
+  let sum = 0;
+  for (let i = 0; i < numArr.length; i++) {
+    sum += numArr[i];
+  }
+  console.log(sum);
+}
+add2(2, 4, 5) // 0
+add2([2, 4, 5]); // 11
+
+// ==================================================================================================================================
 
 // Data needed for a later exercise
 const flights =
