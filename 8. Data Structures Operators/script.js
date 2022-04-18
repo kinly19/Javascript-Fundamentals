@@ -48,9 +48,10 @@ const restaurant2 = {
 /*
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
 
-Destructuring - is an ES6 feature and it's basically a way of unpacking... values from an array or an object into separate variables.
-Use [Sqaure brackets] for arrays
-The original array is not affected, we are only unpacking it.
+Destructuring 
+- is an ES6 feature and it's basically a way of unpacking... values from an array or an object into separate variables.
+  Use [Sqaure brackets] for arrays
+  The original array is not affected, we are only unpacking it.
 */
 
 const arr = [2,3,4];
@@ -254,13 +255,14 @@ let mergedObj = { ...obj1, ...obj2 };
 
 // =================================================== Rest Pattern and Parameters ==================================================
 /*
-The main difference between rest and spread is that the rest operator puts the rest of some specific user-supplied values into a JavaScript array. 
-But the spread syntax expands iterables into individual elements.
+Difference between rest and spread 
+- The rest operator puts the rest of some specific user-supplied values into a JavaScript array. 
+  But the spread syntax expands iterables into individual elements.
 */
 
 // Spread because right of assignment operator
 const spread = [1, 2, ...[3, 4]];
-
+ 
 // Rest because left of assignment operator
 const [a1, b1, ...others] = [1, 2, 3, 4, 5];
 console.log(a1, b1, others);
@@ -316,6 +318,245 @@ add2(2, 4, 5) // 0
 add2([2, 4, 5]); // 11
 
 // ==================================================================================================================================
+
+// =================================================== Short Circuiting (&& and ||) =================================================
+/*
+Short-circuiting 
+- Means that if the first value is a truthy... value, it will immdediately return that first value 
+
+Logical operators
+- Use any data type
+- Return any data type
+- Short-circuiting
+*/
+
+/* Logical Or 
+  - Returns the first true value of all operands
+  - Or simply the last value if all of them are falsy.
+*/
+
+console.log(3 || "Sasha") // 3
+console.log(0 || "Imogen"); // Imogen
+console.log(true || 0); // True
+console.log(undefined || null); // Null
+
+// Hello is the first truthy value in the chain of OR operations
+console.log(undefined || 0 || "" || "Hello" || 23 || null); // Hello
+
+/* Logical AND
+- Returns the first falsy value or the last value if all of the operands are truthy.
+*/
+
+// If the first value is falsy, it will immediately return the falsy value
+console.log(0 && "Hello world"); // 0
+// On a truthy value, the evaluation continues and returns value of last operand
+console.log(25 && "Hello world"); // Hello world
+
+console.log(true && false) // false
+// The operator returns the value of the first... falsy operand
+console.log("Hello" && 23 && null && "World"); // null 
+console.log("Learning" && false && 0); //false
+
+
+// ==================================================================================================================================
+
+// ================================================= Nullish Coalescing Operator (??) ===============================================
+/*
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator
+
+The nullish coalescing operator (??) 
+- Is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined,
+  otherwise returns its left-hand side operand.
+*/
+
+// If we wanted to return the actual value of numGuest,
+// Because the value of 'numGuest' is 0 (falsy value), in our Logical 'OR' expression it will short circuit and return 10 (truthy value. See line 331)
+const numGuest = 0;
+const guests = numGuest || 10;
+console.log(guests) // 10
+
+// Nullish coalescing operator allows us to return false only if the value is actually null or undefinded and not ("" or 0 )
+// Only null or undefined will be considered falsy values
+const numGuest2 = 0
+const guest2 = numGuest ?? 10;
+console.log(guest2); // 0 
+
+// ==================================================================================================================================
+
+// =================================================== Logical Assignment Operators =================================================
+/*
+
+The Logical OR assignment (||=)
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR_assignment
+- (x ||= y) operator only assigns if 'x' is falsy. (if x is falsy it should return value of y)
+- This operator only assigns a value to a variable if that variable is currently falsy
+
+Logical nullish assignment (??=)
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_nullish_assignment
+- The logical nullish assignment (x ??= y) operator only assigns if 'x' is nullish (null or undefined).
+- If 'x' is nullish it should return value of y
+
+- Logical AND assignment (&&=)
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND_assignment
+- The logical AND assignment (x &&= y) operator only assigns if 'x' is truthy.
+- If 'x' is truthy it should return value of y
+
+*/
+
+const rest1 = {
+  name: "Capri",
+  numGuest: 20,
+}
+
+const rest2 = {
+  name: "La Piazza",
+  owner: "Giovanni Rossi",
+}
+
+console.log(rest1.owner || rest1.name); // Capri
+console.log(rest2.owner || rest2.name); // Giovanni Rossi
+
+rest1.numGuest = rest1.numGuest || 10;
+rest2.numGuest = rest2.numGuest || 10;
+console.log(rest1.numGuest) // 20
+console.log(rest2.numGuest) // 10
+
+// Logical OR Assignment Operator
+console.log(rest1.owner ||= rest1.name); // Capri
+console.log(rest2.owner ||= rest2.name); // Giovanni Rossi
+console.log(rest1.numGuest ||= 10); // 20
+console.log(rest2.numGuest ||= 10); // 10
+
+// Logical nullish assignment (??=)
+console.log(rest1.owner ??= rest1.name); // Capri
+console.log(rest2.owner ??= rest2.name); // Giovanni Rossi
+console.log(rest1.numGuest ??= 10); // 20
+console.log(rest2.numGuest ??= 10); // 10
+
+// Logical AND assignment (&&=)
+console.log(rest1.owner &&= "Anonymous"); // undefined
+console.log(rest2.owner &&= "Anonymous"); // Anonymous
+
+// ==================================================================================================================================
+
+// =========================================================== Challenge #1 =========================================================
+/*
+Suppose we get data from a web service about a certain game (below). In this challenge we're going to work with that data.
+Here are your tasks
+
+1. Create one player array for each team (variables 'players1' and 
+'players2')
+2. The first player in any player array is the goalkeeper and the others are field 
+players. For Bayern Munich (team 1) create one variable ('gk') with the 
+goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 
+field players
+3. Create an array 'allPlayers' containing all players of both teams (22 
+players)
+4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a 
+new array ('players1Final') containing all the original team1 players plus 
+'Thiago', 'Coutinho' and 'Perisic'
+5. Based on the game.odds object, create one variable for each odd (called 
+'team1', 'draw' and 'team2')
+6. Write a function ('printGoals') that receives an arbitrary number of player 
+names (not an array) and prints each of them to the console, along with the 
+number of goals that were scored in total (number of player names passed in)
+7. The team with the lower odd is more likely to win. Print to the console which 
+team is more likely to win, without using an if/else statement or the ternary 
+operator.
+Test data for 6.: First, use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. 
+Then, call the function again with players from game.scored   
+
+*/
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+
+// 1.
+const [players1, players2] = game.players;
+console.log(players1);
+console.log(players2);
+
+// 2.
+const [t1gk, ...t1FieldPlayers] = players1
+const [t2gk, ...t2FieldPlayers] = players2
+console.log(t1gk, t1FieldPlayers);
+
+// 3.
+const allPlayers = [...players1, ...players2];
+console.log("All players: ", allPlayers);
+
+// 4.
+const players1Final = [...players1,"Thiago", "Coutinho", "Perisic"];
+console.log(players1Final);
+
+// 5.
+const {odds: {team1, x: draw, team2}} = game
+console.log(team1, draw, team2);
+
+// 6.
+const printGoals = (...players) => {
+  for (let i = 0; i < players.length; i++) {
+    console.log(`Player name: ${players[i]}`);
+  }
+  console.log(`Total goals: ${players.length}`);
+}
+
+printGoals(...players1);
+printGoals(...game.scored);
+
+// 7.
+team1 < team2 && console.log("team 1 is more likely to win");
+team1 > team2 && console.log("team 2 is more likely to win");
+
+// ==================================================================================================================================
+
+
+
+
+
+
+
+
+
+
 
 // Data needed for a later exercise
 const flights =
