@@ -58,3 +58,8 @@
 1. Arrays destructuring
 2. Object destructuring
 3. The Spread Operator
+4. Rest Pattern and Parameters
+5. Short Circuiting (&& and ||)
+6. The Nullish Coalescing Operator (??)
+7. Logical Assignment Operators
+8. Coding Challenge #1
