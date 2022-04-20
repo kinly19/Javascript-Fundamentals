@@ -63,3 +63,11 @@
 6. The Nullish Coalescing Operator (??)
 7. Logical Assignment Operators
 8. Coding Challenge #1
+9. Looping Arrays: The for-of Loop
+10. Enhanced Object Literals
+11. Optional Chaining (?.)
+12. Looping Objects: Object Keys, Values, and Entries
+13. Coding Challenge #2
+14. Sets
+15. Maps: Fundamentals
+16. Maps: Iteration
