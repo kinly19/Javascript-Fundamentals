@@ -548,15 +548,557 @@ team1 > team2 && console.log("team 2 is more likely to win");
 
 // ==================================================================================================================================
 
+// ================================================== Looping Arrays: The for-of Loop ===============================================
+/*
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
 
+for (variable of iterable) {
+  statement
+}
 
+On each iteration a value of a different property is assigned to variable. variable may be declared with const, let, or var.
+Variable is always the current element in each... iteration
+Can still use the continue and break keywords.
 
+The entries() method returns a new Array Iterator object that contains the key/value pairs for each index in the array.
+*/
 
+const menu1 = ['Apple pie', 'Spaghetti', 'Lasagna', 'Risotto']; 
 
+// for loop
+for (let i = 0; i < menu1.length; i++){
+  console.log(`Count:${i + 1}`);
+  console.log(menu1[i]);
+};
 
+/* 
+for of loop
+ - 'item' variable is always the current element in each iteration
+*/
+for (const item of menu1) {
+  console.log(item);
+}
 
+for (const item2 of menu1.entries()) {
+  console.log(`${item2[0] + 1}:${item2[1]}`);
+  console.log(item2);
+}
 
+// entries () & Destructuring 
+for (const [num, foodItem] of menu1.entries()) {
+  // We can destructor directly above instead of below
+  // const [num, foodItem] = item2;
+  console.log(`${num + 1}: ${foodItem}`);
+}
 
+// ==================================================================================================================================
+
+// ====================================================== Enhanced Object Literals ==================================================
+
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const hours = {
+  thur: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[2 + 2]]: {
+    open: 11,
+    close: 23,
+  },
+
+  // We can now actually compute property... names instead of having to write them out manually and literally.
+  [3 + 2]: {
+    open: 0, 
+    close: 24,
+  },
+};
+
+console.log(hours)
+// thur: {open: 12, close: 22}
+// fri: {open: 11, close: 23}
+// 5: {open: 0, close: 24}
+
+const someObj = {
+
+  hours: hours,
+
+  welcome: function () {
+    console.log("Hello world");
+  }, 
+
+  // With ES6 enhanced object literals, 
+  /*
+  If the property name is the same as the variable name in which we get our value from
+  we can pass in the new object directly seen below.
+  */
+  hours,
+
+  // No longer have to create a property, and then set it to a function expression
+  welcome2 () {
+    console.log("Hello world again");
+  }
+
+}
+
+console.log(someObj.hours);
+someObj.welcome();
+
+// ==================================================================================================================================
+
+// ======================================================= Optional Chaining (?.) ===================================================
+/*
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+
+The optional chaining operator (?.) 
+- Enables you to read the value of a property located deep within a chain of connected objects without having to check that each
+  reference in the chain is valid...
+- Operator is like the . chaining operator, except that instead of causing an error... if a reference is nullish (null or undefined), 
+  the expression short-circuits with a return value of undefined. (doesnt break your code)
+- The optional chaining operator ?. takes the reference (value) to its left... and checks if it is undefined or null. 
+  If the reference is either of these nullish values, the checks will stop and return undefined (but return if we have it)
+*/
+
+const person = {
+  first: "Imogen",
+  age: 2022 - 1990,
+  occupation: {
+    role: "Teacher",
+    location: {
+      building: "The lighthouse",
+    },
+  }
+}
+
+console.log(person.occupation.location.building) // London
+
+// If we tried to access a nested objects property which did not exist
+// console.log(person.occupation.office.room);
+// Cannot read properties of undefined (reading 'room')
+
+// We would have to check if 'occupation' object had an 'office' property 
+// Might also want to check if we had 'occupation' also
+if (person.occupation && person.occupation.office) {
+  console.log(person.occupation.office.room)
+}
+
+// Optional Chaining
+// Allow us to do the above in a more shorter and simpler way, Return the value of undefined instead of returning an error
+console.log(person.occupation?.office?.room);
+// Undefined
+
+// Arrays 
+const user = [{
+  name: "Alyssia",
+  email: "Hello@world.com"
+}]
+
+// console.log(user[1].name);
+// Cannot read properties of undefined (reading 'name')
+
+console.log(user[1]?.name || "User array empty");
+// The OR operator '||' uses the right value if left is falsy, while the nullish coalescing operator '??' uses the right value if left is null or undefined
+console.log(user[1]?.name ?? "User array empty");
+// Undefined
+console.log(user[0]?.name ?? "User array empty");
+// Alyssia
+// ==================================================================================================================================
+
+// ========================================= Looping Objects: Object Keys, Values, and Entries ======================================
+
+/*
+Object.keys() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+- This method returns an array of a given object's own enumerable property names..., iterated in the same order that a normal loop would.
+
+Object.values() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values
+- This method returns an array of a given object's own enumerable property values
+
+Object.entries()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+- This method returns an array of a given object's own enumerable string-keyed property [key, value] pairs (object property name and value).
+*/
+
+const restaurant3 = {
+  name: 'Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0,
+      close: 24,
+    },
+  },
+}
+
+// 1. Looping Property NAMES
+const properties = Object.keys(restaurant3.openingHours);
+console.log(properties);
+// Returns all the property names... from 'openingHours' object in an array (see notes above)
+
+// Building string
+let openStr = `We are open ${properties.length} days a week on: `
+
+// Below is the array which we get from Object.keys(restaurant3.openingHours) in which we then loop through 
+for (const day of Object.keys(restaurant3.openingHours)) {
+  openStr += `${day}, `;
+}
+
+console.log(openStr);
+// We are open 3 days a week on: thu, fri, sat, 
+
+// 2. Looping Property VALUES
+const objValues = Object.values(restaurant3.openingHours);
+console.log(objValues);
+// Returns each objects properties VALUES inside of an array
+
+for (const values of Object.values(restaurant3.openingHours)) {
+  console.log(values);
+}
+
+// 3. Looping property NAME and VALUES (entries)
+const objectEntries = Object.entries(restaurant3.openingHours);
+console.log(objectEntries);
+// Returns an array of each object properties key-value pairs 
+
+// Looping through array with destructuring
+for ( const [weekday, {open, close}] of Object.entries(restaurant3.openingHours)) {
+  console.log(`On ${weekday} we open at ${open}, and close at ${close}`);
+}
+// ==================================================================================================================================
+
+// =========================================================== Challenge #2 =========================================================
+/*
+Loop over the game.scored array and print each player name to the console, 
+along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already 
+studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exactly like this:
+Odd of victory Bayern Munich: 1.33
+Odd of draw: 3.25
+Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them 
+(except for "draw"). Hint: Note how the odds and the game objects have the 
+same property names �
+4. Bonus: Create an object called 'scorers' which contains the names of the 
+players who scored as properties, and the number of goals as the value. In this 
+game, it will look like this:
+{
+ Gnarby: 1,
+ Hummels: 1,
+ Lewandowski: 2
+}
+*/
+
+const game2 = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// 1. 
+// for loop
+for (let i = 0; i < game2.scored.length; i++) {
+  console.log(`Goal ${i + 1}: ${game2.scored[i]}`);
+}
+
+// for of loop
+for (const [index, playerName] of game2.scored.entries()) {
+  console.log(`Goal ${index + 1}: ${playerName}`);
+}
+
+// 2.
+const odds = Object.values(game2.odds);
+let average = 0
+
+for (const odd of odds) {
+  average += odd
+}
+
+average /= odds.length;
+console.log(average);
+
+const entries = Object.entries(game2.odds);
+console.log(entries);
+// 3.
+for ( const [team, odd] of Object.entries(game2.odds)) {
+ 
+
+  const teamStr = team === "x" ? `Draw` : `Victory ${game2[team]}`;
+  console.log(`Odds of ${teamStr} ${odd}`);
+}
+
+// ==================================================================================================================================
+
+// =============================================================== Sets =============================================================
+/*
+The Set object
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+- Lets you store unique values of any type, whether primitive values or object references.
+- You can iterate through the elements of a set in insertion order
+- A value in the Set may ONLY occur once; it is unique in the Set's collection.
+*/ 
+
+const ordersSet = new Set(["Pasta","Pizza","Pizza","Risotto","Pasta","Pizza"]);
+console.log(ordersSet);
+// {'Pasta', 'Pizza', 'Risotto'}
+
+// Remove duplicate elements from the array 
+const numArr = [2,3,4,4,2,3,3,4,4,5,5,6,6,7,5,32,3,4,5]; 
+const setNumArr = [...new Set(numArr)];
+console.log(setNumArr);
+// [2, 3, 4, 5, 6, 7, 32]
+
+// Relation with Strings
+const myString = "Javascrip";
+console.log(new Set(myString));
+// {'J', 'a', 'v', 's', 'c', 'r', 'i', 'p', 't'}
+
+// Get size of a set (like .length)
+console.log(ordersSet.size);
+// 3
+
+// Check if an element is in a set
+console.log(ordersSet.has("bread"));
+// False
+console.log(ordersSet.has("Pizza"));
+// True
+
+// Add elements to a set
+ordersSet.add("Garlic Bread");
+ordersSet.add("Garlic Bread");
+console.log(ordersSet);
+// {'Pasta', 'Pizza', 'Risotto', 'Garlic Bread'}
+// Even though we added it twice, Set will ignore the duplicate
+
+// Delete elements
+ordersSet.delete("Risotto");
+console.log(ordersSet);
+// {'Pasta', 'Pizza', 'Garlic Bread'}
+
+// Delete all
+// ordersSet.clear();
+
+// Getting an element from a Set 
+console.log(ordersSet[0]);
+// undefined
+// in sets there are actually no indexes. And in fact, there is no way of getting values out of a set.
+
+// If we wanted to remove duplicates and then throw the values into an array then we could retrive them normally 
+const ordersSetArr = [...ordersSet];
+console.log(ordersSetArr);
+console.log(ordersSetArr[1]);
+// Pizza
+
+for (const set of ordersSet) {
+  console.log(set);
+}
+
+// Example 
+const staff = ["Waiter", "Chef", "Waiter", "Manager", "Chef", "Waiter"]; 
+const staffUnique = [...new Set(staff)]; // spread operator works on all iterables.
+const staffPosition = staffUnique.length;
+console.log(staffUnique);
+console.log(`Amount of positions: ${staffPosition}`);
+
+/* Conclusion 
+- Sets are not intended... to replace arrays at all.
+- Now sets have this very useful property of being unique. And it's also very easy to interact with sets by using all of their straightforward methods. 
+  However, they are not nearly as important as arrays.
+- Good to know if you need them like the example above
+*/
+// ==================================================================================================================================
+
+// =============================================================== Maps =============================================================
+/*
+The Map object
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+- Holds key-value pairs and remembers the original insertion order of the keys. Any value (both objects and primitive values) may be used as either a key or a value.
+
+- A data structure that we can use to map values... to keys... (like objects data is stored in key-paired values)
+- The big difference between objects and maps is that in maps, the keys can have any... type and this can be huge.
+- In objects, the keys are basically always strings. But in maps, we can have any type of key (object, array etc)
+
+*/
+// Creating a map, the easiest is to create an empty map. Then fill the map
+const restMap = new Map();
+restMap.set("name", "Classic dinner");
+restMap.set(1, "London");
+restMap.set(2, "Brighton");
+// 'name' => 'Classic dinner', 1 => 'London', 2 => 'Brighton'
+
+// Set
+// Using set method, returns the updated map, which allows us to chain
+restMap
+  .set("categories", ["Italian", "Pizzeri", "Vegetarian", "Organic"])
+  .set("starterMenu", [
+    "Focaccia",
+    "Bruschetta",
+    "Garlic Bread",
+    "Caprese Salad",
+  ])
+  .set(true, "We are open")
+  .set(false, "We are closed")
+  .set("open", 11)
+  .set("close", 23);
+
+console.log(restMap);
+console.log(typeof restMap);
+
+restMap.set(document.querySelector("h1"), "heading");
+console.log(restMap.get(document.querySelector("h1")));
+// Using a dom element as a key
+// heading
+
+restMap.set("getHeading", document.querySelector("h1").textContent);
+console.log(restMap.get("getHeading"));
+// Data Structures and Modern Operators
+// Storing a dom element to a keys value
+
+// Retrieving values 
+console.log(restMap.get("categories")); // ['Italian', 'Pizzeria', 'Vegetarian', 'Organic']
+const todaysSpecial = restMap.get("starterMenu")[2];
+console.log(`Todays special: ${todaysSpecial}`);
+// Garlic Bread
+
+// Clever but not the most readable, dont go crazy with it
+const time = 21;
+console.log(restMap.get(time > restMap.get("open") && time < restMap.get("close")));
+
+// Check
+console.log(restMap.has("categories"));
+// true
+
+// Get Size (length)
+console.log(restMap.size);
+// 9
+
+// ==================================================================================================================================
+
+// ========================================================== Maps: Iteration =======================================================
+/*
+
+*/
+
+// Another way of filling a map
+const question = new Map([
+  ["question", "What is the best programming language in the world"],
+  // The first position of array is the key. The second position is the value.
+  [1, "C"],
+  [2, "Java"],
+  [3, "Javascript"],
+  ["correct", 3],
+  [true, "Correct ✨🎉🎊"],
+  [false, "Try again 😂"],
+])
+
+console.log(question);
+
+// Iteration
+// Destructure the array the for of loop gives us 
+for (const [key, value] of question) {
+  // Check if the key type is a number
+  if (typeof key === "number") {
+    //return
+    console.log(value);
+  }
+}
+
+// Convert object to map 
+// Small trick whenever you need a map, when you already have an object.
+const aPerson = {
+  first: "Alex",
+  last: "World"
+}
+
+const aPersonMap = new Map(Object.entries(aPerson))
+console.log(Object.entries(aPerson))
+
+/*
+const aPersonArr = Object.entries(aPerson);
+console.log(aPersonArr);
+const aPersonMap = new Map(aPersonArr);
+console.log(aPersonMap);
+console.log(aPersonMap.get("first"))
+console.log(aPersonMap)
+*/
+
+// Convert map to an array
+const aPersonArr = [...question]
+console.log([...question]);
+
+/* 
+Example using prompt to get users answer and to keep prompting for a correct answer 'while' user answer is false
+
+const prompMsg = `${question.get("question")}? 
+  1: ${question.get(1)} 
+  2: ${question.get(2)}
+  3: ${question.get(3)}`;
+
+let userAnswer;
+const correct = question.get("correct"); // 3
+
+while (userAnswer !== correct){
+  userAnswer = Number(prompt(prompMsg));
+
+  if (userAnswer !== correct) {
+    alert(question.get(false))
+  }
+
+  if (userAnswer === correct) {
+    alert(question.get(true))
+  }
+}
+*/
+
+// ==================================================================================================================================
 
 // Data needed for a later exercise
 const flights =
