@@ -71,3 +71,8 @@
 14. Sets
 15. Maps: Fundamentals
 16. Maps: Iteration
+17. Coding Challenge #3
+18. Working With Strings - Part 1
+19. Working With Strings - Part 2
+20. Working With Strings - Part 3
+21. Coding Challenge #4
