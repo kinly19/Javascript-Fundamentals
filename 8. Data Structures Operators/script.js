@@ -1156,6 +1156,360 @@ const gameEvents = new Map([
 
 // ==================================================================================================================================
 
+// =================================================== Working With Strings - Part 1 ================================================
+
+/* 
+Calling methods on strings
+- JavaScript will automatically behind the scenes convert that string primitive to a string object with the same content. 
+  And then it's on that object where the methods are called, this is why methods work on strings.
+- This process is called 'boxing' because it basically takes our string and puts it into a box which is the object.
+- Whenever we call a method on a string, once the operation is done the object is then converted back to a regular string primitive.
+
+  console.log(new String("Javascript"));
+  console.log(typeof new String("Javascript")); // Object
+  console.log(typeof new String("Javascript").slice(1)) // String
+
+*/
+
+const airline = "TAP Air Portugal";
+const plane = "A320";
+
+// Get position of character in a string
+console.log(plane[0]); // A
+console.log(plane[3]); // 0
+console.log("B737"[0]) // B
+
+// Read string length
+console.log(plane.length); // 4
+console.log("String".length); // 6
+
+// Get position of certain letter or word within a string
+console.log(airline.indexOf("r")); // 6, spaces are included
+console.log(airline.lastIndexOf("r")); // 10
+console.log(airline.indexOf("Portugal")); // 8
+
+// Methods
+/*
+slice() -
+method returns a shallow copy of a portion of an array into a new array object selected from start to end
+where start and end represent the index of items... in that array. The original array will not be modified.
+*/
+console.log(airline.slice(4)); // Air Portugal
+// Stops one before index
+console.log(airline.slice(4, 7)); // Air
+console.log(airline.slice(0, airline.indexOf(" "))); // Tap
+console.log(airline.slice(airline.lastIndexOf(" ") + 1)); // Portugal
+// Define a negative begin argument
+console.log(airline.slice(-2)); // al 
+// Define a negative end argument
+console.log(airline.slice(1, -1)); // AP Air Portuga
+
+
+const checkMiddleSeat = (position) => {
+  // B and E are middle seats
+  const seat = position.slice(-1);
+  if (seat === "B" || seat === "E") {
+    console.log("You got the middle seat 😂");
+  } else {
+    console.log("You got lucky!");
+  }
+}
+
+
+/*
+includes() 
+- Method determines whether an array includes a certain value among its entries, returning true or false as appropriate.
+*/
+const checkMiddleSeat2 = (position) => {
+  // B and E are middle seats
+  const seat = position.includes("E") || position.includes("B");
+  if (seat) {
+    console.log("You got the middle seat 😂");
+  } else {
+    console.log("You got lucky");
+  }
+}
+
+const YourPosition = "11B";
+checkMiddleSeat(YourPosition);
+// You got the middle seat 😂
+checkMiddleSeat2(YourPosition);
+// You got the middle seat 😂
+
+// ==================================================================================================================================
+
+// =================================================== Working With Strings - Part 2 ================================================
+
+const airline2 = "LHR London Heathrow";
+
+// Methods
+console.log(airline2.toLowerCase());
+// lhr london heathrow
+console.log(airline2.toUpperCase());
+// LHR LONDON HEATHROW
+
+// Fix capitalization in name
+const passenger = "aLExa"; // should return Alexa
+
+const passengerLower = passenger.toLowerCase(); // alexa
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); // A + lexa
+console.log(passengerCorrect); // Alexa
+
+// Function for above
+const amendName = (name) => {
+  const amendName = name[0].toUpperCase() + name.slice(1).toLowerCase(); // I + sabella
+  return amendName;
+}
+console.log(amendName("ISabeLla")); // Isabella
+
+// Comparing emails 
+const email = "hello@world.io"; 
+const loginEmail = "  Hello@world.Io \n";
+console.log(loginEmail);
+
+const amendEmail = (email) => {
+
+ /* or
+  const lowerEmail = email.toLowerCase();
+  const trimmedEmail = lowerEmail.trim();
+  return trimmedEmail
+  */ 
+
+  // const amendedEmail = email.trim().toLowerCase();
+  const amendedEmail = email.toLowerCase().trim();
+  // From es19 you can trim from the start or end - trimStart() or trimEnd()
+  return amendedEmail;
+}
+console.log(amendEmail(loginEmail)); // hello@world.io
+
+// Replace parts of strings
+const priceGB = "288,97£"; 
+const priceUS = priceGB.replace("£", "$").replace(",", ".");
+console.log(priceUS); 
+
+const announcement = "All passengers come to boarding door 23, boarding door 23";
+
+// Only changes first instance
+console.log(announcement.replace("door", "Gate"));
+// All passengers come to boarding Gate 23, boarding door 23
+
+// Replaces all instances
+console.log(announcement.replaceAll("door", "Gate"));
+// All passengers come to boarding Gate 23, boarding Gate 23
+
+// Replace the whole string
+console.log(announcement.replace(announcement, "boarding for gate 23 has changed to 25"));
+
+// Using Regular expression
+console.log(announcement.replace(/door/g, "Gate"));
+// All passengers come to boarding Gate 23, boarding Gate 23
+
+
+// Booleans
+const plane2 = "Airbus A320neo";
+console.log(plane2.includes("A320neo")); // True
+console.log(plane2.includes("A320trio")); // False
+
+console.log(plane2.startsWith("Air")); // True
+console.log(plane2.startsWith("A320")); // False
+
+if (plane2.startsWith("Airbus") && plane2.endsWith("neo")) {
+  console.log("Part of the new Airbus family");
+}
+
+// Practice exercise 
+const checkBaggage = (items) => {
+ 
+  const baggage = items.toLowerCase();
+
+  if (baggage.includes("knife") || baggage.includes("gun")) {
+    console.log("You are not allowed to board");
+  } else {
+    console.log("Welcome on board!");
+  }
+}
+
+checkBaggage("car batteries");
+checkBaggage("i have a gun");
+
+
+const checkBags = (items) => {
+  // Take the string and put each word inside an item
+  const passengerItems = [items.slice(" ")];
+  console.log(passengerItems)
+  const exclude = ["Knife", "Gun"];
+  console.log(exclude);
+}
+
+checkBags("i have a gun");
+// ==================================================================================================================================
+
+// =================================================== Working With Strings - Part 3 ================================================
+
+/*
+split()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+- Method divides a String into an ordered list of substrings, puts these substrings into an array, and returns the array. 
+  The division is done by searching for a pattern; where the pattern is provided as the first parameter in the method's call.
+*/
+
+console.log("a+very+nice+string".split("+"));
+// ['a', 'very', 'nice', 'string']
+
+console.log("Learning javascript is fun!".split(" "));
+// ['Learning', 'javascript', 'is', 'fun!']
+
+// Watch out for this one
+console.log("Learning javascript is fun!".split(""));
+// ['L', 'e', 'a', 'r', 'n', 'i', 'n', 'g', ' ', 'j', 'a', 'v', 'a', 's', 'c', 'r', 'i', 'p', 't', ' ', 'i', 's', ' ', 'f', 'u', 'n', '!']
+
+// Destructuring 
+const [userFirstName, userLastName] = "Imogen Poots".split(" ");
+console.log(`Firstname: ${userFirstName} Lastname: ${userLastName}`);
+// Firstname: Imogen Lastname: Poots
+
+
+/*
+join() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+- Method creates and returns a new string by concatenating all of the elements in an array (or an array-like object) 
+  separated by commas or a specified separator string. If the array has only one item, then that item will be returned without using the separator.
+*/
+
+// Returns a new string by concatenating all of the elements in an array
+const newName = ["Ms", userFirstName, userLastName.toUpperCase()].join(" ");
+console.log(newName);
+// Ms Imogen POOTS
+
+// Function
+const capitalizeName = (name) => {
+  // create an array where each word is a separate item
+  const nameSplit = name.split(" ");
+  const capitalizeNameArry = [];
+
+  for ( const n of nameSplit) {
+    // loop through and push each word that has been capitalized
+    capitalizeNameArry.push(n[0].toUpperCase() + n.slice(1));
+  }
+
+  return capitalizeNameArry.join(" ")
+}
+console.log(capitalizeName("jessica ann smith davis"));
+
+// Another example from above
+const capitalizeName2 = (name) => {
+  const nameSplit = name.split(" ");
+  const capitalizeNameArry = [];
+
+  for ( const n of nameSplit) {
+    capitalizeNameArry.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+
+  return capitalizeNameArry.join(" ");
+}
+
+console.log(capitalizeName2("jessica ann smith davis"));
+
+// Padding a string.
+/*
+padStart() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
+- Method pads the current string with another string (multiple times, if needed) until the resulting string reaches the given length. 
+  The padding is applied from the start of the current string. 
+- Add to the start of a string multiple times until a certain (defined length) string length is reached
+*/
+
+const message = "Go to gate 23";
+console.log(message.padStart(25, "+")); // add '+' multiple times until the strings length is 25
+// ++++++++++++Go to gate 23 
+console.log("hello".padStart(25,"♥"));
+// ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥hello
+
+console.log("hello".padStart(25, "♥").padEnd(30, "☻"));
+//♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥hello☻☻☻☻☻
+
+
+const maskCredit = (number) => {
+  // when one of the operands of the plus sign is a string it will convert all the operands to a string
+  const string = number + "";
+  console.log(string);
+
+  /* 
+  This is hard coded for 16digits sliced from index of 12 to get last 4 digits
+  If we had a card number which was 19 digits it will show the last 7 digits instead
+  
+  const maskedString = string.slice(12).padStart(string.length, "*") 
+  */
+
+  // more dynamic
+  const maskedString = string.slice(-4).padStart(string.length, "*");
+  
+  return maskedString;
+}
+
+console.log(maskCredit(4526452641254125));
+// ************4125
+console.log(maskCredit(4245564));
+// ***5564
+
+// Repeat 
+/*
+repeat() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat
+- Method constructs and returns a new string which contains the specified number of copies of the string on which it was called, concatenated together.
+*/
+
+const chorus = "Because I\'m happy. ";
+console.log(`Chorus lyrics: ${chorus.repeat(25)}`) // logs chorus 25 times
+
+const planesInLine = (amount) => {
+  console.log(`There are ${amount} planes in the sky ${"✈".repeat(amount)}`)
+}
+
+planesInLine(5); // There are 5 planes in the sky ✈✈✈✈✈
+planesInLine(3); // There are 3 planes in the sky ✈✈✈
+
+
+// ==================================================================================================================================
+
+// =========================================================== Challenge #4 =========================================================
+/*
+Write a program that receives a list of variable names written in underscore_case 
+and convert them to camelCase.
+The input will come from a textarea inserted into the DOM (see code below to 
+insert the elements), and conversion will happen when the button is pressed.
+Test data (pasted to textarea, including spaces):
+underscore_case
+first_name
+Some_Variable 
+ calculate_AGE
+delayed_departure
+Should produce this output (5 separate console.log outputs):
+underscoreCase ✅
+firstName ✅✅
+someVariable ✅✅✅
+calculateAge ✅✅✅✅
+delayedDeparture ✅✅✅✅✅
+Hints:
+§ Remember which character defines a new line in the textarea �
+§ The solution only needs to work for a variable made out of 2 words, like a_b
+§ Start without worrying about the ✅. Tackle that only after you have the variable 
+name conversion working �
+§ This challenge is difficult on purpose, so start watching the solution in case 
+you're stuck. Then pause and continue!
+Afterwards, test with your own test data
+*/
+
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+
+// ==================================================================================================================================
+
+
+
+
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
