@@ -1500,19 +1500,95 @@ you're stuck. Then pause and continue!
 Afterwards, test with your own test data
 */
 
-
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
+const btn = document.querySelector("button");
+
+const camelCaseNames = () => {
+
+  const textarea = document.querySelector("textarea").value;
+  const nameList = textarea.split("\n");
+
+  /*
+  for (let i = 0; i < nameList.length; i++) {
+
+    const currentName = nameList[i].toLowerCase();
+    const indexOf_ = nameList[i].indexOf("_");
+
+    const firstN = currentName.slice(0, currentName.indexOf("_")).trim();
+    const secondN = currentName[indexOf_ + 1].toUpperCase() + currentName.slice(indexOf_ + 2);
+  
+    const camelCaseName = firstN + secondN;
+    console.log(`${camelCaseName.padEnd(20)} ${"✅".repeat(i + 1)}`);
+  }
+  */
+
+  // Cleaner than above
+  // entries returns a new Array Iterator object that contains the key/value pairs for each index in the array 
+  for ( const [index, name] of nameList.entries()) {
+
+    // Remeber split divides a string into an ordered list of substrings // eg ["underscor", "case"]
+    const [firstN, secondN] = name.toLowerCase().trim().split("_");
+    const camelCaseName = firstN + secondN[0].toUpperCase() + secondN.slice(1);
+
+    // or build the string and console log that
+    // const camelCaseName = `${firstN + secondN[0].toUpperCase() + secondN.slice(1)} ${"✅".repeat(index + 1)}`;
+    console.log(`${camelCaseName.padEnd(20)} ${"✅".repeat(index + 1)}`);
+   
+  }
+
+}
+
+btn.addEventListener("click", camelCaseNames);
+// ==================================================================================================================================
+
+// ====================================================== String Methods Practice ===================================================
+
+const flights =
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+
+for (const flight of flights.split("+")) {
+
+  console.log(flights.split("+"))
+  /*
+  Returns an array
+  console.log(flight);
+  0: "_Delayed_Departure;fao93766109;txl2133758440;11:25"
+  1: "_Arrival;bru0943384722;fao93766109;11:45"
+  2: "_Delayed_Arrival;hel7439299980;fao93766109;12:05"
+  3: "_Departure;fao93766109;lis2323639855;12:30"
+  */
+
+  let [status, depart, arrive, eta] = flight.split(";");
+
+  /*
+  Returns an array which is what we destructure on
+  console.log(flight.split(";"));
+    ['_Delayed_Departure', 'fao93766109', 'txl2133758440', '11:25']
+    ['_Arrival', 'bru0943384722', 'fao93766109', '11:45']
+    ['_Delayed_Arrival', 'hel7439299980', 'fao93766109', '12:05']
+    ['_Departure', 'fao93766109', 'lis2323639855', '12:30']
+  */
+
+  // Make changes to the string
+  status = status.replaceAll("_", " ").trim();
+  depart = depart.slice(0, 3).toUpperCase();
+  arrive = arrive.slice(0, 3).toUpperCase();
+  eta = eta.replace(":", "h");
 
 
+  const delayStatus = status.startsWith("Delayed") ? "🔴" : "";
+
+  const message = `${delayStatus} ${status} from ${depart} to ${arrive} (${eta})`.padStart(50);
+  console.log(message);
+
+}
 // ==================================================================================================================================
 
 
 
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
 
 // Data needed for first part of the section
 const restaurant = {
