@@ -76,3 +76,6 @@
 19. Working With Strings - Part 2
 20. Working With Strings - Part 3
 21. Coding Challenge #4
+22. String Methods Practice
+#
+## A Closer Look At Functions
