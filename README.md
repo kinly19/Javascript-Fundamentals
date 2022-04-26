@@ -73,8 +73,19 @@
 16. Maps: Iteration
 17. Coding Challenge #3
 18. Working With Strings - Part 1
+    * Calling methods on strings
+    * Get position of a character or letter in a string
+    * slice()
+    * includes() 
 19. Working With Strings - Part 2
+    * toLowerCase() & toUpperCase()
+    * replace() & replaceAll()
+    * includes()
 20. Working With Strings - Part 3
+    * split()
+    * join() 
+    * Padding strings with padStart() & padEnd()
+    * repeat()
 21. Coding Challenge #4
 22. String Methods Practice
 #
