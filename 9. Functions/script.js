@@ -326,3 +326,158 @@ book.call(swiss, ...flightData);
 console.log(swiss.bookings);
 
 // ================================================================================================================================== 
+
+// ========================================================= The Bind Method ========================================================
+/*
+bind() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind
+- Method creates a new function that, when called, has its this keyword set to the provided... value, 
+  with a given sequence of arguments preceding any provided when the new function is called.
+- A copy of the given function with the specified this value, and initial arguments (if provided).
+
+- bind does not immediately call the function. Instead it returns a new function where this keyword is bound.
+*/
+
+const flightData2 = [583, "George Cooper"]; 
+
+const bookEW = book.bind(eurowings);
+bookEW(23, "Steven Williams");
+// Steven Williams booked a seat on EuroWings flight EW23
+
+// We can specify parts of the argument beforehand, is actually a common pattern called partial application.
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23("Jonas Alexa");
+console.log(eurowings.bookings);
+
+// With event listeners
+lufthansa.planes = 300;
+// Creating a method inside lufthansa object
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++
+  console.log(this.planes);
+}
+
+document.querySelector(".buy").addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+// Returns NAN because the keyword 'this' inside an eventlistener points to the element on which that handler is attached too.
+// We can use the bind method to bind what the keyword 'this' should point too.
+
+// Partial application 
+const addTax = (rate, value) => {
+  return value + value * rate;
+}
+
+console.log(addTax(0.1, 200));
+
+// We can now use the bind function on 'addTax' function and preset the rate argument.
+const addVat = addTax.bind(null, 0.23);
+console.log(addVat(100));
+
+// The bind() method returns a new function 
+// Below is like what bind does, a function which returns a function
+const addTaxRate = (rate) => {
+  return (value) => {
+    console.log(value + value * rate);
+  }
+}
+
+const addVat2 = addTaxRate(0.1);
+addVat2(1000);
+// ================================================================================================================================== 
+
+// ======================================================= Coding Challenge #1 ======================================================
+/*
+Let's build a simple poll app!
+A poll has a question, an array of options from which people can choose, and an 
+array with the number of replies for each option. This data is stored in the starter 
+'poll' object below.
+Your tasks:
+1. Create a method called 'registerNewAnswer' on the 'poll' object. The 
+method does 2 things:
+1.1. Display a prompt window for the user to input the number of the 
+selected option. The prompt should look like this:
+What is your favourite programming language?
+0: JavaScript
+1: Python
+2: Rust
+3: C++
+(Write option number)
+1.2. Based on the input number, update the 'answers' array property. For 
+example, if the option is 3, increase the value at position 3 of the array by 
+1. Make sure to check if the input is a number and if the number makes 
+sense (e.g. answer 52 wouldn't make sense, right?)
+2. Call this method whenever the user clicks the "Answer poll" button.
+3. Create a method 'displayResults' which displays the poll results. The 
+method takes a string as an input (called 'type'), which can be either 'string'
+or 'array'. If type is 'array', simply display the results array as it is, using 
+console.log(). This should be the default option. If type is 'string', display a 
+string like "Poll results are 13, 2, 4, 1".
+4. Run the 'displayResults' method at the end of each 
+'registerNewAnswer' method call.
+5. Bonus: Use the 'displayResults' method to display the 2 arrays in the test 
+data. Use both the 'array' and the 'string' option. Do not put the arrays in the poll 
+object! So what should the this keyword look like in this situation?
+
+*/
+
+const data1 = [5, 2, 2];
+const data2 = [1, 5, 3, 9, 6, 1];
+
+const poll = {
+  question: "What is your favourite programming language?",
+  options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  registerNewAnswer () {
+
+    // Get answer
+    const answer = Number(
+      prompt(`${this.question} \n ${this.options.join("\n")} \n (Write option number)`)
+    )
+    console.log(answer)
+    
+    // Register answer
+    typeof answer === "number" && answer < this.options.length && this.answers[answer]++;
+    this.displayResults("string")
+    this.displayResults()
+  },
+
+  displayResults (type = "array") {
+
+  if (type === "string") {
+    console.log(`Poll results are ${this.answers.join(", ")}`);
+  } else
+    console.log(this.answers);
+  }
+
+}
+
+document.querySelector(".poll").addEventListener("click", poll.registerNewAnswer.bind(poll));
+// document.querySelector(".poll").addEventListener("click", () =>  poll.registerNewAnswer())
+
+// Changing this keyword with call
+poll.displayResults.call({answers: data1}, "string")
+
+// ================================================================================================================================== 
+
+// ======================================== Immediately Invoked Function Expressions (IIFE) =========================================
+/*
+IIFE - Immediately Invoked Function Expression
+- https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+- is a JavaScript function that runs as soon........... as it is defined.
+*/
+
+// 
+const runOnce = () => {
+  console.log("This will never run again");
+}
+runOnce();
+// This function will only run once but we can always run this function again if we needed too.
+
+// IIFE function
+(() => {
+  console.log("This will only run once and never again")
+})();
+// This IIFE function will actually execute immediately as soon as its defined 
+
+// ================================================================================================================================== 
