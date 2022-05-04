@@ -481,3 +481,132 @@ runOnce();
 // This IIFE function will actually execute immediately as soon as its defined 
 
 // ================================================================================================================================== 
+
+// ============================================================ Closures ============================================================
+/*
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+Closure 
+- Is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). 
+  In other words, a closure gives you access to an outer function's scope from an inner function. 
+  In JavaScript, closures are created every time a function is created, at function creation time.
+
+  - A function always has access to the variable environment of the execution context in which it was created
+  - A closure gives a function access to all the variables of its parent function, even after that parent function has returned
+  - We can say that a closure makes a function remember all the variables that existed at the function's birthplace...
+*/
+
+const secureBooking = () => {
+  let passengerCount = 0
+
+  return () => {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  }
+}
+
+/*
+  booker function has access to the 'passengerCount' variable, because of closure. The closure is basically the variable environment attached to the function (secureBooking), 
+  exactly as it was at the time and place that the function was created.
+  The Booker function closes over its parents scope or over its parent variable environment
+*/
+const booker = secureBooking();
+booker();
+booker();
+booker();
+console.dir(booker);
+// Closure (secureBooking) {passengerCount: 3}
+
+
+// Example 1.
+// We dont need to return a function inside another function to have a closure 
+
+let f;
+
+// This function holds a variable 'a' and assigns 'f' to a function expression
+const g = () => {
+  const a = 23;
+  f = () => {
+    console.log(a * 2);
+  };
+};
+
+// Calling g then assigns f to be a function which does something
+g()
+f() // 46 (23 * 2)
+console.dir(f);
+// Closure (g) {a: 23}
+
+/*
+Even though the 'f' variable was defined outside in the global scope, but as we assigned it to be a function inside of the 'g' function, 
+it then closes over the variable enviroment of the 'g' function which includes the 'a' variable.
+And therefore it is able to access the 'a' variable even after the 'g' function at this point has of course already finished its execution
+*/
+
+// Re-assign f
+
+const h = () => {
+  const b = 777;
+  f = () => {
+    console.log(b * 2);
+  };
+};
+
+h();
+f(); // 1554
+console.dir(f);
+// Closure (h) {b: 777}
+
+// Example 2. 
+
+const boardPassengers = (num, wait) => {
+  const perGroup = num / 3;
+
+  setTimeout(() => {
+    console.log(`We are now boarding all ${num} passengers`);
+    console.log(`There are 3 groups each with ${Math.trunc(perGroup)} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
+/*
+Our setTimeout function executes independently after 3secs, but even after 'boardPassengers' function has finished executing.
+setTimeout function still has access to all the variables (num and perGroup) that were in the variable environment in which it was created in (boardPassengers).
+This is because of closure 
+*/
+
+// Closures have priority over the scope chain
+const perGroup = 1000;
+boardPassengers(180, 3);
+// If we set perGroup in the global, the function will still use 'perGroup' defined inside the function over the global variable.
+
+// ================================================================================================================================== 
+
+// ======================================================= Code Challenge #2 ========================================================
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+  console.log("This should only run once");
+
+  document.querySelector("body").addEventListener("click", () => {
+    header.style.color = "blue";
+    console.log("Eventlistener executed");
+  });
+})();
+
+/* 
+The IIFE is a function which runs as soon as it is defined, inside of this function we set a variable 'header' to be a h1 element. 
+We then set the color style of the h1 element (header) to be red. 
+
+We also have an on click event listener, which executes a function on click. This event listener on click will change the color of 
+our h1 element to blue. 
+
+Even though IIFE function has already executed, our addEventListener is still able to access the 'headers' variable because of closure. 
+
+Closure allow a function to access the variable environment of the execution context of which it was created, because the eventlistener was
+created inside of our IIFE, even after the IIFF function has finished executing it still holds onto to the variable it needs. 
+*/
+
+// ================================================================================================================================== 
