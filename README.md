@@ -90,3 +90,19 @@
 22. String Methods Practice
 #
 ## A Closer Look At Functions
+1. Default Parameters
+2. How Passing Arguments Works: Value vs. Reference
+3. First-Class and Higher-Order Functions
+4. Functions Accepting Callback Functions
+5. Functions Returning Functions
+6. The call and apply Methods
+7. The Bind Method
+8. Coding Challenge #1
+9. Immediately Invoked Function Expressions (IIFE)
+10. Closures
+11. Code Challenge #2
+#
+## Working With Arrays
+1. Array Methods
+2. Looping Arrays: forEach
+3. forEach With Maps And Sets
