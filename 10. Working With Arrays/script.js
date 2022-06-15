@@ -1,9 +1,6 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
+// ============================================================ BANKIST APP ==========================================================
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -61,9 +58,45 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
+//. Function for displaying list items
+const displayMovements = (movements) => {
+  containerMovements.innerHTML = "";
+  
+  movements.forEach((mov, index) => {
+    const type = mov > 0 ? "deposit" : "withdrawal";
+    
+    const html = `
+    <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${
+      index + 1
+    } ${type}</div>
+    <div class="movements__value">${mov}</div>
+    </div>
+    `;
+    
+    // where to put above html string
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+};
+
+displayMovements(account1.movements);
+
+// Compute usernames
+const createUsernames = (acc) => {
+  acc.forEach(
+    (user) =>
+    // Add new property
+    (user.username = user.owner
+      // build new string for property value
+        .split(" ")
+        .map((string) => string[0])
+        .join(""))
+  );
+};
+createUsernames(accounts);
+// ===================================================================================================================================
+
+// ============================================================= LECTURES ============================================================
 
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
