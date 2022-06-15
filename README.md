@@ -103,6 +103,9 @@
 11. Code Challenge #2
 #
 ## Working With Arrays
-1. Array Methods
-2. Looping Arrays: forEach
-3. forEach With Maps And Sets
+1. Bankist App
+2. Array Methods
+3. Looping Arrays: forEach
+4. forEach With Maps And Sets
+5. Coding challenge #1
+6. Map() Method
