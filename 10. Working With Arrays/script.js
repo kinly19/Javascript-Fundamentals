@@ -411,6 +411,7 @@ map(() =>
 
 */
 
+// Test data
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const eurToUsd = 1.1;
@@ -441,4 +442,104 @@ const movementDiscription = movements.map(
 );
 
 console.log(movementDiscription);
+// ===================================================================================================================================
+
+// ========================================================= Filter () Method ========================================================
+
+/*
+filter() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+- Method creates a new... array with all elements that pass... the test implemented by the provided function.
+- Only elements which pass the condition, will be placed inside the new array.
+- Original array remains the same
+*/
+
+// Test data
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const deposits = movements.filter(deposits => deposits > 0);
+console.log(deposits);
+
+
+// Example of above with for loop
+const depositsArr = [];
+for (const mov of movements) if (mov > 0) depositsArr.push(mov);
+
+/*
+for (const mov of movements) {
+  if (mov > 0) {
+    depositsArr.push(mov);
+  };
+};
+*/
+
+console.log(depositsArr);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+
+// ===================================================================================================================================
+
+// ========================================================= Reduce () Method ========================================================
+/*
+reduce() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+- Method executes a user-supplied "reducer" callback function on each element of the array in order, 
+  passing in the return value from the calculation on the preceding element (prev element). 
+  The final result of running the reducer across all elements of the array is a single value.
+- Reduces all elements into one single value
+*/
+
+// Test data
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const balance = movements.reduce((prev, cur, index) => {
+  console.log(`Previous Iteration ${index}: ${prev} + Current Iteration: ${cur}`)
+  return prev + cur;
+},0);
+
+// One liner same as above
+const balance2 = movements.reduce((prev, curr) => prev + curr, 0)
+
+console.log(balance);
+console.log(balance2);
+// 3840
+
+// Example with for of loop
+let balance3 = 0
+for (const mov of movements) {
+  balance3 += mov;
+}
+console.log(balance3);
+
+// Max value 
+/*
+const maxBalance = movements.reduce((prev, cur) => {
+  let max = prev
+  if (cur > max) {
+    console.log(`new max is ${cur}`)
+    max = cur
+  } else {
+    console.log(`not greater: ${cur}`)
+    max = max
+  }
+
+  after the first iteration the accumulator ends up as undefined, which is why this doesnt work
+  unless we return a value for the accumulator to use
+})
+*/
+
+// We always want to return a value for the accumulator (prev) to use on the next iteration
+const maxBalance = movements.reduce((prev, cur) => {
+  
+  if (prev > cur) {
+    console.log(`prev is: ${prev} and is greater than : ${cur}`)
+    return prev
+  } else {
+    console.log(`prev is: ${prev} and is not greater than: ${cur}`)
+    return cur
+  }
+})
+
+console.log(maxBalance)
 // ===================================================================================================================================
