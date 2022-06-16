@@ -109,3 +109,5 @@
 4. forEach With Maps And Sets
 5. Coding challenge #1
 6. Map() Method
+7. Filter () Method
+8. Reduce () Method
