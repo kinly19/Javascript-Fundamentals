@@ -595,3 +595,122 @@ console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]))
 console.log(calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]))
 
 // ===================================================================================================================================
+
+// ========================================================== Chaining Methods =======================================================
+/*
+Things to remember
+
+- We should not overuse... chaining, we should try to optimize it where we can
+- Chaining tons of methods one after the other can cause a real performance issues if we have really huge arrays
+- Try to compress all the functionality that they do into as little methods as possible
+- We can only chain a method after another one, only if the first method returns an array
+
+- It is a bad practice in JavaScript to chain methods that mutate the underlying original array. And an example of that is the splice method. 
+- should not chain a method like the splice or the reverse method.
+
+*/
+
+// Test data
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const eurToUsd = 1.1;
+const totalDepositsUSD = movements
+  .filter((mov) => mov > 0)
+  .map((mov) => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov); 
+  // Wouldnt be able to chain another method after reduce, because the reduce method returns a value and not an array
+
+console.log(totalDepositsUSD);
+
+/* 
+Chaining all these methods together can make it a little harder to debug
+For example, if one of these methods returned something really weird, we wouldnt really know which method it came from.
+
+We can check out the array results in each method using the array parameter that we get access to in the methods callback function.
+
+*/
+
+const totalDepositsUSD2 = movements
+  .filter((mov) => mov > 0)
+  .map((mov, index, arr) => {
+    console.log(arr);
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov, index, arr) => {
+    console.log(arr);
+    return acc + mov;
+  });
+
+// ===================================================================================================================================
+
+// ======================================================== Coding Challenge #3 ======================================================
+/*
+Rewrite the 'calcAverageHumanAge' function from Challenge #2, but this time 
+as an arrow function, and using chaining
+
+const calcAverageHumanAge = (ages) => {
+  const humanAge = ages.map((dogAge) => {
+    if (dogAge <= 2 ) {
+      return dogAge * 2;
+    } else {
+      return 16 + dogAge * 4;
+    }
+  })
+
+  const adultAges = humanAge.filter((dog) => dog >= 18);
+  const averageAge = adultAges.reduce((acc, cur) => acc + cur, 0) / adultAges.length;
+
+  return averageAge
+}
+*/
+
+const calcAverageHumanAge3 = (ages) => {
+  const humanAge = ages
+    .map((dogAge) => (dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4))
+    .filter((dog) => dog >= 18)
+    .reduce((acc, cur, index, arr) => {
+      return acc + cur / arr.length;
+    }, 0);
+
+  return humanAge
+}
+
+console.log(calcAverageHumanAge3([5, 2, 4, 1, 15, 8, 3]))
+// 44
+console.log(calcAverageHumanAge3([16, 6, 10, 5, 6, 1, 4]))
+// 47.333333333333336
+
+// ===================================================================================================================================
+
+// ========================================================= The Find() Method =======================================================
+/*
+find() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+- Method returns the first... element in the provided array that satisfies the provided testing function. 
+  If no values satisfy the testing function, undefined is returned.
+- Wont... return a new array, but only... the value of the first element that satisfy the condition
+*/
+
+// Test data
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const firstWithdrawal = movements.find((mov) => mov < 0);
+console.log(firstWithdrawal);
+// -400
+
+// Get index of the found element in the array
+console.log(movements.findIndex((item) => item < 0));
+console.log(movements.findIndex(item => item === firstWithdrawal))
+// 2
+
+// Find account owner of Jessica Davis in accounts array
+const account = accounts.find((acc) => acc.owner === "Jessica Davis");
+console.log(account);
+
+// For loop
+for (const account of accounts) {
+  if (account.owner === "Jessica Davis") {
+    console.log(account)
+  }
+}
+
+// ===================================================================================================================================
