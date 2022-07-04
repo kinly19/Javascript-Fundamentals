@@ -111,3 +111,7 @@
 6. Map() Method
 7. Filter () Method
 8. Reduce () Method
+9. Coding Challenge #2
+10. Chaining Methods
+11. Coding Challenge #3
+12. The Find() Method
