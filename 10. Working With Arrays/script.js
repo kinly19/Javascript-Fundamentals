@@ -81,6 +81,44 @@ const displayMovements = (movements) => {
 
 displayMovements(account1.movements);
 
+// Calc & display balance
+const calcDisplayBalance = (movements) => {
+  const totalBalance = movements.reduce((prev, cur) => prev + cur)
+  labelBalance.textContent = totalBalance;
+}
+calcDisplayBalance(account1.movements);
+
+// Calc & display summary
+const calcDisplaySummary = (movements) => {
+  const totalDeposits = movements
+    .filter((mov) => mov > 0)
+    .reduce((prev, cur) => prev + cur);
+  
+  labelSumIn.textContent = `${totalDeposits}€`;
+
+  const totalWithdrawal = movements
+    .filter((mov) => mov < 0)
+    .reduce((prev, cur) => prev + cur);
+
+  labelSumOut.textContent = `${Math.abs(totalWithdrawal)}€`
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((mov) => (mov * 1.2) / 100)
+    // add interest for deposits greater than 1euro
+    .filter((mov, index, arr) => {
+      console.log(arr);
+      return mov >= 1;
+    })
+    .reduce((prev, int, index, arr) => {
+      console.log(arr);
+      return prev + int;
+    });
+
+  labelSumInterest.textContent = `${interest}€`
+}
+calcDisplaySummary(account1.movements);
+
 // Compute usernames
 const createUsernames = (acc) => {
   acc.forEach(
