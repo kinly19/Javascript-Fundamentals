@@ -65,46 +65,48 @@ const displayMovements = (movements) => {
   movements.forEach((mov, index) => {
     const type = mov > 0 ? "deposit" : "withdrawal";
     
+    // Passing in list for each movement
     const html = `
     <div class="movements__row">
     <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-    <div class="movements__value">${mov}</div>
+    <div class="movements__value">${mov}€</div>
     </div>
     `;
-    
-    // where to put above html string
+
+    // Where to put above html string
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
-
-displayMovements(account1.movements);
 
 // Calc & display balance
 const calcDisplayBalance = (movements) => {
   const totalBalance = movements.reduce((prev, cur) => prev + cur)
   labelBalance.textContent = totalBalance;
 }
-calcDisplayBalance(account1.movements);
 
 // Calc & display summary
-const calcDisplaySummary = (movements) => {
-  const totalDeposits = movements
+const calcDisplaySummary = (acc) => {
+
+  // Show total deposits
+  const totalDeposits = acc.movements
     .filter((mov) => mov > 0)
     .reduce((prev, cur) => prev + cur);
   
   labelSumIn.textContent = `${totalDeposits}€`;
 
-  const totalWithdrawal = movements
+  // Show total withdrawal
+  const totalWithdrawal = acc.movements
     .filter((mov) => mov < 0)
     .reduce((prev, cur) => prev + cur);
 
   labelSumOut.textContent = `${Math.abs(totalWithdrawal)}€`
 
-  const interest = movements
+  // Show total interest
+  const interest = acc.movements
     .filter((mov) => mov > 0)
-    .map((mov) => (mov * 1.2) / 100)
+    .map((mov) => (mov * acc.interestRate) / 100)
     // add interest for deposits greater than 1euro
     .filter((mov, index, arr) => {
       console.log(arr);
@@ -117,7 +119,6 @@ const calcDisplaySummary = (movements) => {
 
   labelSumInterest.textContent = `${interest}€`
 }
-calcDisplaySummary(account1.movements);
 
 // Compute usernames
 const createUsernames = (acc) => {
@@ -126,12 +127,44 @@ const createUsernames = (acc) => {
     // Add new property
     (user.username = user.owner
       // build new string for property value
+        .toLowerCase()
         .split(" ")
         .map((string) => string[0])
         .join(""))
   );
 };
 createUsernames(accounts);
+
+// Event handler
+let currentAccount;
+btnLogin.addEventListener("click", (e) => {
+  e.preventDefault();
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    containerApp.style.opacity = 100;
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(" ")[0]}`
+    
+    // Clear input fields
+    inputLoginUsername.value = "";
+    inputLoginPin.value = ""
+    // or 
+    // inputLoginUsername.value = inputLoginPin.value = "";
+
+    // unfocus input field
+    inputLoginPin.blur();
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+
+  }
+})
+
 // ===================================================================================================================================
 
 // ============================================================= LECTURES ============================================================
