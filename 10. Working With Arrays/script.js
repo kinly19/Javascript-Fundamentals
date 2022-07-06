@@ -168,7 +168,6 @@ btnLogin.addEventListener("click", (e) => {
 
     // Update ui
     updateUI(currentAccount);
-
   }
 })
 
@@ -828,13 +827,13 @@ find()
 // Test data
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const firstWithdrawal = movements.find((mov) => mov < 0);
+const firstWithdrawal = movements.find(mov => mov < 0);
 console.log(firstWithdrawal);
 // -400
 
 // Get index of the found element in the array
-console.log(movements.findIndex((item) => item < 0));
-console.log(movements.findIndex(item => item === firstWithdrawal))
+console.log(movements.findIndex(item => item < 0));
+console.log(movements.findIndex(item => item === firstWithdrawal));
 // 2
 
 // Find account owner of Jessica Davis in accounts array
@@ -844,8 +843,69 @@ console.log(account);
 // For loop
 for (const account of accounts) {
   if (account.owner === "Jessica Davis") {
-    console.log(account)
+    console.log(account);
   }
 }
+
+// ===================================================================================================================================
+
+// ========================================================= findIndex Method ========================================================
+/*
+findIndex() 
+- Method returns the index of the first element in an array that satisfies the provided testing function. 
+  If no elements satisfy the testing function, -1 is returned.
+*/
+
+const array1 = [5, 12, 8, 130, 44];
+
+const isLargeNumber = (element) => element > 13;
+
+console.log(array1.findIndex(isLargeNumber));
+// 3
+console.log(array1.findIndex(item => item === 12));
+// 1 
+// ===================================================================================================================================
+
+// ========================================================== some and every =========================================================
+/*
+some() 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+- Method tests whether at least one element in the array passes the test implemented by the provided function. 
+  It returns true if, in the array, it finds an element for which the provided function returns true; otherwise it returns false. 
+- It doesn't modify the array.
+
+every()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+- Method tests whether all... elements in the array pass the test implemented by the provided function. It returns a Boolean value.
+*/
+
+// Test data
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// includes()
+// We can only really test for equality with includes
+console.log(movements.includes(-130)); // true
+console.log(movements[5] === -130); // true
+// With some()
+console.log(movements.some(mov => mov === -130));
+
+// some()
+// We can test for a condition instead and check if atleast one (any) item inside the array passes the condition
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits); // true
+
+// every() 
+// Check if all items in array pass condition
+console.log(movements.every(mov => mov > 0)); // false
+console.log(account1.movements.every(mov => mov > 0)); // false
+console.log(account4.movements.every(mov => mov > 0)); // true 
+
+/* Separate callback function
+- As seen above we have directly written our callback functions into our array methods.
+  Below we can use a separate callback function and then pass that as a callback function for our array method to use
+- Keep things dry
+*/
+const deposit = mov => mov > 0; 
+console.log(movements.every(deposit));
 
 // ===================================================================================================================================
