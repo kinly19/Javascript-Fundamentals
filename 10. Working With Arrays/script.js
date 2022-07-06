@@ -195,6 +195,20 @@ btnTransfer.addEventListener("click", (e) => {
   inputTransferAmount.value = inputTransferTo.value = "";
 })
 
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("Transfer loan");
+  const loanAmount = Number(inputLoanAmount.value);
+
+  if (loanAmount > 0 && currentAccount.movements.some(mov => mov >= loanAmount * 0.1)) {
+    // Add loan amount movement to currentAccount
+    currentAccount.movements.push(loanAmount);
+    // Update UI
+    updateUI(currentAccount);
+  }
+  // Clear input field
+  inputLoanAmount.value = "";
+});
 // ===================================================================================================================================
 
 // ============================================================= LECTURES ============================================================
