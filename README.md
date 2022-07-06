@@ -114,4 +114,6 @@
 9. Coding Challenge #2
 10. Chaining Methods
 11. Coding Challenge #3
-12. The Find() Method
+12. Find() Method
+13. FindIndex() Method
+14. Some() And Every() Method
