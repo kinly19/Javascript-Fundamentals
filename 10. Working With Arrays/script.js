@@ -209,6 +209,26 @@ btnLoan.addEventListener("click", (e) => {
   // Clear input field
   inputLoanAmount.value = "";
 });
+
+btnClose.addEventListener("click", (e) => {
+  e.preventDefault();
+  const index = accounts.findIndex(acc => acc.username === inputCloseUsername.value);
+  // Check details
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    // Remove account
+    console.log("Close account");
+    accounts.splice(index, 1);
+    console.log(accounts);
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  // Clear input fields
+  inputCloseUsername.value = inputClosePin.value = "";
+})
+
 // ===================================================================================================================================
 
 // ============================================================= LECTURES ============================================================
