@@ -59,12 +59,14 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //. Function for displaying list items
-const displayMovements = (movements) => {
+const displayMovements = (movements, sort = false) => {
   containerMovements.innerHTML = "";
-  
-  movements.forEach((mov, index) => {
-    const type = mov > 0 ? "deposit" : "withdrawal";
+  const sortedMovements = sort
+    ? movements.slice().sort((a, b) => a - b)
+    : movements;
 
+  sortedMovements.forEach((mov, index) => {
+    const type = mov > 0 ? "deposit" : "withdrawal";
     // Passing in list for each movement
     const html = `
     <div class="movements__row">
@@ -227,6 +229,14 @@ btnClose.addEventListener("click", (e) => {
   // Clear input fields
   inputCloseUsername.value = inputClosePin.value = "";
 })
+
+let sort = false;
+btnSort.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !sort);
+  sort = !sort;
+});
 
 // ===================================================================================================================================
 
