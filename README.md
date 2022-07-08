@@ -117,3 +117,5 @@
 12. Find() Method
 13. FindIndex() Method
 14. Some() And Every() Method
+15. Flat() And FlatMap() Methods
+16. Sorting Arrays With Sort() Method
