@@ -146,6 +146,7 @@ const updateUI = (acc) => {
   calcDisplayBalance(acc);
   // Display summary
   calcDisplaySummary(acc);
+  console.log("pinge")
 }
 
 // Event handler
@@ -917,5 +918,158 @@ console.log(account4.movements.every(mov => mov > 0)); // true
 */
 const deposit = mov => mov > 0; 
 console.log(movements.every(deposit));
+
+// ===================================================================================================================================
+
+// ===================================================== flat and flatMap Methods ====================================================
+
+/*
+flat()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat 
+- Method creates a new array with all... sub-array elements concatenated into it recursively up to the specified depth.
+- Allows us to flatten an array into one single array or up to a specified depth
+- Returns new array
+- ES2019
+
+Syntax
+- flat(depth)
+- The depth level specifying how deep a nested array structure should be flattened. Default is 1.
+
+flatMap()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap 
+- Method returns a new array formed by applying a given callback function to each element of the array, and then flattening the result by one level. 
+- It is identical to a map() followed by a flat() of depth 1 (arr.map(...args).flat()), but slightly more efficient than calling those two methods separately.
+*/
+
+// flat () method
+const arr4 = [1, 2, 3, [4, 5, 6], 7, 8];
+console.log(arr4.flat());
+// [1, 2, 3, 4, 5, 6, 7, 8]
+
+const arr5 = [1, 2, 3, [[[4, 5, 6]]]];
+console.log(arr5.flat(1));
+// [1, 2, 3, [[4, 5, 6]]]
+console.log(arr5.flat(2));
+// [1, 2, 3, [4, 5, 6]]
+console.log(arr5.flat(3));
+// [1, 2, 3, 4, 5, 6]
+
+// flatMap()
+// Test data
+const nums1 = [5, 10];
+const nums2 = [10, 20];
+const nums3 = [30, 40];
+const allNums = [nums1, nums2, nums3]
+// 0: (2) [5, 10]
+// 1: (2) [10, 20]
+// 2: (2) [30, 40]
+
+// Map method and flat
+const calcNums = allNums
+  .map((num) => num)
+  // return array
+  .flat()
+  // flatten the array into a single array
+  .reduce((acc, num) => acc + num);
+  // Add all the numbers together
+console.log(calcNums)
+
+/*
+flatMap method allows us to combine the map() and flat() method together as a single method
+flatMap only goes one level deep and can not be changed, if we have to go more than 1 level we would still have to use the flat method
+*/
+const calcNums2 = allNums.flatMap((num) => num).reduce((acc, num) => acc + num);
+console.log(calcNums2);
+
+/* Same as above
+const overalBalance = accounts
+  .map((mov) => mov.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov);
+
+console.log(overalBalance);
+
+const overalBalance2 = accounts
+  .flatMap((item) => item.movements)
+  .reduce((acc, mov) => acc + mov);
+
+console.log(overalBalance2);
+*/
+
+// ===================================================================================================================================
+
+// ========================================================== Sorting Arrays =========================================================
+
+/*
+sort()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort 
+- Method sorts the elements of an array in place and returns the reference to the same array, now sorted. 
+- The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values
+- Will!!! mutate the original array
+- Wont work with mixed arrays
+
+compareFunction(a, b) return value	sort order
+return value > 0	sort a after b
+return value < 0	sort a before b
+return value === 0	keep original order of a and b
+*/
+
+// Strings
+const owners = ["jonas", "Zak", "Adam", "Martha"];
+console.log(owners.sort());
+//  ['Adam', 'Martha', 'Zak', 'jonas']
+
+// Numbers
+console.log(movements);
+// [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+console.log(movements.sort());
+// [-130, -400, -650, 1300, 200, 3000, 450, 70]
+/*
+Sort will coverts each element inside our array into a string. Then compare each string alphabetically.
+using sort with numbers gives us a weird outcome, but the reason why this happens is because when our numbers are converted into string... values,
+they are then sorted alphabetically as string (if we look at our numbers as strings they are indeed sorted correctly)
+
+'-' < 0 
+'1' < '4' < '6' etc
+
+to fix this we can pass a compare function into the sort method
+*/
+
+/* 
+Compare function
+return value > 0 sort a after b
+return value < 0 sort a before b
+return value === 0	keep original order of a and b
+ */
+
+// Ascending order
+movements.sort((a, b) => {
+  if (a > b) return 1
+  if (a < b) return -1
+  
+  return 0 
+})
+console.log(movements)
+// [-650, -400, -130, 70, 200, 450, 1300, 3000]
+
+// Descending order
+movements.sort((a, b) => {
+  if (a > b) return -1
+  if (a < b) return 1
+  
+  return 0 
+})
+console.log(movements)
+// [3000, 1300, 450, 200, 70, -130, -400, -650]
+
+// or a cleaner quicker way
+movements.sort((a, b) => a - b);
+/*
+-650 - -450 // 200
+-450 - -650 // 200
+*/
+movements.sort((a, b) => b - a);
+// 
 
 // ===================================================================================================================================
