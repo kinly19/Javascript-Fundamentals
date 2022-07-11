@@ -146,7 +146,6 @@ const updateUI = (acc) => {
   calcDisplayBalance(acc);
   // Display summary
   calcDisplaySummary(acc);
-  console.log("pinge")
 }
 
 // Event handler
@@ -1066,10 +1065,286 @@ console.log(movements)
 // or a cleaner quicker way
 movements.sort((a, b) => a - b);
 /*
--650 - -450 // 200
+-650 - -450 // -200
 -450 - -650 // 200
 */
 movements.sort((a, b) => b - a);
 // 
+
+// ===================================================================================================================================
+
+// ============================================= More Ways of Creating and Filling Arrays ============================================
+/*
+Array() constructor 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Array
+- Is used to create Array objects.
+- If the only argument passed to the Array constructor is an integer between 0 and 2^32 - 1 (inclusive)
+  this returns a new JavaScript array with its length property set to that number
+  this implies an array of arrayLength empty slots, not slots with actual undefined values 
+
+
+fill() method 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+- Changes all elements in an array to a static value, from a start index (default 0) to an end index (default array.length). 
+  It returns the modified array.
+
+  Syntax
+  fill(value)
+  fill(value, start)
+  fill(value, start, end)
+
+
+Array.from()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from 
+- Static method creates a new, shallow-copied Array instance from an iterable or array-like object.
+- Give us a Mapping function
+*/
+
+// Manually creating arrays
+const arr6 = [1, 2, 3, 4, 5];
+console.log(new Array(1, 2, 3, 4, 5));
+
+// Empty array + fill method
+const x = new Array(7);
+console.log(x);
+// [empty × 7]
+
+
+// fill
+// x.fill(1);
+// console.log(x);
+// [1, 1, 1, 1, 1, 1, 1]
+
+// x.fill(1, 3);
+// console.log(x);
+// [empty × 3, 1, 1, 1, 1]
+
+x.fill(1, 3, 5);
+console.log(x);
+// [empty × 3, 1, 1, empty × 2]
+
+arr6.fill(10, 1, 2);
+console.log(arr6);
+// [1, 10, 3, 4, 5]
+
+// Array.from
+const y = Array.from({length: 7}, () => 1)
+console.log(y);
+// [1, 1, 1, 1, 1, 1, 1]
+
+const z = Array.from(new Array(7), () => 1);
+console.log(z);
+// [1, 1, 1, 1, 1, 1, 1]
+
+const w = Array.from({ length: 7 }, (cur, index) => index + 1);
+console.log(w);
+// [1, 2, 3, 4, 5, 6, 7]
+
+// Generate array of random numbers from 1 - 100
+const randomNum = Array.from({ length: 100 }, (cur, index) =>
+  Math.floor(Math.random(index) * 100 + 1)
+);
+console.log(randomNum);
+
+// Generate array from string
+const string = Array.from("Javascript")
+console.log(string);
+for (const letter of string) console.log(letter);
+
+
+// Array of movements from ui
+labelBalance.addEventListener("click", () => {
+  const movementsUI = Array.from(
+    // Create an array from the result of querySelectorAll (which is an array like structure node list)
+    document.querySelectorAll(".movements__value"),
+    // Use mapping function to transform the array to the way we want it
+    (el) => Number(el.textContent.replace("€", ""))
+  );
+  console.log(movementsUI);
+})
+
+
+
+// ===================================================================================================================================
+
+// ===================================================== Which Array Method To Use ===================================================
+/*
+
+What do i actually want this method to do?
+
+1. To mutate original array
+
+  Add to original;
+   .push() > end
+   .unshift() > start
+
+  Remove from original
+   .pop() > end
+   .shift() > start
+   .splice() > any
+
+  Others
+   .reverse()
+   .sort()
+   .fill()
+
+2. A new array
+
+  Computed from original
+   .map() > loop
+
+  Filtered using condition
+   .filter()
+
+  Portion from original
+   .slice()
+
+  Adding original to another array
+   .concate()
+
+  Flattening the original
+   .flat()
+   .flatMap()
+
+3. An array index
+
+  Based on value
+   .indexOf()
+
+  Based on test condition
+   .findIndex()
+
+4. An array element
+  
+  Based on test condition
+   .find()
+
+5. Know if an array includes something
+  
+  Based on value
+   .includes()
+
+  Based on test condition
+   .some()
+   .every()
+
+6. A new string
+
+  Based on separator string
+   .join()
+
+7. To transform a value
+
+  Based on accumulator
+   .reduce()
+
+8. To just loop over an array with no new array
+
+  Based on callback
+   .forEach()
+
+*/
+
+// ===================================================================================================================================
+
+// ====================================================== Array Methods Practice =====================================================
+
+// 1. Get total of all bank deposits
+const bankDepositSum = accounts
+  .flatMap((cur) => cur.movements.filter((mov) => mov > 0))
+  .reduce((acc, mov) => acc + mov);
+console.log(bankDepositSum);
+
+// Without method chain
+// new array
+const allBankTransfers = accounts.flatMap(cur => cur.movements);
+// only deposits
+const allBankDeposits = allBankTransfers.filter(mov => mov > 0)
+// Add total
+const depositTotal = allBankDeposits.reduce((acc, mov) => acc + mov);
+console.log(depositTotal);
+
+// 2. Get amount od deposits greater than 1000
+const numDeposits1000 = accounts
+  .flatMap((cur) => cur.movements)
+  .filter((mov) => mov >= 1000).length;
+console.log(numDeposits1000);
+
+// reduce method
+const numDeposits1000Red = accounts.flatMap(cur => cur.movements).reduce((acc, mov) => {
+  if (mov >= 1000) {
+    return acc + 1
+  } else {
+    return acc
+  }
+},0) // set value of accumulator
+console.log(numDeposits1000Red);
+
+// reduce with ternary operator
+const numDeposits1000Red2 = accounts
+  .flatMap((cur) => cur.movements)
+  .reduce((count, mov) => (mov >= 100 ? count + 1 : count), 0);
+  /* 
+  or using prefixed ++ operator 
+    .reduce((count, mov) => (mov >= 100 ? ++count : count), 0);
+
+  Wont work 
+    .reduce((count, mov) => (mov >= 100 ? count++ : count), 0);
+  */
+console.log(numDeposits1000Red2);
+
+// 3. Adding all deposits and withdrawals into an object
+const { allDeposits, allWithdrawals } = accounts
+  .flatMap((mov) => mov.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? "allDeposits" : "allWithdrawals"] += cur;
+      return sums;
+    },
+    { allDeposits: 0, allWithdrawals: 0 }
+  );
+
+console.log(allDeposits, allWithdrawals);
+// {deposits: 25180, withdrawals: -7340}
+
+// .4
+const convertTitleCase = (string) => {
+
+  const exceptions = ["a", "an", "the", "and", "but", "or", "on", "in", "with"];
+
+  // The  mess
+  // const titleCase = string
+  //   .toLowerCase()
+  //   .split(" ")
+  //   .map((word) => {
+  //     if (!exceptions.includes(word)) {
+  //       return word[0].toUpperCase() + word.slice(1);
+  //     } else {
+  //       return word;
+  //     }
+  //   });
+
+  // return titleCase[0][0].toUpperCase() + titleCase[0].slice(1) + " " + titleCase.slice(1).join(" ");
+
+  const capitalize = (str) => {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
+  const titleCase = string
+    .toLowerCase()
+    .split(" ")
+    .map((word) =>
+      exceptions.includes(word) ? word : capitalize(word)
+    ).join(" ");
+
+  return capitalize(titleCase);
+ 
+}
+
+console.log(convertTitleCase("this is a nice title"));
+// This Is a Nice Title
+console.log(convertTitleCase("this is a LONG title but not too long"));
+console.log(convertTitleCase("and here is another title with an EXAMPLE"));
 
 // ===================================================================================================================================
