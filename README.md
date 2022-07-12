@@ -119,3 +119,9 @@
 14. Some() And Every() Method
 15. Flat() And FlatMap() Methods
 16. Sorting Arrays With Sort() Method
+17. More Ways of Creating and Filling Arrays
+    * fill()
+    * Array.from()
+18. Which Array Method To Use
+19. Array Methods Practice
+20. Coding Challenge #4
