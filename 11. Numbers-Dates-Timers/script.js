@@ -264,3 +264,62 @@ btnSort.addEventListener("click", (e) => {
 /////////////////////////////////////////////////
 // LECTURES
 
+// ================================================== Converting and Checking Numbers ================================================
+/*
+  - All numbers are presented internally as floating point numbers (basically, always as decimals).
+  - Numbers are represented internally in a 64 base 2 format. That means that numbers are always stored in a binary format. 
+    They are only composed of zeros and ones.
+
+  parseInt()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+  - Function parses a string argument and returns an integer of the specified radix
+  - numbers before string
+
+  parseFloat()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
+  - Function parses an argument (converting it to a string first if needed) and returns a floating point number.
+
+  isNaN()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
+  - Function determines whether a value is NaN or not. Because coercion inside the isNaN function can be surprising
+    you may alternatively snt to use Number.isNaN().
+
+  isInteger()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
+  - Method determines whether the passed value is an integer.
+*/
+
+console.log(23 === 23.0); // true 
+// Base 10 - 0 to 9. 1/10 = 0.1
+// Binary base 2 - 0 - 1
+
+console.log(0.1 + 0.2) // 0.30000000000000004
+console.log(0.1 + 0.2 === 0.3) // false
+
+// Converting string to number
+console.log(Number("23"));
+console.log(+"23");
+// when JavaScript sees the plus operator, it will do type coercion.
+
+// Parsing
+console.log(Number.parseInt("30px", 10)); // 30
+console.log(Number.parseInt("px30", 10)); // NaN
+
+console.log(Number.parseFloat("2.5rem")) // 2.5
+console.log(Number.parseInt("2.5rem")) // 2
+
+// isNan
+// Checks if value is "NaN" or not
+console.log(Number.isNaN(20)); // false
+console.log(Number.isNaN("20")); // false
+console.log(Number.isNaN(+"20z")); // true
+console.log(Number.isNaN(23 / 0)); // false
+ 
+// isFinite()
+// Better way of checking if a value is a number or not
+console.log(Number.isFinite(20)); // true
+console.log(Number.isFinite("20")); // false
+console.log(Number.isFinite(+"20z")); // false
+console.log(Number.isFinite(23 / 0)); // false
+
+// ===================================================================================================================================
