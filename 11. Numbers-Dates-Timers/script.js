@@ -95,7 +95,7 @@ const displayMovements = (movements, sort = false) => {
     <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-    <div class="movements__value">${mov}€</div>
+    <div class="movements__value">${mov.toFixed(2)}€</div>
     </div>
     `;
 
@@ -108,7 +108,7 @@ const displayMovements = (movements, sort = false) => {
 const calcDisplayBalance = (acc) => {
   // Store total balance into users account
   acc.balance = acc.movements.reduce((prev, cur) => prev + cur);
-  labelBalance.textContent = acc.balance;
+  labelBalance.textContent = `${acc.balance.toLocaleString()}€`;
 }
 
 // Calc & display summary
@@ -119,14 +119,14 @@ const calcDisplaySummary = (acc) => {
     .filter((mov) => mov > 0)
     .reduce((prev, cur) => prev + cur);
   
-  labelSumIn.textContent = `${totalDeposits}€`;
+  labelSumIn.textContent = `${totalDeposits.toFixed(2)}€`;
 
   // Show total withdrawal
   const totalWithdrawal = acc.movements
     .filter((mov) => mov < 0)
     .reduce((prev, cur) => prev + cur);
 
-  labelSumOut.textContent = `${Math.abs(totalWithdrawal)}€`
+  labelSumOut.textContent = `${Math.abs(totalWithdrawal.toFixed(2))}€`
 
   // Show total interest
   const interest = acc.movements
@@ -142,7 +142,7 @@ const calcDisplaySummary = (acc) => {
       return prev + int;
     });
 
-  labelSumInterest.textContent = `${interest}€`
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`
 }
 
 // Compute usernames
@@ -221,7 +221,7 @@ btnTransfer.addEventListener("click", (e) => {
 btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Transfer loan");
-  const loanAmount = Number(inputLoanAmount.value);
+  const loanAmount = Math.floor(inputLoanAmount.value);
 
   if (loanAmount > 0 && currentAccount.movements.some(mov => mov >= loanAmount * 0.1)) {
     // Add loan amount movement to currentAccount
@@ -260,10 +260,7 @@ btnSort.addEventListener("click", (e) => {
   sort = !sort;
 });
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // LECTURES
-
 // ================================================== Converting and Checking Numbers ================================================
 /*
   - All numbers are presented internally as floating point numbers (basically, always as decimals).
