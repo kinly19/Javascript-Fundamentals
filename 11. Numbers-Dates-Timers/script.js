@@ -323,3 +323,60 @@ console.log(Number.isFinite(+"20z")); // false
 console.log(Number.isFinite(23 / 0)); // false
 
 // ===================================================================================================================================
+
+// ========================================================== Math and Rounding ======================================================
+/*
+  Math.sqrt()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt
+  - Function returns the square root of a number, that is
+
+  Math.max()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
+  - Function returns the largest of the zero or more numbers given as input parameters, 
+    or NaN if any parameter isn't a number and can't... be converted into one.
+
+  Math.min() **
+
+  Math.PI 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/PI
+  - Property represents the ratio of the circumference of a circle to its diameter
+
+  Math.random()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random 
+  - Function returns a floating-point, pseudo-random number in the range 0 to less than 1 (inclusive of 0, but not 1) 
+    with approximately uniform distribution over that range — which you can then scale to your desired range.
+
+  Math.trunc()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
+  - Function returns the integer part of a number by removing any fractional digits
+
+  Math.round()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round 
+  - Function returns the value of a number rounded to the nearest integer.
+
+  
+
+*/
+
+// Math.sqrt()
+// Square root
+console.log(Math.sqrt(25)); // 5
+
+// Min and max values
+console.log(Math.max(5, 2, 23, 7, 21)) // 23
+console.log(Math.min(5, 2, "23", 7, 21)) // 2
+console.log(Math.min(5, 2, "23px", 7, 21)) // NaN
+
+// PI
+console.log(Math.PI * Number.parseFloat("10px") **2); // 314.1592653589793
+
+// Math.random()
+console.log(Math.trunc(Math.random() * 6) + 1) // random number from 1 - 6
+const randomInt = (max, min) => Math.trunc(Math.random() * (max - min) + min);
+console.log(randomInt(10, 20));
+
+// Rounding intergers
+console.log(Math.trunc(23.5)); // 23
+
+console.log(Math.round(23.3)); // 23
+// ===================================================================================================================================
