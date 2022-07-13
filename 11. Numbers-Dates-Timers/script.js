@@ -354,7 +354,17 @@ console.log(Number.isFinite(23 / 0)); // false
   - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round 
   - Function returns the value of a number rounded to the nearest integer.
 
-  
+  Math.ceil()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil 
+  - Function always... rounds a number up to the next largest integer.
+
+  Math.floor()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor 
+  - Function returns the largest integer less than or equal to a given number
+
+  toFixed()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed 
+  - Method formats a number using fixed-point notation
 
 */
 
@@ -375,8 +385,32 @@ console.log(Math.trunc(Math.random() * 6) + 1) // random number from 1 - 6
 const randomInt = (max, min) => Math.trunc(Math.random() * (max - min) + min);
 console.log(randomInt(10, 20));
 
-// Rounding intergers
+// 1. Rounding intergers
+// Math.trunc()
 console.log(Math.trunc(23.5)); // 23
 
+// Math.round()
 console.log(Math.round(23.3)); // 23
+console.log(Math.round(23.9)); // 24
+
+// Round up
+// Math.ceil()
+console.log(Math.ceil(23.1)); // 24
+
+// Round down
+// Math.floor()
+console.log(Math.floor(23.1)); // 24
+
+// 2. Round decimals
+// Wrap decimal number inside of parentheses 
+console.log((2.7).toFixed(0)) // '3'
+console.log((2.7).toFixed(3)) // '2.700'
+console.log((2.7).toFixed(2)) // '2.70'
+console.log((2.7).toFixed(1)) // '2.7'
+console.log((2.345).toFixed(2)) // '2.35'
+console.log((2.344).toFixed(2)) // '2.34'
+// convert to number
+console.log(+(2.344).toFixed(2)) // 2.34
+
+
 // ===================================================================================================================================
