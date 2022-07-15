@@ -512,3 +512,64 @@ const huge = 545646574841231221n
 console.log(huge + " is Really Big");
 
 // ===================================================================================================================================
+
+// =========================================================== Creating Dates ========================================================
+/*
+  Date
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+  - Objects represent a single moment in time in a platform-independent format. 
+    Date objects contain a Number that represents milliseconds since 1 January 1970 UTC
+
+  Constructors
+    Date()
+    - When called as a function, returns a string representation of the current date and time.
+    new Date()
+    - When called as a constructor, returns a new Date object.
+
+  All Methods
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#instance_methods
+*/
+
+// Create a date
+const now = new Date();
+console.log(now); // Fri Jul 15 2022 16:38:26 GMT+0100 (British Summer Time)
+
+console.log(new Date("Jul 15 2022 16:38:26")); // Fri Jul 15 2022 16:38:26 GMT+0100 (British Summer Time)
+
+// Date created like this are unreliable 
+console.log(new Date("December 24, 2015")) // Thu Dec 24 2015 00:00:00 GMT+0000 (Greenwich Mean Time)
+
+// Months are index based
+console.log(new Date(2037, 10, 19, 15, 23, 5)); // Thu Nov 19 2037 15:23:05 GMT+0000 (Greenwich Mean Time)
+// Javascript can auto correct days
+console.log(new Date(2037, 10, 40)); // Thu Dec 10 2037 00:00:00 GMT+0000 (Greenwich Mean Time)
+
+// Unix time (theoretical time the clock began ticking)
+console.log(new Date(0)); // Thu Jan 01 1970 01:00:00 GMT+0100 (Greenwich Mean Time)
+// 3 days after unix
+console.log(new Date(3 * 24 * 60 * 60 * 1000)) // Sun Jan 04 1970 01:00:00 GMT+0100
+
+// date methods 
+const future = new Date(2022, 6, 15, 17, 10);
+console.log(future); //Fri Jul 15 2022 17:10:00 GMT+0100
+console.log(future.getFullYear());
+console.log(future.getYear()); // 122 (1 = 100 after 1900) Deprecated
+console.log(future.getMonth()); // 6 (index based)
+console.log(future.getDate()); // 15
+console.log(future.getDay()); // 5 (day of the week not day of the month) (index based sun = 0, mon = 1 etc)
+console.log(future.getHours()); // 17
+console.log(future.getSeconds()); // 0
+console.log(future.toISOString()); // 2022-07-15T16:10:00.000Z
+console.log(future.getTime()); // 165700901400000 (Timestamp)
+console.log(new Date().getTime());
+
+// Get date based of time stamp
+console.log(new Date(1657901400000)); // Fri Jul 15 2022 17:10:00 GMT+0100 (British Summer Time)
+
+// Current timeStamp
+console.log(Date.now()) // 1657902461934
+
+// Set methods
+future.setFullYear(2050); 
+console.log(future); // Fri Jul 15 2050 17:10:00 GMT+0100
+// ===================================================================================================================================
