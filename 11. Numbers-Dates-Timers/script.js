@@ -411,3 +411,34 @@ console.log(+(2.344).toFixed(2)) // 2.34
 
 
 // ===================================================================================================================================
+
+// ======================================================== The Remainder Operator ===================================================
+/*
+The remainder operator (%)  
+*/
+
+console.log(5 % 2) // 1 because 2 * 2 = 4 + remain 1
+console.log(5 / 2) // 2.5
+console.log(8 % 2) // 0
+console.log(8 % 3) // 2
+
+// Even
+console.log(6 % 2) // 0
+
+// Odd
+console.log(7 % 2) // 7 = 3 * 2 = 6 + remain 1
+
+const isEven = (n) => n % 2 === 0; 
+console.log(isEven(7)); // false
+console.log(isEven(120)); // true
+
+// Change each even row to another color
+labelBalance.addEventListener("click", () => {
+  [...document.querySelectorAll(".movements__row")].forEach((row, index) => {
+    if (index % 2 === 0) {
+      row.style.backgroundColor = "orange";
+    }
+  }) 
+}) 
+
+// ===================================================================================================================================
