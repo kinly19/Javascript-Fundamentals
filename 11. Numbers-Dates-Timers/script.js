@@ -470,3 +470,45 @@ console.log(parseInt("23_000")); // 23
 
 // ===================================================================================================================================
 
+// ========================================================= Working with BigInt =====================================================
+/*
+  - BigInt is a special type of interger, which was introduced in 2020
+
+  - Number are represented internally as 64bit, that means there are exactly 64 ones and zeros to represent any given number. 
+  - Now out of these 64 bits only 53 are used to actually store the digits themselves. 
+    The rest are for storing the position of the decimal point and the sign.
+  - If there are only 53bits to store the number there is a limit of how big a number can be
+
+  - BigInt allows us to store numbers as large as we want safely
+*/
+
+// The biggest number javascript can represent safely
+console.log(2 ** 53 - 1); // 9007199254740991
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+
+// Any integer that is larger than above, cannot be represented safely
+// Javascript will still use some tricks to try represent these unsafe numbers
+// Some of these numbers below may be correct and some just plain wrong 
+console.log(2 ** 53 + 0); // 9007199254740992    X
+console.log(2 ** 53 + 1); // 9007199254740992
+console.log(2 ** 53 + 2); // 9007199254740994    X
+console.log(2 ** 53 + 3); // 9007199254740994    
+console.log(2 ** 53 + 4); // 9007199254740996    X
+console.log(2 ** 53 + 250000); // 9007199254990992    X
+
+console.log(2 ** 53 + 157000); // 9007199254897992    X
+// BigInt
+console.log(9007199254740991n + 157000n); // 9007199254897991
+
+// Cant mix bigInt with regular numbers
+// console.log(73264783274n + 32) // Error Cannot mix BigInt and other types
+
+// Exceptions
+console.log(20n > 15) // true
+console.log(20n === 20) // false
+console.log(20n == "20") // true (type coercion)
+// String concate
+const huge = 545646574841231221n
+console.log(huge + " is Really Big");
+
+// ===================================================================================================================================
