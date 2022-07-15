@@ -442,3 +442,31 @@ labelBalance.addEventListener("click", () => {
 }) 
 
 // ===================================================================================================================================
+
+// ========================================================== Numeric Separators =====================================================
+/*
+Numeric separators 
+- A JavaScript feature that allows you to use underscore as a separator in numeric literals, for example, you can write 10000 as 10_000.
+- Allows us humans to read numbers easier.
+*/
+
+// 287460000000
+const diameter = 287_460_000_000
+// Javascript will ignore the underscores 
+console.log(diameter); // 287460000000
+
+const priceCents = 345_599; // 345599
+
+const transferFee = 15_00; // 1500
+const transferFee2 = 1_500; // 1500
+
+// Numeric separators can only be placed inbetween numbers
+// const PI = 3.1415_;
+
+console.log(Number("230000"));
+// Cant convert into numbers, only use Numeric separators when using actual numbers types
+console.log(Number("23_000")); // NaN
+console.log(parseInt("23_000")); // 23
+
+// ===================================================================================================================================
+
