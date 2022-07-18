@@ -429,15 +429,15 @@ console.log(Number.isFinite(23 / 0)); // false
 console.log(Math.sqrt(25)); // 5
 
 // Min and max values
-console.log(Math.max(5, 2, 23, 7, 21)) // 23
-console.log(Math.min(5, 2, "23", 7, 21)) // 2
-console.log(Math.min(5, 2, "23px", 7, 21)) // NaN
+console.log(Math.max(5, 2, 23, 7, 21)); // 23
+console.log(Math.min(5, 2, "23", 7, 21)); // 2
+console.log(Math.min(5, 2, "23px", 7, 21)); // NaN
 
 // PI
-console.log(Math.PI * Number.parseFloat("10px") **2); // 314.1592653589793
+console.log(Math.PI * Number.parseFloat("10px") ** 2); // 314.1592653589793
 
 // Math.random()
-console.log(Math.trunc(Math.random() * 6) + 1) // random number from 1 - 6
+console.log(Math.trunc(Math.random() * 6) + 1); // random number from 1 - 6
 const randomInt = (max, min) => Math.trunc(Math.random() * (max - min) + min);
 console.log(randomInt(10, 20));
 
@@ -458,16 +458,15 @@ console.log(Math.ceil(23.1)); // 24
 console.log(Math.floor(23.1)); // 24
 
 // 2. Round decimals
-// Wrap decimal number inside of parentheses 
-console.log((2.7).toFixed(0)) // '3'
-console.log((2.7).toFixed(3)) // '2.700'
-console.log((2.7).toFixed(2)) // '2.70'
-console.log((2.7).toFixed(1)) // '2.7'
-console.log((2.345).toFixed(2)) // '2.35'
-console.log((2.344).toFixed(2)) // '2.34'
+// Wrap decimal number inside of parentheses
+console.log((2.7).toFixed(0)); // '3'
+console.log((2.7).toFixed(3)); // '2.700'
+console.log((2.7).toFixed(2)); // '2.70'
+console.log((2.7).toFixed(1)); // '2.7'
+console.log((2.345).toFixed(2)); // '2.35'
+console.log((2.344).toFixed(2)); // '2.34'
 // convert to number
-console.log(+(2.344).toFixed(2)) // 2.34
-
+console.log(+(2.344).toFixed(2)); // 2.34
 
 // ===================================================================================================================================
 
@@ -476,18 +475,18 @@ console.log(+(2.344).toFixed(2)) // 2.34
 The remainder operator (%)  
 */
 
-console.log(5 % 2) // 1 because 2 * 2 = 4 + remain 1
-console.log(5 / 2) // 2.5
-console.log(8 % 2) // 0
-console.log(8 % 3) // 2
+console.log(5 % 2); // 1 because 2 * 2 = 4 + remain 1
+console.log(5 / 2); // 2.5
+console.log(8 % 2); // 0
+console.log(8 % 3); // 2
 
 // Even
-console.log(6 % 2) // 0
+console.log(6 % 2); // 0
 
 // Odd
-console.log(7 % 2) // 7 = 3 * 2 = 6 + remain 1
+console.log(7 % 2); // 7 = 3 * 2 = 6 + remain 1
 
-const isEven = (n) => n % 2 === 0; 
+const isEven = (n) => n % 2 === 0;
 console.log(isEven(7)); // false
 console.log(isEven(120)); // true
 
@@ -497,8 +496,8 @@ labelBalance.addEventListener("click", () => {
     if (index % 2 === 0) {
       row.style.backgroundColor = "orange";
     }
-  }) 
-}) 
+  });
+});
 
 // ===================================================================================================================================
 
@@ -510,8 +509,8 @@ Numeric separators
 */
 
 // 287460000000
-const diameter = 287_460_000_000
-// Javascript will ignore the underscores 
+const diameter = 287_460_000_000;
+// Javascript will ignore the underscores
 console.log(diameter); // 287460000000
 
 const priceCents = 345_599; // 345599
@@ -547,11 +546,11 @@ console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
 
 // Any integer that is larger than above, cannot be represented safely
 // Javascript will still use some tricks to try represent these unsafe numbers
-// Some of these numbers below may be correct and some just plain wrong 
+// Some of these numbers below may be correct and some just plain wrong
 console.log(2 ** 53 + 0); // 9007199254740992    X
 console.log(2 ** 53 + 1); // 9007199254740992
 console.log(2 ** 53 + 2); // 9007199254740994    X
-console.log(2 ** 53 + 3); // 9007199254740994    
+console.log(2 ** 53 + 3); // 9007199254740994
 console.log(2 ** 53 + 4); // 9007199254740996    X
 console.log(2 ** 53 + 250000); // 9007199254990992    X
 
@@ -563,11 +562,11 @@ console.log(9007199254740991n + 157000n); // 9007199254897991
 // console.log(73264783274n + 32) // Error Cannot mix BigInt and other types
 
 // Exceptions
-console.log(20n > 15) // true
-console.log(20n === 20) // false
-console.log(20n == "20") // true (type coercion)
+console.log(20n > 15); // true
+console.log(20n === 20); // false
+console.log(20n == "20"); // true (type coercion)
 // String concate
-const huge = 545646574841231221n
+const huge = 545646574841231221n;
 console.log(huge + " is Really Big");
 
 // ===================================================================================================================================
@@ -590,13 +589,13 @@ console.log(huge + " is Really Big");
 */
 
 // Create a date
-const now = new Date();
-console.log(now); // Fri Jul 15 2022 16:38:26 GMT+0100 (British Summer Time)
+// const now = new Date();
+// console.log(now); // Fri Jul 15 2022 16:38:26 GMT+0100 (British Summer Time)
 
 console.log(new Date("Jul 15 2022 16:38:26")); // Fri Jul 15 2022 16:38:26 GMT+0100 (British Summer Time)
 
-// Date created like this are unreliable 
-console.log(new Date("December 24, 2015")) // Thu Dec 24 2015 00:00:00 GMT+0000 (Greenwich Mean Time)
+// Date created like this are unreliable
+console.log(new Date("December 24, 2015")); // Thu Dec 24 2015 00:00:00 GMT+0000 (Greenwich Mean Time)
 
 // Months are index based
 console.log(new Date(2037, 10, 19, 15, 23, 5)); // Thu Nov 19 2037 15:23:05 GMT+0000 (Greenwich Mean Time)
@@ -606,9 +605,9 @@ console.log(new Date(2037, 10, 40)); // Thu Dec 10 2037 00:00:00 GMT+0000 (Green
 // Unix time (theoretical time the clock began ticking)
 console.log(new Date(0)); // Thu Jan 01 1970 01:00:00 GMT+0100 (Greenwich Mean Time)
 // 3 days after unix
-console.log(new Date(3 * 24 * 60 * 60 * 1000)) // Sun Jan 04 1970 01:00:00 GMT+0100
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // Sun Jan 04 1970 01:00:00 GMT+0100
 
-// date methods 
+// date methods
 const future = new Date(2022, 6, 15, 17, 10);
 console.log(future); //Fri Jul 15 2022 17:10:00 GMT+0100
 console.log(future.getFullYear());
@@ -626,9 +625,9 @@ console.log(new Date().getTime());
 console.log(new Date(1657901400000)); // Fri Jul 15 2022 17:10:00 GMT+0100 (British Summer Time)
 
 // Current timeStamp
-console.log(Date.now()) // 1657902461934
+console.log(Date.now()); // 1657902461934
 
 // Set methods
-future.setFullYear(2050); 
+future.setFullYear(2050);
 console.log(future); // Fri Jul 15 2050 17:10:00 GMT+0100
 // ===================================================================================================================================
