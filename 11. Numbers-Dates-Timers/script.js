@@ -181,9 +181,9 @@ const calcDisplaySummary = (acc) => {
 const createUsernames = (acc) => {
   acc.forEach(
     (user) =>
-    // Add new property
-    (user.username = user.owner
-      // build new string for property value
+      // Add new property
+      (user.username = user.owner
+        // build new string for property value
         .toLowerCase()
         .split(" ")
         .map((string) => string[0])
@@ -195,12 +195,12 @@ createUsernames(accounts);
 // Update ui
 const updateUI = (acc) => {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
   // Display balance
   calcDisplayBalance(acc);
   // Display summary
   calcDisplaySummary(acc);
-}
+};
 
 // Event handler
 let currentAccount;
@@ -211,21 +211,42 @@ btnLogin.addEventListener("click", (e) => {
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
     containerApp.style.opacity = 100;
-    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(" ")[0]}`
-    
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(" ")[0]}`;
+
     // Clear input fields
     inputLoginUsername.value = "";
-    inputLoginPin.value = ""
-    // or 
+    inputLoginPin.value = "";
+    // or
     // inputLoginUsername.value = inputLoginPin.value = "";
 
     // unfocus input field
     inputLoginPin.blur();
 
+    // Create current date and time
+    const now = new Date();
+
+    const option = {
+      hour: "numeric",
+      minute: "numeric",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      // weekday: "long"
+    };
+
+    // Without Internationalizing Numbers (Intl)
+    // const hour = now.getHours();
+    // const min = `${now.getMinutes()}`.padStart(2, 0);
+    // labelDate.textContent = `${formatMovementDate(now)}, ${hour}:${min}`;
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      option
+    ).format(now);
     // Update ui
     updateUI(currentAccount);
   }
-})
+});
 
 btnTransfer.addEventListener("click", (e) => {
   e.preventDefault();
@@ -244,11 +265,15 @@ btnTransfer.addEventListener("click", (e) => {
     // Doing transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+    // Update ui
     updateUI(currentAccount);
   }
-  
+
   inputTransferAmount.value = inputTransferTo.value = "";
-})
+});
 
 btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
@@ -258,6 +283,8 @@ btnLoan.addEventListener("click", (e) => {
   if (loanAmount > 0 && currentAccount.movements.some(mov => mov >= loanAmount * 0.1)) {
     // Add loan amount movement to currentAccount
     currentAccount.movements.push(loanAmount);
+    // Add loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -282,13 +309,13 @@ btnClose.addEventListener("click", (e) => {
   }
   // Clear input fields
   inputCloseUsername.value = inputClosePin.value = "";
-})
+});
 
 let sort = false;
 btnSort.addEventListener("click", (e) => {
   e.preventDefault();
 
-  displayMovements(currentAccount.movements, !sort);
+  displayMovements(currentAccount, !sort);
   sort = !sort;
 });
 
