@@ -141,8 +141,8 @@ const displayMovements = (acc, sort = false) => {
 const calcDisplayBalance = (acc) => {
   // Store total balance into users account
   acc.balance = acc.movements.reduce((prev, cur) => prev + cur);
-  labelBalance.textContent = `${acc.balance.toLocaleString()}€`;
-}
+  labelBalance.textContent = `${formatCurrency(acc.balance, acc.locale, acc.currency)}`;
+};
 
 // Calc & display summary
 const calcDisplaySummary = (acc) => {
@@ -151,15 +151,15 @@ const calcDisplaySummary = (acc) => {
   const totalDeposits = acc.movements
     .filter((mov) => mov > 0)
     .reduce((prev, cur) => prev + cur);
-  
-  labelSumIn.textContent = `${totalDeposits.toFixed(2)}€`;
+
+  labelSumIn.textContent = `${formatCurrency(totalDeposits, acc.locale, acc.currency)}`;
 
   // Show total withdrawal
   const totalWithdrawal = acc.movements
     .filter((mov) => mov < 0)
     .reduce((prev, cur) => prev + cur);
 
-  labelSumOut.textContent = `${Math.abs(totalWithdrawal.toFixed(2))}€`
+  labelSumOut.textContent = `${formatCurrency(Math.abs(totalWithdrawal), acc.locale, acc.currency)}`;
 
   // Show total interest
   const interest = acc.movements
@@ -175,8 +175,7 @@ const calcDisplaySummary = (acc) => {
       return prev + int;
     });
 
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`
-}
+  labelSumInterest.textContent = `${formatCurrency(interest, acc.locale, acc.currency)}`};
 
 // Compute usernames
 const createUsernames = (acc) => {
