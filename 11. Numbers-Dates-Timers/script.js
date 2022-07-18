@@ -109,20 +109,26 @@ const formatCurrency = (value, locale, currency) => {
   }).format(value);
 };
 
+const displayMovements = (acc, sort = false) => {
   containerMovements.innerHTML = "";
   const sortedMovements = sort
-    ? movements.slice().sort((a, b) => a - b)
-    : movements;
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   sortedMovements.forEach((mov, index) => {
     const type = mov > 0 ? "deposit" : "withdrawal";
+    const date = new Date(acc.movementsDates[index]);
+    const displayDate = formatMovementDate(date, acc.locale);
+    const formattedMov = formatCurrency(mov, acc.locale, acc.currency);
+    
     // Passing in list for each movement
     const html = `
     <div class="movements__row">
     <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-    <div class="movements__value">${mov.toFixed(2)}€</div>
+    <div class="movements__date">${displayDate}</div>
+    <div class="movements__value">${formattedMov}</div>
     </div>
     `;
 
