@@ -101,6 +101,14 @@ const formatMovementDate = (date, locale) => {
 
   return new Intl.DateTimeFormat(locale).format(date);
 };
+
+const formatCurrency = (value, locale, currency) => {
+  return Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
+};
+
   containerMovements.innerHTML = "";
   const sortedMovements = sort
     ? movements.slice().sort((a, b) => a - b)
