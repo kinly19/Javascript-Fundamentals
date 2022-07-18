@@ -81,7 +81,26 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = (movements, sort = false) => {
+const formatMovementDate = (date, locale) => {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
+  const daysPassed = calcDaysPassed(new Date(), date);
+  console.log(daysPassed);
+
+  // Condition
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  // Without Internationalizing Numbers (Intl)
+  // const day = `${date.getDate()}`.padStart(2, 0);
+  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  // const year = `${date.getFullYear()}`;
+  // const displayDate = `${day}/${month}/${year}`;
+  // return displayDate;
+
+  return new Intl.DateTimeFormat(locale).format(date);
+};
   containerMovements.innerHTML = "";
   const sortedMovements = sort
     ? movements.slice().sort((a, b) => a - b)
