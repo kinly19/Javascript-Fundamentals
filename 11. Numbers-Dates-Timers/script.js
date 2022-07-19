@@ -648,3 +648,34 @@ const day1 = calcDaysPassed2(new Date(2037, 3, 14), new Date(2037, 3, 24));
 console.log(day1);
 // millisec / 86,400,000 = 10 days
 // ===================================================================================================================================
+
+// =================================================== Internationalizing Dates (Intl) ===============================================
+/*
+  Intl.DateTimeFormat object 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+  - Enables language-sensitive date and time formatting.
+  - The results can be customized using the options argument
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+*/
+
+const option = {
+  hour: "numeric",
+  minute: "numeric",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  weekday: "long",
+};
+
+const newDate = new Date();
+console.log(Intl.DateTimeFormat("en-GB").format(newDate));
+// 18/07/2022
+console.log(Intl.DateTimeFormat("en-US").format(newDate));
+// 7/18/2022
+
+// Using Options
+console.log(Intl.DateTimeFormat("en-GB", option).format(newDate));
+// Monday, 18 July 2022 at 19:19
+
+// ===================================================================================================================================
+
