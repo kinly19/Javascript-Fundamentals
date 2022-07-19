@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2022-07-10T17:01:17.194Z',
+    '2022-07-13T23:36:17.929Z',
+    '2022-07-17T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -228,7 +228,7 @@ btnLogin.addEventListener("click", (e) => {
     const option = {
       hour: "numeric",
       minute: "numeric",
-      day: "numeric",
+      day: "numeric", 
       month: "numeric",
       year: "numeric",
       // weekday: "long"
@@ -351,8 +351,8 @@ console.log(23 === 23.0); // true
 // Base 10 - 0 to 9. 1/10 = 0.1
 // Binary base 2 - 0 - 1
 
-console.log(0.1 + 0.2) // 0.30000000000000004
-console.log(0.1 + 0.2 === 0.3) // false
+console.log(0.1 + 0.2); // 0.30000000000000004
+console.log(0.1 + 0.2 === 0.3); // false
 
 // Converting string to number
 console.log(Number("23"));
@@ -363,8 +363,8 @@ console.log(+"23");
 console.log(Number.parseInt("30px", 10)); // 30
 console.log(Number.parseInt("px30", 10)); // NaN
 
-console.log(Number.parseFloat("2.5rem")) // 2.5
-console.log(Number.parseInt("2.5rem")) // 2
+console.log(Number.parseFloat("2.5rem")); // 2.5
+console.log(Number.parseInt("2.5rem")); // 2
 
 // isNan
 // Checks if value is "NaN" or not
@@ -372,7 +372,7 @@ console.log(Number.isNaN(20)); // false
 console.log(Number.isNaN("20")); // false
 console.log(Number.isNaN(+"20z")); // true
 console.log(Number.isNaN(23 / 0)); // false
- 
+
 // isFinite()
 // Better way of checking if a value is a number or not
 console.log(Number.isFinite(20)); // true
