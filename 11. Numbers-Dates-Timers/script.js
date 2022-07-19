@@ -279,15 +279,17 @@ btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Transfer loan");
   const loanAmount = Math.floor(inputLoanAmount.value);
-
-  if (loanAmount > 0 && currentAccount.movements.some(mov => mov >= loanAmount * 0.1)) {
-    // Add loan amount movement to currentAccount
-    currentAccount.movements.push(loanAmount);
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
-    // Update UI
-    updateUI(currentAccount);
-  }
+  
+  setTimeout(() => {
+    if (loanAmount > 0 && currentAccount.movements.some(mov => mov >= loanAmount * 0.1)) {
+      // Add loan amount movement to currentAccount
+      currentAccount.movements.push(loanAmount);
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+    }
+  }, 2500);
   // Clear input field
   inputLoanAmount.value = "";
 });
