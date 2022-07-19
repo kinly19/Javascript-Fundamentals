@@ -125,3 +125,15 @@
 18. Which Array Method To Use
 19. Array Methods Practice
 20. Coding Challenge #4
+##  Numbers-Dates-Timers
+1. Bankist App
+2. Converting and Checking Numbers
+3. Math and Rounding
+4. The Remainder Operator
+5. Numeric Separators
+6. Working with BigInt
+7. Creating Dates
+8. Operations With Dates
+9. Internationalizing Dates (Intl)
+10. Internationalizing Numbers (Intl)
+11. Timers: setTimeout and setInterval
