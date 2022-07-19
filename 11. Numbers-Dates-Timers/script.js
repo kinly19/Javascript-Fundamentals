@@ -720,4 +720,61 @@ console.log(
   // US: $3,884,764.23
   
 // ===================================================================================================================================
+
+// ================================================== Timers: setTimeout and setInterval =============================================
+/*
+The global setTimeout() 
+- https://developer.mozilla.org/en-US/docs/Web/API/setTimeout 
+- Method sets a timer which executes a function or specified piece of code once... the timer expires.
+  - setTimeout(functionRef, delay, param1, param2)
   
+  The setInterval()
+  - https://developer.mozilla.org/en-US/docs/Web/API/setInterval 
+  - Method repeatedly calls a function or executes a code snippet, with a fixed time delay between each call.
+  */
+ 
+ // setTimeout
+ /* 
+ When the setTimeout function is called, it will keep track of the time and only executes the console.log once the time has elapsed, 
+ but javascript will not wait for that to happen and will continue onto the next line of code. (asynchronous javascript).
+ */
+
+setTimeout(() => {
+  console.log("Here is your pizza");
+},3000);
+
+console.log("Waiting...");
+
+// Passing parameters
+setTimeout((ingrd1, ingrd2) => {
+  console.log(`Here is your pizza with ${ingrd1}, ${ingrd2}`);
+},3000, "olives", "pineapple");
+
+// Cleartimeout()
+const ingred = ["Pineapple", "Peppers"];
+
+const pizzaTimer = setTimeout((ingred1, ingred2) => {
+  console.log(`Your pizza with ${ingred1}, ${ingred2}`);
+}, 3000, ...ingred);
+
+if (ingred.includes("Peppers")) {
+  clearTimeout(pizzaTimer);
+};
+
+// setInterval()
+/*
+setInterval(() => {
+  const now = new Date();
+  
+  const options = {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  };
+  
+  console.log(`Uk Time: ${Intl.DateTimeFormat("en-US", options).format(now)}`);
+}, 1000);
+*/
+
+// ===================================================================================================================================
