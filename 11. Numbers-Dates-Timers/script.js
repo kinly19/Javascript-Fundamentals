@@ -679,3 +679,45 @@ console.log(Intl.DateTimeFormat("en-GB", option).format(newDate));
 
 // ===================================================================================================================================
 
+// ================================================== Internationalizing Numbers (Intl) ==============================================
+/*
+The Intl.NumberFormat object
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat 
+- Enables language-sensitive number formatting.
+- The results can be customized using the options argument:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat#using_options
+
+useGrouping
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
+- Whether to use grouping separators, such as thousands separators or thousand/lakh/crore separators. The default is auto.
+*/
+const num = 3884764.23;
+
+const option2 = {
+  style: "currency",
+  currency: "USD",
+  
+  // Allows us to use grouping selectors, thousands separators or thousand/lakh/crore separators. The default is auto
+  // useGrouping: false,
+};
+
+console.log("US:", new Intl.NumberFormat("en-US").format(num));
+// US: 3,884,764.23
+console.log("Germany:", new Intl.NumberFormat("de-DE").format(num));
+// Germany: 3.884.764,23
+console.log("Syria:", new Intl.NumberFormat("ar-SY").format(num));
+// Syria: ٣٬٨٨٤٬٧٦٤٫٢٣
+
+// Using locale from browser
+console.log(
+  "navigator language",
+  new Intl.NumberFormat(navigator.language).format(num)
+  );
+  // navigator language 3,884,764.23
+  
+  // Using Options
+  console.log("US:", new Intl.NumberFormat("en-US", option2).format(num));
+  // US: $3,884,764.23
+  
+// ===================================================================================================================================
+  
