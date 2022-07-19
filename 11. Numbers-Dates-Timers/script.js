@@ -633,3 +633,18 @@ console.log(Date.now()); // 1657902461934
 future.setFullYear(2050);
 console.log(future); // Fri Jul 15 2050 17:10:00 GMT+0100
 // ===================================================================================================================================
+
+// ======================================================== Operations With Dates ====================================================
+// Test data
+// const future = new Date(2022, 6, 15, 17, 10);
+console.log(Number(future));
+
+// Doing calculations with dates
+// Returning the amount of days passed between two dates
+const calcDaysPassed2 = (date1, date2) =>
+  (date2 - date1) / (1000 * 60 * 60 * 24);
+
+const day1 = calcDaysPassed2(new Date(2037, 3, 14), new Date(2037, 3, 24));
+console.log(day1);
+// millisec / 86,400,000 = 10 days
+// ===================================================================================================================================
