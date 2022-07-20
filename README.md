@@ -137,3 +137,20 @@
 9. Internationalizing Dates (Intl)
 10. Internationalizing Numbers (Intl)
 11. Timers: setTimeout and setInterval
+##  Advanced DOM and Events
+1. How the DOM Really Works
+2. Selecting, Creating, and Deleting Elements
+    * documentElement()
+    * querySelector()
+    * querySelectorAll()
+    * getElementById()
+    * getElementsByTagName()
+    * getElementsByClassName()
+    * insertAdjacentHTML()
+    * createElement()
+    * prepend()
+    * append()
+    * cloneNode()
+    * before()
+    * after()
+    * remove()
