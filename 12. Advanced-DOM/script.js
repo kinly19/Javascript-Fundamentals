@@ -40,3 +40,23 @@ document.addEventListener('keydown', function (e) {
   
 */
 // ===================================================================================================================================
+
+// ==================================================== How the DOM Really Works =====================================================
+/*
+  What is the DOM
+  - The DOM is the interface between all Javascript code and the browser, or more specifically HTML documents, 
+    All rendered in by the browser.
+  - Allows us to make Javascript interact with the browser.
+  - We can write js to create, modify and delete HTML elements, set styles, classes and attributes and listen and respond to events
+  - DOM tree is generated from an HTML document, which we can then interact with
+  - DOM is a very complex API which contains many methods and properties to help interact with the DOM tree.
+    
+  - The DOM contains different types of nodes, some are HTML elements others are just text. This is important to remember
+    because all these different DOM methods and properties are organized into these different types of objects.
+    https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+  - Inheritance of methods and properties allow all these different node types to inherit additional methods
+
+  - https://flaviocopes.com/dom/#:~:text=The%20DOM%20is%20a%20tree,and%20move%20to%20different%20nodes 
+*/
+// ===================================================================================================================================
+ 
