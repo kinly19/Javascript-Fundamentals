@@ -210,3 +210,71 @@ document.querySelector('.btn--close-cookie').addEventListener('click', () => {
 });
 
 // ===================================================================================================================================
+
+// =========================================== Selecting, Creating, and Deleting Elements ============================================
+/*
+  Window.getComputedStyle()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
+  - Method returns an object containing the values of all CSS properties of an element, after applying active stylesheets 
+    and resolving any basic computation those values may contain.
+
+  Element.getAttribute()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute
+  - Method of the Element interface returns the value of a specified attribute on the element.
+
+  Data attributes
+  - https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+  - Allow us to store extra information on standard, semantic HTML elements without other hacks such as non-standard attributes, or extra properties on DOM.
+*/
+
+
+// const message = document.createElement("div"); 
+
+// 1. Setting Styles (inline styling)
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+// Reading styles
+// Can only read styles which we have set ourselves using 'style' property 
+console.log(message.style.height); // returns nothing
+console.log(message.style.width); // 120%
+console.log(message.style.backgroundColor); // rgb(55, 56, 61)
+
+// Reading and setting styles with getComputedStyle
+console.log(getComputedStyle(message).height); // 50px
+message.style.height = Number.parseFloat(getComputedStyle(message).height) + 20 + "px";
+console.log(getComputedStyle(message).height); // 50px + 20px = 70px
+
+// Change css custom properties (Css variables)
+document.documentElement.style.setProperty("--color-primary", "orangeRed");
+
+// 2. Reading and setting attributes (default properties)
+// Reading
+const logo = document.querySelector(".nav__logo");
+console.log(logo.alt); // Bankist logo
+console.log(logo.src); // http://127.0.0.1:8080/img/logo.png (absolute URL)
+console.log(logo.getAttribute("src")); // img/logo.png (Relative URL file path)
+
+// Non-standard (properties which are not expected) wont work unless we use getAttribute
+console.log(logo.designer);
+console.log(logo.getAttribute("designer")); // Jonas
+
+// Setting
+logo.alt = "Beautiful minimalist logo"; 
+console.log(logo.alt); // Beautiful minimalist logo
+logo.setAttribute("company", "Bankist");
+
+// Data attributes
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add("c", "f");
+logo.classList.remove("c", "f");
+logo.classList.toggle("c", "f");
+logo.classList.contain("c", "f");
+
+// Dont use
+logo.className = "Something"
+// Doing it like this will overwrite any existing classes
+
+// ===================================================================================================================================
