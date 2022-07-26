@@ -268,13 +268,72 @@ logo.setAttribute("company", "Bankist");
 console.log(logo.dataset.versionNumber);
 
 // Classes
-logo.classList.add("c", "f");
-logo.classList.remove("c", "f");
-logo.classList.toggle("c", "f");
-logo.classList.contain("c", "f");
+//  logo.classList.add("c", "f");
+//  logo.classList.remove("c", "f");
+//  logo.classList.toggle("c", "f");
+//  logo.classList.contain("c", "f");
 
 // Dont use
-logo.className = "Something"
+// logo.className = "Something"
 // Doing it like this will overwrite any existing classes
+   
+// ===================================================================================================================================
+   
+// ================================================== Implementing Smooth Scrolling ==================================================
+/*
+  Element.getBoundingClientRect()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect 
+  - Method returns a DOMRect object providing information about the size of an element and its position relative to the viewport.
+
+  Window.pageXOffset
+  - pageXOffset is an alias for scrollX
+
+  Window.pageYOffset
+  - pageYOffset is an alias for scrollY
+
+  Element.clientHeight
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
+  - Read-only property is zero for elements with no CSS or inline layout boxes; otherwise, 
+    it's the inner height of an element in pixels. It includes padding but excludes borders, margins, and horizontal scrollbars (if present)
+
+  // Scrolling
+  Window.scrollTo()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo 
+  - Scrolls to a particular set of coordinates in the document.
+
+  Element.scrollIntoView()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+  - Method scrolls the element's ancestor containers such that the element on which scrollIntoView() is called is visible to the user.
+  - Scrolls the element we want into view
+*/
+
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", (e) => {
+  const s1coords = section1.getBoundingClientRect();
+  console.log("section1 bondingClient")
+  console.log(s1coords);
+
+  // Gives us the amount (offset) of how much X/Y has scrolled (scrollX , scrollY)
+  console.log("current scroll X/Y:", window.pageXOffset, window.pageYOffset);
+
+  // Give us the value of the viewport height and width of an element
+  console.log("height/width viewport:", document.documentElement.clientHeight, document.documentElement.clientWidth);
+
+  // Scrolling
+  // Take the amount which has already been scrolled + the remaining amount for the element we want to scroll to, to reach the top
+  // window.scrollTo(s1coords.left, s1coords.top + window.pageYOffset);
+
+  // Using scrollTo options
+  scrollTo({
+    left: s1coords.left,
+    top: s1coords.top + scrollY,
+    behavior: "smooth"
+  });
+
+  // Modern (easier) way (only works in modern browsers)
+  section1.scrollIntoView({behavior: "smooth"});
+})
 
 // ===================================================================================================================================
