@@ -400,10 +400,74 @@ h1.addEventListener("mouseover", alertH1);
   Event Propagation
   - The flow of events traveling through the Document Object Model(DOM) tree from its parent right down to the target element 
     and then propagating back to its parent element.
-
+  - Any other events on any parent element will also be invoked because of propagation.
+  
   Three phases in a JavaScript event
-   1. Event Capture Phase - Event propagated from the Window object towards the target element.
+   1. Event Capture Phase - Event propagated from the Window object towards the target element. (element which started the event)
    2. Event Target Phase - The event reaches the target element which started the event.
-   3. Event Bubbling Phase - It is the reverse of the event capture phase. Event flows from the target element towards the Window object.
+   3. Event Bubbling Phase - It is the reverse of the event capture phase. Event flows from the target element back up towards the Window object.
 */
+// ===================================================================================================================================
+
+// =================================================== Event Propagation in Practice =================================================
+
+/*
+  Event.stopPropagation()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+  - Method of the Event interface prevents any further propagation of the current event in the capturing and bubbling phases.
+*/
+
+/*
+  In the example below, the nav, nav__link and nav__links all have a simple 'click' event handler, which simply changes the background color
+  this example will show us how event propagation works. 
+
+  e.g clicking on nav__links will run its eventhandler, and then propagation will then run its parents eventhandlers and so on
+  - 'nav__links' element event
+  - 'nav__link' element event
+  - 'nav' element event
+*/
+
+// Function for generating a random number
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+// Function for generating random rgb colors
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+console.log(randomColor(0, 255));
+
+/* Arrow function with the keyword this
+  The keyword 'this' with an arrow functions points to the window
+
+  document.querySelector(".nav__link").addEventListener("click", () => {
+    console.log(this); // this ---> window
+    this.style.backgroundColor = randomColor() // returns an error
+  })
+*/
+
+
+// When clicking on the nav__link element to fire of its event, this event goes through 3 phases
+// 1. Event Capture ===> window
+// 2. Event target
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  // The keyword this inside an eventlistner (when using a function defined with function keyword) always points to the element using that eventhandler (or window if not in strict mode)
+  console.log(this); // this ---> .nav__link"
+  console.log('LINK:', e.target);
+  this.style.backgroundColor = randomColor();
+
+  // Stopping event propagation (bubbling)
+  // e.stopPropagation();
+});
+
+// 3 Event bubbling 
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('CONTAINER:', e.target);
+  this.style.backgroundColor = randomColor();
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  console.log('NAV:', e.target);
+  this.style.backgroundColor = randomColor();
+});
 // ===================================================================================================================================
