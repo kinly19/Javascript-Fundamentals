@@ -337,3 +337,61 @@ btnScrollTo.addEventListener("click", (e) => {
 })
 
 // ===================================================================================================================================
+
+// ================================================ Types of Events and Event Handlers ===============================================
+
+/*
+Different types of events
+https://developer.mozilla.org/en-US/docs/Web/events#event_listing
+
+Element: mouseenter event
+- https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event 
+- mouseenter is fired at an Element when a pointing device (usually a mouse) is initially moved so that its hotspot 
+is within the element at which the event was fired.
+- Use the event name in methods like addEventListener(), or set an event handler property
+
+addEventListner vs 'on' property
+- https://thisthat.dev/add-event-listener-function-vs-on-property/
+- You can add multiple handlers for an event with addEventListener
+- The 'on' property or attribute only registers one... handler & will remove all existing handlers
+- Able to remove handlers with addEventListener
+*/
+
+
+const h1 = document.querySelector('h1');
+// Events below will run, once the cursor is within the element
+h1.addEventListener('mouseenter', () => {
+  console.log('Mouse entered h1 element...');
+});
+
+h1.addEventListener('mouseenter', () => {
+  console.log('You have reached the h1 element');
+});
+
+/*
+Attaching an event directly onto an element (without eventListener)
+- This is an older way of doing it, although this may look similar to what we do in some frameworks
+e.g - React: <button onClick={sayHello}>Hello</button>
+the framework actually parses the code, and transpiles it to an addEventListener method
+- https://thisthat.dev/add-event-listener-function-vs-on-property/
+*/
+h1.onmouseleave = () => {
+  console.log('Mouse left h1 element...');
+};
+
+// Because the 'on' property only registers one handler, the event below will actually remove the one above it
+h1.onmouseleave = () => {
+  console.log('You left the h1 element');
+};
+
+// Removing events
+const alertH1 = () => {
+  alert("You are reading the h1 element");
+  // Removing event
+  h1.removeEventListener("mouseover", alertH1);
+}
+
+h1.addEventListener("mouseover", alertH1);
+
+// ===================================================================================================================================
+
