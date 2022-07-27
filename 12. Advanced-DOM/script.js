@@ -395,3 +395,15 @@ h1.addEventListener("mouseover", alertH1);
 
 // ===================================================================================================================================
 
+// ============================================= Event Propagation: Bubbling and Capturing ===========================================
+/*
+  Event Propagation
+  - The flow of events traveling through the Document Object Model(DOM) tree from its parent right down to the target element 
+    and then propagating back to its parent element.
+
+  Three phases in a JavaScript event
+   1. Event Capture Phase - Event propagated from the Window object towards the target element.
+   2. Event Target Phase - The event reaches the target element which started the event.
+   3. Event Bubbling Phase - It is the reverse of the event capture phase. Event flows from the target element towards the Window object.
+*/
+// ===================================================================================================================================
