@@ -3,8 +3,10 @@
 ///////////////////////////////////////
 // Modal window
 
+const section1 = document.querySelector("#section--1");
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
+const btnScrollTo = document.querySelector(".btn--scroll-to");
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
@@ -32,6 +34,73 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+btnScrollTo.addEventListener("click", (e) => {
+  const s1coords = section1.getBoundingClientRect();
+  console.log("section1 bondingClient")
+  console.log(s1coords);
+
+  // Gives us the amount (offset) of how much X/Y has scrolled (scrollX , scrollY)
+  console.log("current scroll X/Y:", window.pageXOffset, window.pageYOffset);
+
+  // Give us the value of the viewport height and width of an element
+  console.log("height/width viewport:", document.documentElement.clientHeight, document.documentElement.clientWidth);
+
+  // Scrolling
+  // Take the amount which has already been scrolled + the remaining amount for the element we want to scroll to, to reach the top
+  // window.scrollTo(s1coords.left, s1coords.top + window.pageYOffset);
+
+  // Using scrollTo options
+  scrollTo({
+    left: s1coords.left,
+    top: s1coords.top + scrollY,
+    behavior: "smooth"
+  });
+
+  // Modern (easier) way (only works in modern browsers)
+  section1.scrollIntoView({behavior: "smooth"});
+});
+
+// Page navigation with Event delegation
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault()
+
+  if (e.target.classList.contains("nav__link")) {
+
+    const section = e.target.getAttribute("href");
+    document.querySelector(section).scrollIntoView({behavior: "smooth"})
+  }
+})
+
+/*
+  Without Event delegation
+  This way is fine for a few links, but we are essentially adding the same event listener on each link.
+  e.g if we had 100 links, that would be another 100 of the same eventlistener being added over and over.
+  With event delegation approach, instead of adding one event listener to each of the child items, you only add 1 event listener to the parent <ul>.
+
+  (React does event delegation for us behind the scenes)
+  
+  document.querySelectorAll(".nav__link").forEach(el => {
+    el.addEventListener("click", function (e) {
+      e.preventDefault()
+
+      const id = this.getAttribute('href');
+      document.querySelector(id).scrollIntoView({behavior: "smooth"});
+
+      // Or this way using getBoundingClientRect()
+
+      const section = document.querySelector(id).getBoundingClientRect();
+
+      scrollTo({
+        left: section.left,
+        top: section.top + scrollY,
+        behavior: "smooth",
+      })
+      
+    })
+  })
+*/
+
 
 // ============================================================== Notes =============================================================
 /*
