@@ -376,6 +376,7 @@ console.log(logo.dataset.versionNumber);
   - Scrolls the element we want into view
 */
 
+/*
 const btnScrollTo = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
 
@@ -404,6 +405,7 @@ btnScrollTo.addEventListener("click", (e) => {
   // Modern (easier) way (only works in modern browsers)
   section1.scrollIntoView({behavior: "smooth"});
 })
+*/
 
 // ===================================================================================================================================
 
@@ -539,4 +541,53 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log('NAV:', e.target);
   this.style.backgroundColor = randomColor();
 });
+// ===================================================================================================================================
+
+// =========================================== Event Delegation: Implementing Page Navigation ========================================
+/*
+  - https://www.geeksforgeeks.org/event-delegation-in-javascript/
+  - Event Delegation is basically a pattern to handle events efficiently. 
+    Instead of adding an event listener to each and every similar element, we can add an event listener to a parent
+*/
+
+// Event delegation
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains('nav__link')) {
+    const section = e.target.getAttribute('href');
+    document.querySelector(section).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+/*
+  Without Event delegation
+  This way is fine for a few links, but we are essentially adding the same event listener on each link.
+  e.g if we had 100 links, that would be another 100 of the same eventlistener being added over and over.
+  With event delegation approach, instead of adding one event listener to each of the child items, you only add 1 event listener to the parent <ul>.
+
+  (React does event delegation for us behind the scenes)
+  
+  document.querySelectorAll(".nav__link").forEach(el => {
+
+    el.addEventListener("click", function (e) {
+      e.preventDefault()
+
+      const id = this.getAttribute('href');
+      document.querySelector(id).scrollIntoView({behavior: "smooth"});
+
+      // Or this way using getBoundingClientRect()
+
+      const section = document.querySelector(id).getBoundingClientRect();
+
+      scrollTo({
+        left: section.left,
+        top: section.top + scrollY,
+        behavior: "smooth",
+      })
+      
+    })
+  })
+*/
+
 // ===================================================================================================================================
