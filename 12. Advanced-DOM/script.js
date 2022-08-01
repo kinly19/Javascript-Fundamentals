@@ -591,3 +591,101 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 */
 
 // ===================================================================================================================================
+
+// =========================================================== DOM: Traversing =======================================================
+/*
+  Dom Traversing
+  - https://zellwk.com/blog/dom-traversals/#:~:text=There%20are%20two%20methods%20to,children 
+  - Elements in the DOM are organized into a tree-like data structure that can be traversed to navigate
+  - Navigating around the DOM tree
+
+  Node.childNodes
+  - https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes
+  - Property of the Node interface returns a live NodeList of child nodes of the given element where the first child node is assigned index 0. 
+    Child nodes include elements, text and comments.
+
+  Element.children
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/children
+  - Property returns a live HTMLCollection which contains all of the child elements of the element upon which it was called.
+
+  Element.firstElementChild
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/firstElementChild
+  - Element.firstElementChild read-only property returns an element's first child Element, or null if there are no child elements.
+
+  Element.lastElementChild
+  - Element.lastElementChild read-only property returns an element's last child Element, or null if there are no child elements.
+
+  Node.parentNode
+  - https://developer.mozilla.org/en-US/docs/Web/API/Node/parentNode
+  - Property of the Node interface returns the parent of the specified node in the DOM tree.
+
+  Node.parentElement
+  - https://developer.mozilla.org/en-US/docs/Web/API/Node/parentElement
+  - Property of Node interface returns the DOM node's parent Element, or null if the node either has no parent, or its parent isn't a DOM Element.
+
+  Element.closest()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+  - Method of the Element interface traverses the element and its parents (heading toward the document root) 
+    until it finds a node that matches the specified CSS selector.
+
+  Element.previousElementSibling
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/previousElementSibling
+  - Read-only property returns the Element immediately prior to the specified one in its parent's children list
+    or null if the specified element is the first one in the list.
+  - Returns element one before specified one
+
+  Element.nextElementSibling
+  - https://developer.mozilla.org/en-US/docs/Web/API/Element/nextElementSibling
+  - read-only property returns the element immediately following the specified one in its parent's children list
+    or null if the specified element is the last one in the list.
+
+  
+*/
+
+// const h1 = document.querySelector("h1");
+
+// Going downwards: child (children of h1 element)
+console.log(h1.querySelectorAll(".highlight"));
+// Works for direct children (child element that comes immediately below the parent)
+console.log(h1.childNodes);
+console.log(h1.children);
+// Using properties to set styles
+h1.firstElementChild.style.color = "white";
+h1.lastElementChild.style.color = "orangered";
+
+// Going upwards: Parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// Find closest parent of an element
+h1.closest(".header").style.background = "var(--gradient-secondary)"
+h1.closest("h1").style.background = "var(--gradient-primary)"
+
+// Going sideways : Siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+console.log(h1.parentElement.children);
+
+// Styling all elements which are not a h1
+[...h1.parentElement.children].forEach((el) => {
+  if (el !== h1) el.style.transform = "scale(0.5)";
+})
+
+/* Same as above
+const headerTitleNodeList = document.querySelector(".header__title").children;
+for(const el of headerTitleNodeList) {
+  console.log(el)
+  el.style.color = "green";
+}
+
+Array.from(headerTitleNodeList).forEach(el => {
+  if (el !== h1) el.style.transform = "scale(1.5)"
+})
+
+*/
+
+
+
+
+
+// ===================================================================================================================================
