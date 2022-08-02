@@ -101,6 +101,43 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
   })
 */
 
+// Tabbed component
+const tabs = document.querySelectorAll(".operations__tab");
+const tabContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+// Using event delegation
+tabContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove all active classes from all buttons and content area
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+
+  // Activate class for selected button
+  clicked.classList.add('operations__tab--active');
+  // Activate class for content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+
+  /* 
+  let currentContent = document.querySelector(`.operations__content--1`); // Add this line to global
+  let selectedContent = document.querySelector(`.operations__content--${clicked.dataset.tab}`);
+
+  if (currentContent.classList.contains('operations__content--active')) {
+    currentContent.classList.remove('operations__content--active');
+    currentContent = selectedContent;
+  }
+  currentContent.classList.add('operations__content--active');
+  */
+});
 
 // ============================================================== Notes =============================================================
 /*
@@ -681,11 +718,6 @@ for(const el of headerTitleNodeList) {
 Array.from(headerTitleNodeList).forEach(el => {
   if (el !== h1) el.style.transform = "scale(1.5)"
 })
-
 */
-
-
-
-
 
 // ===================================================================================================================================
