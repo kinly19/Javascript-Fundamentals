@@ -302,7 +302,7 @@ console.log(document.body);
 
 // Elements
 console.log(document.querySelector(".nav"));
-const header = document.querySelector(".header");
+// const header = document.querySelector(".header");
 
 // Multiple elements
 const allSections = document.querySelectorAll(".section");
@@ -764,4 +764,71 @@ Array.from(headerTitleNodeList).forEach(el => {
 })
 */
 
+// ===================================================================================================================================
+
+// ==================================================== The Intersection Observer API ================================================
+/*
+  Intersection Observer API
+  - https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+  - The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element 
+    with an ancestor element or with a top-level document's viewport.
+  - Allows us to observe changes to elements that are within the viewport view
+*/
+
+// Example 1.
+/*
+  1. Selecting element.
+  const header = document.querySelector(".header");
+
+  2. Observer callback.
+  const observeCallBack = (entries, observer) => {
+    entries.forEach(entry => console.log(entry));
+  };
+
+  3. Observer options.
+  const observeOptions = {
+    root: null,
+    threshold: [0, 0.2],
+  };
+
+  4. Creating an observer.
+  const observer = new IntersectionObserver(observeCallBack, observeOptions);
+
+  5. Target element to observe.
+  observer.observe(section1);
+*/
+
+
+// Example 2.
+/*
+  1. Selecting element
+  const header = document.querySelector('.header');
+
+  2. Callback function to pass into observer
+  const observeCallback = entries => {
+    const [entry] = entries;
+
+    if (entry.isIntersecting) nav.classList.remove('sticky');
+    else nav.classList.add('sticky');
+  };
+
+  3. Creating intersection observer with options
+  const headerObserver = new IntersectionObserver(observeCallback, {
+    root: null,
+    threshold: 0,
+    rootMargin: '-90px',
+  });
+
+  4. Target element to be observed
+  headerObserver.observe(header);
+  
+*/
+
+/* Bad example
+  const initialCoords = section1.getBoundingClientRect();
+  window.addEventListener("scroll", (e) => {
+    if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+    else nav.classList.remove('sticky');
+  });
+*/
 // ===================================================================================================================================
