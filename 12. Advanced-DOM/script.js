@@ -105,7 +105,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 */
 
 // Tabbed component
-
 // Using event delegation
 tabContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
@@ -160,6 +159,25 @@ const handleHover = function (e) {
 // Passing "argument" into handler function with bind
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
+
+// Sticky nav
+// Callback function to pass into observer
+const observeCallback = entries => {
+  const [entry] = entries;
+
+  if (entry.isIntersecting) nav.classList.remove('sticky');
+  else nav.classList.add('sticky');
+};
+
+// Creating intersection observer with options
+const headerObserver = new IntersectionObserver(observeCallback, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+// Target element to be observed
+headerObserver.observe(header);
 
 // ============================================================== Notes =============================================================
 /*
