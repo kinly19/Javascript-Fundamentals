@@ -1,8 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
+const header = document.querySelector('.header');
 const section1 = document.querySelector("#section--1");
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -10,6 +8,7 @@ const btnScrollTo = document.querySelector(".btn--scroll-to");
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const nav = document.querySelector(".nav");
+const navHeight = nav.getBoundingClientRect().height;
 const tabs = document.querySelectorAll(".operations__tab");
 const tabContainer = document.querySelector(".operations__tab-container");
 const tabsContent = document.querySelectorAll(".operations__content");
@@ -41,7 +40,7 @@ document.addEventListener('keydown', function (e) {
 
 btnScrollTo.addEventListener("click", (e) => {
   const s1coords = section1.getBoundingClientRect();
-  console.log("section1 bondingClient")
+  console.log("section1 bondingClient");
   console.log(s1coords);
 
   // Gives us the amount (offset) of how much X/Y has scrolled (scrollX , scrollY)
@@ -66,15 +65,15 @@ btnScrollTo.addEventListener("click", (e) => {
 });
 
 // Page navigation with Event delegation
-document.querySelector(".nav__links").addEventListener("click", function (e) {
-  e.preventDefault()
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
 
-  if (e.target.classList.contains("nav__link")) {
+  if (e.target.classList.contains('nav__link')) {
 
-    const section = e.target.getAttribute("href");
-    document.querySelector(section).scrollIntoView({behavior: "smooth"})
+    const section = e.target.getAttribute('href');
+    document.querySelector(section).scrollIntoView({ behavior: 'smooth' });
   }
-})
+});
 
 /*
   Without Event delegation
