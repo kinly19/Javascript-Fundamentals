@@ -9,6 +9,10 @@ const overlay = document.querySelector('.overlay');
 const btnScrollTo = document.querySelector(".btn--scroll-to");
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const nav = document.querySelector(".nav");
+const tabs = document.querySelectorAll(".operations__tab");
+const tabContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
 
 const openModal = function (e) {
   e.preventDefault();
@@ -102,9 +106,6 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
 */
 
 // Tabbed component
-const tabs = document.querySelectorAll(".operations__tab");
-const tabContainer = document.querySelector(".operations__tab-container");
-const tabsContent = document.querySelectorAll(".operations__content");
 
 // Using event delegation
 tabContainer.addEventListener('click', function (e) {
@@ -139,11 +140,37 @@ tabContainer.addEventListener('click', function (e) {
   */
 });
 
+// Menu fade animations
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const selectedLink = e.target;
+    const siblings = selectedLink
+      .closest('.nav')
+      .querySelectorAll('.nav__link');
+    const logo = selectedLink.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      // Any link which is not selected (mouseover)
+      if (el !== selectedLink) el.style.opacity = this;
+    });
+
+    logo.style.opacity = this;
+  }
+};
+
+// Passing "argument" into handler function with bind
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
+
 // ============================================================== Notes =============================================================
 /*
   querySelectorAll() 
   - Returns a static (not live) NodeList representing a list of the document's elements that match the specified group of selectors.
   
+  Function.prototype.bind()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind
+  - Method creates a new function that, when called, has its 'this' keyword set to the provided value, with a given sequence of arguments 
+    preceding any provided when the new function is called.
 */
 // ===================================================================================================================================
 
