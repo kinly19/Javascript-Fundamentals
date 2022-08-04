@@ -2,6 +2,7 @@
 
 const header = document.querySelector('.header');
 const section1 = document.querySelector("#section--1");
+const allSections = document.querySelectorAll(".section");
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnScrollTo = document.querySelector(".btn--scroll-to");
@@ -179,6 +180,29 @@ const headerObserver = new IntersectionObserver(observeCallback, {
 // Target element to be observed
 headerObserver.observe(header);
 
+// Reveal sections
+const handleSectionReveal = (entries, observer) => {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(handleSectionReveal, {
+  root: null,
+  threshold: 0.15,
+});
+
+// Target multiple elements to be observed
+allSections.forEach(section => {
+  // Add hidden class on render
+  section.classList.add("section--hidden");
+  sectionObserver.observe(section);
+});
+
+
 // ============================================================== Notes =============================================================
 /*
   querySelectorAll() 
@@ -305,8 +329,8 @@ console.log(document.querySelector(".nav"));
 // const header = document.querySelector(".header");
 
 // Multiple elements
-const allSections = document.querySelectorAll(".section");
-console.log(allSections); // Return nodelist of all elements which are a section
+const allSections2 = document.querySelectorAll(".section");
+console.log(allSections2); // Return nodelist of all elements which are a section
 
 // Get element by id
 console.log(document.getElementById("section--1"));
