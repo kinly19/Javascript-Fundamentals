@@ -882,3 +882,12 @@ Array.from(headerTitleNodeList).forEach(el => {
   });
 */
 // ===================================================================================================================================
+
+// ============================================================= Lazy Loading ========================================================
+/*
+  What is lazy loading
+  - https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading
+  - Lazy loading is the practice of delaying load or initialization of resources or objects until they're 
+    actually needed to improve performance and save system resources
+*/
+// ===================================================================================================================================
