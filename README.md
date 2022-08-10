@@ -154,3 +154,12 @@
     * before()
     * after()
     * remove()
+3. Styles, Attributes and Classes
+4. Implementing Smooth Scrolling
+5. Types of Events and Event Handlers
+6. Event Propagation: Bubbling and Capturing
+7. Event Propagation in Practice
+8. Event Delegation: Implementing Page Navigation
+9. DOM: Traversing
+10. The Intersection Observer API
+11. Lazy Loading
