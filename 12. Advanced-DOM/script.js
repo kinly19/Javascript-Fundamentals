@@ -14,6 +14,7 @@ const tabs = document.querySelectorAll(".operations__tab");
 const tabContainer = document.querySelector(".operations__tab-container");
 const tabsContent = document.querySelectorAll(".operations__content");
 
+// Modal 
 const openModal = function (e) {
   e.preventDefault();
   // Remove class style
@@ -509,7 +510,7 @@ document.querySelector('.btn--close-cookie').addEventListener('click', () => {
 
 // ===================================================================================================================================
 
-// =========================================== Selecting, Creating, and Deleting Elements ============================================
+// ================================================= Styles, Attributes and Classes ==================================================
 /*
   Window.getComputedStyle()
   - https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
@@ -987,5 +988,7 @@ Array.from(headerTitleNodeList).forEach(el => {
   - https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading
   - Lazy loading is the practice of delaying load or initialization of resources or objects until they're 
     actually needed to improve performance and save system resources
+
+  - Check line 206 lazy loading images
 */
 // ===================================================================================================================================
