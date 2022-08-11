@@ -57,3 +57,57 @@
 */
 // ===================================================================================================================================
 
+// ============================================== Constructor Functions and the new Operator =========================================
+/*
+  Constructor function
+  - Is a special function that creates and initializes an object instance of a class. 
+    In JavaScript, a constructor gets called when an object is created using the new keyword. 
+    The purpose of a constructor is to create a new object and set values for any existing object properties.
+  - Consstructor functions are just normal functions, but the difference is that we call a constructor function with the new operator.
+  - Constructor functions need to use functions with the function keyword (for use 'this').
+
+  - In OOP there is this convention that constructor functions always start with a capital letter.
+
+  new operator
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new 
+  - Lets developers create an instance of a user-defined object type or of one of the built-in object types that has a constructor function.
+  
+*/
+// Funct expression or declaration will work
+const Person = function (firstName, birthYear) {
+  console.log(this) //--> {} (Person is just the name of the constructor function).
+
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  // Dont create methods inside of constructor functions (Create them inside the prototype instead)
+  /*
+  this.calcAge = function () {
+    console.log(2037 - this.birthYear)
+  }
+  */
+}
+
+// prototype approach for methods
+// Create a method inside the 'Person' prototype, use inheritance to use that method
+Person.prototype.greetUser = function () {
+  console.log(`Hello ${this.firstName}`);
+};
+
+const jonas = new Person("Jonas", 1991);
+console.log(jonas);
+// {firstName: "Jonas",birthYear: 1991}
+
+// When calling a function with the 'new' keyword, the function will be used as a constructor.
+// 'new' keyword will do the following things:
+// 1. New empty object {} is created.
+// 2. function is called, 'this' keyword will point to that object (this = {}).
+// 3. Newly created object is then linked to prototype (class object prototype?).
+// 4. function automatically returns object {}
+
+// Check if an object is an instance of a class 
+console.log(jonas instanceof Person); // true
+// Using method
+jonas.greetUser();
+
+// ===================================================================================================================================
