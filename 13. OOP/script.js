@@ -111,3 +111,46 @@ console.log(jonas instanceof Person); // true
 jonas.greetUser();
 
 // ===================================================================================================================================
+
+// ============================================================== Prototypes =========================================================
+/*
+  Prototypes
+  - https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes
+  - Prototypes are the mechanism by which JavaScript objects inherit features from one another
+  - Each object has its own built-in property called 'prototype'
+  - prototype itself is just an object so the prototype will have its own prototype, making what's called a prototype chain.
+
+  - Each and every function automatically has a property called 'prototype'.
+
+*/
+
+// Constructor function
+const Person2 = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+}
+
+// Creating an instance (new object) with 'new' keyword
+const sarah = new Person2("Sarah", 30);
+
+// Creating a method inside of Person2 prototype
+Person2.prototype.greetUser = function () {
+  console.log(`Hello ${this.firstName}`);
+  console.log(2037 - this.birthYear);
+};
+
+// Using Prototypal inheritancee to access that method inside of the object (created by the constructor function Person2) prototype object
+// The prototype is the property which comes from the constructor function
+sarah.greetUser();
+console.log(sarah.__proto__);
+console.log(sarah.__proto__ === Person2.prototype); // true
+// The prototype is the prototype used for sarah object
+console.log(Person2.prototype.isPrototypeOf(sarah)); // true
+console.log(Person2.prototype.isPrototypeOf(Person2)); //false
+
+
+// Can also set properties of a prototype
+Person2.prototype.species = "Human";
+console.log(sarah);
+
+// ===================================================================================================================================
