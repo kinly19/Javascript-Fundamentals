@@ -139,18 +139,56 @@ Person2.prototype.greetUser = function () {
   console.log(2037 - this.birthYear);
 };
 
-// Using Prototypal inheritancee to access that method inside of the object (created by the constructor function Person2) prototype object
+// Using Prototypal inheritancee to access methods inside of the constructor functions prototype property
 // The prototype is the property which comes from the constructor function
 sarah.greetUser();
+
 console.log(sarah.__proto__);
 console.log(sarah.__proto__ === Person2.prototype); // true
 // The prototype is the prototype used for sarah object
 console.log(Person2.prototype.isPrototypeOf(sarah)); // true
+
+/* The prototype of Person2.prototype is not actually the prototype of 'Person2' but essentially the prototype which will be used for all objects created with 
+ the 'Person2' constructor function */
 console.log(Person2.prototype.isPrototypeOf(Person2)); //false
+console.log(Person2.prototype.isPrototypeOf(sarah)); // true
 
 
 // Can also set properties of a prototype
 Person2.prototype.species = "Human";
 console.log(sarah);
+
+// ===================================================================================================================================
+
+// ============================================ Prototypal Inheritance and The Prototype Chain ======================================= 
+/*
+
+  Each object and function has its own 'prototype' property.
+  
+  'Person2' constructor function has its own prototype property (Person2.prototype), which will be used for any instances created with 
+  Person2 constructor function (any objects created by Person2), but this is not... the prototype of 'Person2' itself. 
+
+  When a function is called with the 'new' operator, a new object is created instantly. This new object has its 'this' keyword set to
+  that newly created object and then the important part, the object is then linked to the constructor functions prototype property.
+  This happens internally by adding the '.__proto__' property to the new object. (Person2.prototype is now the newly created object prototype).
+  __proto__ always points to an object prototype (Person2.prototype).
+
+  sarah.greetUser()
+  when calling the method 'greetUser' inside of 'sarah' object. Javascript will look to see if sarah object has that method. if a property 
+  or a method cannot be found in a certain object JavaScript will then look into its prototype (Person2.prototype), which is where 'greetUser'
+  is found and used. This behavior is called prototypal inheritance or delegation.
+  sarah {} --> Person2.prototype {greetUser: ƒ ()}
+
+
+  When creating an object literal (just a plain object with curly braces), the built in object constructor function is used to create 
+  our object which also has its own prototype property (Object.prototype)
+  Person2 prototype is Object.prototype, Same logic with sarah object.
+  This entire series of links between the objects is what is called the prototype chain.
+  sarah.__proto__ --> Person2.prototype Person2.__proto__ --> Object.prototype Object.__proto --> null
+  
+  Object.prototype has its own prototype which is set to null
+  Object.prototype.__proto__ --> null
+
+*/
 
 // ===================================================================================================================================
