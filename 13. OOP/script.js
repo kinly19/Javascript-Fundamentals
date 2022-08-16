@@ -192,3 +192,57 @@ console.log(sarah);
 */
 
 // ===================================================================================================================================
+
+// ============================================== Prototypal Inheritance on Built-In Objects ========================================= 
+/*
+  Object.prototype.__proto__
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto
+  - Deprecated
+  
+  Object.getPrototypeOf()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf
+  - The Object.getPrototypeOf() method returns the prototype (i.e. the value of the internal [[Prototype]] property) of the specified object.
+*/
+
+console.log(sarah.__proto__); // --> Person2.prototype
+console.log(sarah.__proto__.__proto__); // Person2 prototype ---> Object
+console.log(sarah.__proto__.__proto__.__proto__); // Object prototype ---> null
+
+// Show the actual constructor function
+console.dir(Person2.prototype.constructor);
+
+// Prototypes of arrays
+// When creating an array, js uses its built in Array constructor
+const arr = [3, 6, 5, 7, 8, 9]; // new Array === []
+
+// __proto__ is non standard and deprecated use (Object.getPrototypeOf())
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(Object.getPrototypeOf(arr)); 
+console.log(Object.getPrototypeOf(arr) === Array.prototype); // true
+// Array.prototype is of the Object
+console.log(Object.getPrototypeOf(Array.prototype) === Object.prototype);// true
+console.log(Object.prototype.isPrototypeOf(Array)); // true
+Object.prototype === null // true
+
+// Adding any new method inside of Array.prototype
+// Extending the prototype of a built-in object is generally not a good idea.
+Array.prototype.hello = function (name) {
+  return `${name} says: Hello World`;
+};
+
+// Remember the keyword 'this' when used in a function as a method always points to the object calling that method
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+}
+
+// Elements and functions
+// Shows us the prototypes of an h1 element and all prototypes it can inherit (prototype chain).
+const h1 = document.querySelector("h1");
+console.dir(h1);
+
+// This is the reason why we can actually call methods on functions. It's because they are objects and objects have prototypes. And in this case, this function prototype. 
+console.dir(x => x+1);
+
+// ===================================================================================================================================  
+ 
