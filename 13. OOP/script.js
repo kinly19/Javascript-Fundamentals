@@ -410,3 +410,53 @@ alysia.address = "Somewhere in London";
 console.log(alysia);
 
 // ===================================================================================================================================
+
+// =========================================================== Static Methods ========================================================
+/*
+  Static methods are created inside of the class constructor itself, and can only be called on the class (Class name space).
+  non static methods (instance methods) are created inside of the classes .prototype which is why we can use prototypal inheritance.
+
+  static keyword
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
+  - defines a static method or property for a class, or a class static initialization block 
+    static methods and static properties can not be called on instances of the class. 
+    Instead, they're called on the class itself (directly on the classes name space).
+*/
+
+class Person3Cl {
+  constructor(firstName) {
+    // Below code is stored inside the object which is return from the constructor.
+    this.firstName = firstName;
+
+    // Creating an object(instance) creates a new method for each new object created by the Person3Cl.
+    this.inside = function () {
+      return 'Inside';
+    };
+  }
+
+  // Instance methods
+  // Stored inside of the class .prototype.
+  greet() {
+    console.log(`Hello ${this.firstName}`);
+  }
+
+  // Static methods
+  // Stored directly inside of the class constructor.
+  static staticGreet() {
+    console.log(`Hello`);
+  }
+}
+
+const jason = new Person3Cl("Jason");
+
+// Instance methods
+jason.greet(); // Hello Jason
+
+// Static methods
+/*
+jason.staticGreet() // Returns an error
+*/
+
+Person3Cl.staticGreet(); // Hello
+
+// ===================================================================================================================================
