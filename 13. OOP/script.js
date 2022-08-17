@@ -288,4 +288,56 @@ const car2 = new Car("Mercedes", 95);
 
 console.log(Car.prototype.isPrototypeOf(car1)); // true
 console.log(Car.prototype.isPrototypeOf(car1) && Object.prototype.isPrototypeOf(Car) && Object.getPrototypeOf(Object.prototype) === null); // true
-// ===================================================================================================================================  
+// ===================================================================================================================================
+
+  
+// ============================================================= ES6 Classes =========================================================
+/*
+  Classes
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+  - Classes are a template for creating objects. They encapsulate data with code to work on that data. Classes in JS are built 
+    on prototypes but also have some syntax and semantics that are not shared with ES5 class-like semantics.
+  - Just syntactic sugar they still implement prototypal inheritance behind the scenes but with a syntax that makes more sense 
+    to people coming from other programming languages.
+
+  - Classes are in fact "special functions", and just as you can define function expressions and function declarations, 
+    the class syntax has two components: class expressions and class declarations
+
+  - Hoisting
+    An important difference between function declarations and class declarations is that while functions can be called in code 
+    that appears before they are defined, classes must be defined before they can be constructed.
+
+  - Are first-class function.
+  - Always executed in strict mode.
+*/
+
+// Class declarations
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  // Methods
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  }
+}
+
+/* ES6 classes allow us to define methods all within the classes code block, the methods will still be on the 
+prototype of the class object itself and not in the object returned from constructor.*/
+console.dir(PersonCl);
+
+// Instance
+const jessica = new PersonCl("Jessica", 1996);
+jessica.calcAge();
+console.log(PersonCl.prototype.isPrototypeOf(jessica)); // true
+console.log(Object.getPrototypeOf(jessica) === PersonCl.prototype); // true
+
+// The class really just hides the true nature of prototypal inheritance in JavaScript
+// which is why we can still add methods outside manually into the prototype.
+PersonCl.prototype.greetUser = function () {
+  console.log(`Hello ${this.firstName}`);
+};
+jessica.greetUser();
+
+// ===================================================================================================================================
