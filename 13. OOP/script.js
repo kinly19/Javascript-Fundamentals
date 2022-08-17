@@ -290,7 +290,6 @@ console.log(Car.prototype.isPrototypeOf(car1)); // true
 console.log(Car.prototype.isPrototypeOf(car1) && Object.prototype.isPrototypeOf(Car) && Object.getPrototypeOf(Object.prototype) === null); // true
 // ===================================================================================================================================
 
-  
 // ============================================================= ES6 Classes =========================================================
 /*
   Classes
@@ -339,5 +338,75 @@ PersonCl.prototype.greetUser = function () {
   console.log(`Hello ${this.firstName}`);
 };
 jessica.greetUser();
+
+// ===================================================================================================================================
+
+// ========================================================= Setters and Getters =====================================================
+/*
+  getter
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+  - The get syntax binds an object property to a function that will be called when that property is looked up.
+
+  setter
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
+  - The set syntax binds an object property to a function to be called when there is an attempt to set that property.
+*/
+
+const account = {
+  owner: 'Jessica',
+  movements: [200, 300, 500],
+
+  get latest() {
+    return this.movements[this.movements.length - 1];
+    // this.movements.slice(-1).pop();
+  },
+
+  set movement(mov) {
+    this.movements.push(mov);
+  },
+};
+
+// Using getters.
+// Instead of calling the method like we usually do, we just use it like an actual property.
+console.log(account.latest);
+
+// Using setters.
+// Set them like normal properties
+account.movement = 5000;
+account.movement = 7000;
+console.log(account.movements);
+
+// Classes (getter and setters)
+class Person2Cl {
+  constructor (fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Setting a property which already exist (fullName from constructor)
+  set fullName(name) {
+    console.log(name)
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  // Getting property from setter
+  get fullName() {
+    return this._fullName;
+  }
+
+  get age() {
+    return 2022- this.birthYear;
+  }
+
+  set location(str){
+    this.address = str;
+  }
+}
+
+const alysia = new Person2Cl("Alysia Davis", 1990);
+console.log(alysia.age);
+alysia.address = "Somewhere in London";
+console.log(alysia);
 
 // ===================================================================================================================================
