@@ -460,3 +460,42 @@ jason.staticGreet() // Returns an error
 Person3Cl.staticGreet(); // Hello
 
 // ===================================================================================================================================
+
+// ============================================================ Object.create ========================================================
+/*
+Object.create()
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create 
+- Method creates a new object, using an existing object as the prototype... of the newly created object.
+- There is still the idea of prototypal inheritance. However, there are no .prototype properties involved. 
+And also no constructor functions, and no new operator.
+- We use Object.create to manually set the prototype of an object, to any object we want.
+- The object created with Object.create, its prototype will be/come from the object we point it to.
+*/
+
+// Object literal
+const PersonProto = {
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  },
+  
+  init(name, birthYear) {
+    this.firstName = name;
+    this.birthYear = birthYear;
+  },
+  
+  locationThis() {
+    // 'This' keyword used inside of a method always points to the object calling that method.
+    console.log(this);
+  },
+};
+
+const steven = Object.create(PersonProto); // setting 'steven' object prototype to be/come from 'PersonProto' object.
+console.log(PersonProto.isPrototypeOf(steven)); // true
+console.log(steven.__proto__ === PersonProto); // true
+
+
+steven.init("Steven", 1985);
+steven.calcAge();
+steven.locationThis(); // steven object
+
+// ===================================================================================================================================
