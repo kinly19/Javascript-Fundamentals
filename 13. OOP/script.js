@@ -549,3 +549,68 @@ console.log(car3.speedUS); // 250mi/h
 console.log(car3.speed); // 400 km/h
 
 // ===================================================================================================================================
+
+// ========================================= Inheritance Between "Classes": Constructor Functions ====================================
+/*
+  call() 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+  - Method calls the function with a given 'this' value and arguments provided individually.
+
+  - The difference between call() and bind() is that the call() sets the this keyword and executes the function immediately and 
+    it does not create a new copy of the function, while the bind() creates a copy of that function and sets the this keyword
+*/
+
+const Person3 = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person3.prototype.calcAge = function () {
+  console.log(2022 - this.birthYear);
+};
+
+const Student = function(firstName, birthYear, course) {
+  /*
+    Calling 'Person3' function without the new keyword, we are essentially calling a normal function
+    The 'This' keyword inside of a function is undefined. We use the 'call' method to set the keyword 'this' 
+    to be of the 'this' value inside of 'Person3' function. 
+  */
+  Person3.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+// Set Student .prototype object to inherit from 'Person3' .prototype
+Student.prototype = Object.create(Person3.prototype);
+
+// Dont! inherit/link prototypes like this.
+// Student.prototype = Person3.prototype.
+
+// Always link prototypes before adding any methods.
+Student.prototype.intro = function () {
+  console.log(`My name is ${this.firstName} and i study ${this.course}`);
+};
+
+// Creating instance
+const mike = new Student("Mike", 1995, "Computer science");
+mike.intro(); // My name is Mike and i study Computer science (comes from Student)
+mike.calcAge(); // 27 (comes from Person3)
+
+// mike and Student .prototype both point to Person3.prototype 
+console.log(Person3.prototype.isPrototypeOf(mike)); // true
+console.log(Person3.prototype.isPrototypeOf(Student.prototype)); // true
+// mike.prototype -> Student.prototype Student.prototype -> Person3.prototype
+
+// Prototypal chain
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+console.log(mike instanceof Student); // true
+console.log(mike instanceof Person3); // true
+console.log(mike instanceof Object); // true
+
+// Set constructor property to reference the actual constructor function that created the instance object
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
+
+// ===================================================================================================================================
+
