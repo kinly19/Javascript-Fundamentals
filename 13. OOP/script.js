@@ -770,6 +770,47 @@ console.log(martha instanceof Object); // true
 // martha prototype --> StudentCl.prototype StudentCl.prototype --> Person4Cl.prototype Person4Cl.prototype --> Object.prototype.
 
 // ===================================================================================================================================
+
+// ======================================== Inheritance Between "Classes": Object.create =============================================
+/*
+  Object.create allows us to set an existing object...(the actual object) as the prototype of the newly created object.
 */
 
+const PersonProto2 = {
+  calcAge() {
+    console.log(2022 - this.birthYear)
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+// set prototypes
+const alexa = Object.create(PersonProto2);
+const StudentProto = Object.create(PersonProto2);
+
+// Create method inside of 'StudentProto' (call 'init' function from 'PersonProto2' to set values for 'firstName', 'birthYear' and add/set own property)
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto2.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.intro = function () {
+  console.log(`Hello my name is ${this.firstName} and i study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init("Jay", 1999, "Javascript");
+jay.intro();
+
+alexa.init("Alexa", 1999);
+alexa.calcAge(); // 23
+
+console.log(alexa.prototype === PersonProto2.prototype); // true
+console.log(StudentProto.prototype === PersonProto2.prototype); // true
+console.log(jay.prototype === StudentProto.prototype); // true
+
+// ===================================================================================================================================
 // ===================================================================================================================================
