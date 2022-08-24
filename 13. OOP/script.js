@@ -46,7 +46,7 @@
     - "Syntactic sugar" behind the scenes, ES6 classes work exactly like the constructor functions.
     - ES6 classes still do NOT behave like classes in "Classical OOP". 
     Object.create()
-    - The easiest and most straightforwardss way of linking an object to a prototype object.
+    - The easiest and most straightforwards way of linking an object to a prototype object.
     
     The 4 pillars of OOP are still valid
     - Abstraction
@@ -63,7 +63,7 @@
   - Is a special function that creates and initializes an object instance of a class. 
     In JavaScript, a constructor gets called when an object is created using the new keyword. 
     The purpose of a constructor is to create a new object and set values for any existing object properties.
-  - Consstructor functions are just normal functions, but the difference is that we call a constructor function with the new operator.
+  - Constructor functions are just normal functions, but the difference is that we call a constructor function with the new operator.
   - Constructor functions need to use functions with the function keyword (for use 'this').
 
   - In OOP there is this convention that constructor functions always start with a capital letter.
@@ -679,8 +679,97 @@ console.log(Car4.prototype.isPrototypeOf(EV.prototype)) // true
 // tesla.prototype --> EV.prototype EV.prototype --> Car4 (Because of Object.create)
 
 /*
-  Even though Car4 and EV have the exact same method names, if there are any methods or properties with the same name in a prototype chain,
-  Javascript will use the first one which appears in the prototype chain
+Even though Car4 and EV have the exact same method names, if there are any methods or properties with the same name in a prototype chain,
+Javascript will use the first one which appears in the prototype chain (polymorphism)
+*/
+
+// ===================================================================================================================================
+
+// ============================================= Inheritance Between "Classes": ES6 Classes ==========================================
+/*
+  extends
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends 
+  - Keyword is used in class declarations or class expressions to create a class that is a child of another class.
+  - The extends keyword can be used to subclass custom classes as well as built-in objects
+  - Any constructor that can be called with new keyword (that is, it has the prototype property) can be the candidate for the parent class.
+  - Will set the prototype of the ChildClass and its .prototype
+  - Inherit one class from another class.
+
+  super
+  - Keyword is used to access properties on an object literal or class's [[Prototype]], or invoke a superclass's constructor.
+  - In English The super keyword is used to call the constructor of its parent class to access the parent's properties and methods.
+*/
+
+// ES6 class
+class Person4Cl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  get age() {
+    return 2022 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+}
+
+// Inherit Person4Cl (Link prototypes)
+class StudentCl extends Person4Cl {
+  constructor(fullName, birthYear, course) {
+    /*
+      originally with the constructor function approach 
+      we called the constructor function (normal function without 'new' keyword) 
+      with the 'call' keyword to set the 'this' keyword for that function
+
+      Person4Cl.call(this, fullName, birthYear);
+    */
+
+    /*
+     super() is basically the constructor function of the parent class
+     and does the the same thing as above, sets 'this' keyword for this subclass
+    */
+
+    // Always needs to happen first before using 'this'
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  intro() {
+    console.log(`Hello my name is ${this.fullName} and i am studying ${this.course}`);
+  }
+}
+
+const martha = new StudentCl("Martha Jones", 1999, "Web Development");
+// Methods from Person4Cl
+martha.greet();
+martha.calcAge();
+martha.age;
+// Methods from StudentCl
+martha.intro();
+
+// Prototype chain
+console.log(martha instanceof (StudentCl)); // true
+console.log(martha instanceof (Person4Cl)); // true
+console.log(martha instanceof Object); // true
+// martha prototype --> StudentCl.prototype StudentCl.prototype --> Person4Cl.prototype Person4Cl.prototype --> Object.prototype.
+
+// ===================================================================================================================================
 */
 
 // ===================================================================================================================================
