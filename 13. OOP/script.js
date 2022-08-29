@@ -1038,4 +1038,77 @@ acc3.deposit(500).withdraw(100).requestLoan(1000);
 
 // ===================================================================================================================================
 
+// ======================================================= Coding Challenge #4 =======================================================
+/*
+Your tasks:
+1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl'
+child class of the 'CarCl' class
+2. Make the 'charge' property private
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery'
+methods of this class, and also update the 'brake' method in the 'CarCl'
+class. Then experiment with chaining!
+Test data:
+§ Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+*/
+
+class CarCl2 {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+
+  brake() {
+    this.speed -= 20;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+}
+
+// Inherit/link prototype
+class EVCL2 extends CarCl2 {
+  // Private properties
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  // Methods
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(`${this.make} is going at ${this.speed} km/h, with a charge of: ${this.#charge}%`);
+    return this;
+  }
+
+  chargeBattery(val) {
+    this.#charge = val;
+    console.log(`${this.make} charge set to: ${this.#charge}%`);
+    return this;
+  }
+
+  getChargeLevel() {
+    console.log(`${this.make} charge now at: ${this.#charge}%`);
+    return this;
+  }
+}
+
+// Instance
+const rivian = new EVCL2('Rivian', 120, 23);
+rivian
+  .accelerate()
+  .accelerate()
+  .chargeBattery(60)
+  .brake()
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .getChargeLevel();
 // ===================================================================================================================================
