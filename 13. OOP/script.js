@@ -893,3 +893,88 @@ console.log(acc1);
 console.log("Total deposits:" + acc1.totalDeposits);
 
 // ===================================================================================================================================
+
+// ========================== Encapsulation: Private Class Fields and Methods (Javascript Class field) ===============================
+/*
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields
+  1. Public fields
+  2. Private fields
+  3. Public methods
+  4. Private methods
+  // (There are also static versions for each of the above 8 in total)
+*/
+
+class Account2 {
+  // Always outside the constructor
+  // 1. Public fields (Avaliable on all instances and not on the prototype)
+  locale = navigator.language;
+
+  // 2. Private fields prefixed with # (instances)
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    console.log(`Thank you ${this.owner} for opening an account with us`);
+  }
+
+  // 3. Public methods (exactly the same)
+  // Public interface of our class
+  deposit(movement) {
+    this.#movements.push(movement);
+  }
+
+  withdraw(value) {
+    this.#movements.push(-value);
+  }
+
+  getMovements() {
+    return this.#movements;
+  }
+
+  getAccountPin() {
+    return this.#pin;
+  }
+
+  requestLoan(value) {
+    if (this.#approveLoan(value)) {
+      this.deposit(value);
+      console.log('Loan Approved');
+    }
+  }
+
+  getMessage() {
+    return this.#privateMethod();
+  }
+
+  // 4. Private methods names prefixed with #
+  #approveLoan(value) {
+    return true;
+  }
+
+  #privateMethod() {
+    return 'Hello World';
+  }
+}
+
+const acc2 = new Account2("Emily", "EUR", 2222);
+acc2.deposit(1000);
+acc2.withdraw(-250);
+acc2.requestLoan(1000);
+
+// Access private properties/methods from outside a class
+// acc2.#movement; // Returns error
+// acc2.#pin; // Returns error
+// cacc2.#privateMethod(); // Returns error
+// acc2.#approveLoan(); // Property '#approveLoan' is not accessible outside class 'Account2'
+
+// Can still access private properties via methods
+console.log(acc2.getMovements());
+console.log(acc2.getAccountPin());
+console.log(acc2.getMessage());
+console.log(acc2);
+
+
+// ===================================================================================================================================
