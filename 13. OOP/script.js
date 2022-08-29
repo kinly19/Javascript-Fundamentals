@@ -976,5 +976,66 @@ console.log(acc2.getAccountPin());
 console.log(acc2.getMessage());
 console.log(acc2);
 
+// ===================================================================================================================================
+
+// ======================================================= Chaining Methods ==========================================================
+/*
+  Method chaining
+  - In JavaScript, method chaining is when methods are invoked from one object to another without creating intermediate variables. 
+    In otherwords it is a single statement of multiple method invocations which we instruct our program to perform.
+
+  To chain methods all we have to do is return the object itself at the end of a method that we want to be chainable.
+*/
+
+class Account3 {
+  // Public
+  locale = navigator.language;
+
+  // Private
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+  }
+
+  // Public methods
+  deposit(value) {
+    this.#movements.push(value);
+    // Chaining methods
+    // Return 'this' (the whole acc3 object) allows us to chain on methods.
+    return this;
+  }
+
+  withdraw(value) {
+    this.#movements.push(-value);
+    return this;
+  }
+
+  getMovements() {
+    return this.#movements;
+  }
+
+  requestLoan(value) {
+    if (this.#approveLoan(value)) {
+      this.#movements.push(value);
+      console.log('Loan Approved');
+      return this;
+    }
+  }
+
+  // Private methods
+  #approveLoan(value) {
+    return true;
+  }
+}
+
+const acc3 = new Account3('Lisa', 'EUR', 3333);
+// Chaining methods (see line 1009)
+acc3.deposit(500).withdraw(100).requestLoan(1000);
+
+// ===================================================================================================================================
 
 // ===================================================================================================================================
