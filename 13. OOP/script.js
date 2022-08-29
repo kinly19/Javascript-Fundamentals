@@ -813,4 +813,83 @@ console.log(StudentProto.prototype === PersonProto2.prototype); // true
 console.log(jay.prototype === StudentProto.prototype); // true
 
 // ===================================================================================================================================
+
+// ============================================= Another Class Example Fake Encapsulation ============================================
+/*
+  Navigator.language
+  - https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+  - Read-only property returns a "string" representing the preferred language of the user, usually the language of the browser UI.
+
+  Encapsulation: Protected Properties and Methods
+  - Encapsulation means to keep some properties and methods private inside the class.
+
+  - https://javascript.info/private-protected-properties-methods
+  - Protected properties are usually prefixed with an underscore _.
+  - This is not actually enforced on the language, we can still change private properties and methods outside a class but there is a well 
+    known convention between programmers that such properties and methods should not be accessed from the outside the class.
+*/
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.locals = navigator.language;
+    // Protected properties (property names prefixed with an underscore _)
+    this._movements = [];
+    this._pin = pin;
+    console.log(`Thank you ${this.owner} for opening an account with us`);
+  }
+
+  deposit(movement) {
+    this._movements.push(movement);
+  }
+
+  withdraw(value) {
+    this._movements.push(-value);
+  }
+
+  getMovements() {
+    return this._movements;
+  }
+
+  showTotalDeposits() {
+    this.totalDeposits = this._movements.reduce((prev, cur) => {
+      if (cur > 0) {
+        return prev + cur;
+      } else {
+        return prev;
+      }
+    }, 0);
+
+    return this.totalDeposits;
+  }
+
+  // set totalDeposits(deposits) {
+  //   this._totalDeposits = deposits;
+  // }
+
+  // get totalDeposits() {
+  //   return this._totalDeposits
+  // }
+}
+
+// Object/Class Instance
+const acc1 = new Account("Jonas", "EUR", 1111);
+
+// Interacting with properties
+// Not a good way (interact with properties via methods)
+acc1._movements.push(250);
+acc1._movements.push(-250);
+ 
+// Better
+acc1.deposit(1000);
+acc1.withdraw(-250);
+
+// Allowing access to private properties
+console.log(acc1.getMovements());
+
+console.log(acc1.showTotalDeposits());
+console.log(acc1);
+console.log("Total deposits:" + acc1.totalDeposits);
+
 // ===================================================================================================================================
