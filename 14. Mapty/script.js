@@ -11,6 +11,17 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+let map, mapEvent;
+
+// Handlers
+const clearInputsHandler = () => {
+  inputDistance.value =
+    inputDuration.value =
+    inputCadence.value =
+    inputElevation.value =
+      '';
+};
+
 // Check if browser supports geolocation.
 if (navigator.geolocation) {
   // Get/Set users position
@@ -20,7 +31,7 @@ if (navigator.geolocation) {
       const { longitude } = position.coords;
       const coords = [latitude, longitude];
 
-      const map = L.map('map').setView(coords, 15);
+      map = L.map('map').setView(coords, 15);
 
       L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution:
@@ -42,23 +53,11 @@ if (navigator.geolocation) {
         .openPopup();
 
       // Add new marker position and popups
-      map.on('click', mapEvent => {
-        // Event coords
-        const { lat, lng } = mapEvent.latlng;
-
-        L.marker([lat, lng])
-          .addTo(map)
-          .bindPopup(
-            L.popup({
-              maxWidth: 250,
-              minWidth: 100,
-              autoClose: false,
-              closeOnClick: false,
-              className: 'running-popup',
-            })
-          )
-          .setPopupContent('Workout')
-          .openPopup();
+      map.on('click', mapE => {
+        mapEvent = mapE;
+        // Show form
+        form.classList.remove('hidden');
+        inputDistance.focus();
       });
     },
     () => {
@@ -66,3 +65,27 @@ if (navigator.geolocation) {
     }
   );
 }
+
+// Form submit eventhandler
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Event coords
+  const { lat, lng } = mapEvent.latlng;
+  L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        maxWidth: 250,
+        minWidth: 100,
+        autoClose: false,
+        closeOnClick: false,
+        className: 'running-popup',
+      })
+    )
+    .setPopupContent('Workout')
+    .openPopup();
+
+  // Clean input fields
+  clearInputsHandler();
+});
