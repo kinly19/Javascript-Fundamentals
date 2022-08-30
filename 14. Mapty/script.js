@@ -36,7 +36,6 @@ if (navigator.geolocation) {
             minWidth: 100,
             autoClose: false,
             closeOnClick: false,
-            className: 'test',
           })
         )
         .setPopupContent('You Are Here')
