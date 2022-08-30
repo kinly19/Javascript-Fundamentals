@@ -89,3 +89,9 @@ form.addEventListener('submit', function (e) {
   // Clean input fields
   clearInputsHandler();
 });
+
+inputType.addEventListener('change', function () {
+  // Toggle classes
+  inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+});
