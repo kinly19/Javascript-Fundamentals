@@ -81,9 +81,13 @@ class App {
   #workouts = [];
 
   constructor() {
-    // Get current position
+    // Get user position
     this._getPosition();
 
+    // Get data from local storage
+    this._getLocalStorage();
+
+    // Attach Event handlers
     // Form submit handler
     form.addEventListener('submit', this._newWorkOut.bind(this));
 
@@ -107,7 +111,7 @@ class App {
     // Get user position
     const { latitude, longitude } = position.coords;
     const coords = [latitude, longitude];
-    console.log(this);
+    // console.log(this);
     // Show user position
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
@@ -132,6 +136,9 @@ class App {
 
     // maps click event for showing form
     this.#map.on('click', this._showForm.bind(this));
+
+    // Render markers after map has finished loading
+    this.#workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
   _showForm(mapE) {
@@ -210,6 +217,9 @@ class App {
 
     // Hide form and clear inputs
     this._hideForm();
+
+    // Set local storage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -228,7 +238,7 @@ class App {
       )
       .setPopupContent(`${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`)
       .openPopup();
-      console.log(workout);
+      // console.log(workout);
   }
 
   _renderWorkout(workout) {
@@ -284,7 +294,7 @@ class App {
     if (!workoutEl) return;
 
     const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
-    console.log(workout);
+    // console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
@@ -294,7 +304,29 @@ class App {
     });
 
     // Using public interface
-    workout._click();
+    // workout._click();
+  }
+
+  _setLocalStorage() {
+    localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts"));
+    // console.log(data);
+
+    if (!data) return 
+
+    this.#workouts = data;
+
+    // Render workouts list
+    this.#workouts.forEach(work => this._renderWorkout(work));
+    // Rendering markers here before map has loaded will return error
+  }
+
+  reset() {
+    localStorage.removeItem("workouts");
+    location.reload();
   }
 }
 
