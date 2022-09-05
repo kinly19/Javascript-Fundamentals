@@ -5,6 +5,7 @@ class Workout {
   // Using js classfield
   date = new Date();
   id = (Date.now() + "").slice(-10);
+  clicks = 0;
 
   constructor (coords, distance, duration) {
 
@@ -22,6 +23,10 @@ class Workout {
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
+  }
+
+  _click() {
+    this.clicks ++;
   }
 }
 
@@ -71,6 +76,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class App {
   // Private properties
   #map;
+  #mapZoomLevel = 15;
   #mapEvent;
   #workouts = [];
 
@@ -83,6 +89,8 @@ class App {
 
     // Form input toggle handler
     inputType.addEventListener('change', this._toggleElevationField); // Does not need 'this' keyword
+
+    containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
   }
 
   // Methods
@@ -99,9 +107,9 @@ class App {
     // Get user position
     const { latitude, longitude } = position.coords;
     const coords = [latitude, longitude];
-
+    console.log(this);
     // Show user position
-    this.#map = L.map('map').setView(coords, 15);
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
     L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
@@ -195,7 +203,7 @@ class App {
     this.#workouts.push(workout);
 
     // Render workout to map as a marker
-    this._renderWorkoutMarker(workout)
+    this._renderWorkoutMarker(workout);
 
     // Render workout on list
     this._renderWorkout(workout);
@@ -268,6 +276,25 @@ class App {
       `;
     }
     form.insertAdjacentHTML("afterend", html);
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest(".workout");
+
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
+    console.log(workout);
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 0.75,
+      },
+    });
+
+    // Using public interface
+    workout._click();
   }
 }
 
