@@ -139,6 +139,9 @@ class App {
 
     // Render markers after map has finished loading
     this.#workouts.forEach(work => this._renderWorkoutMarker(work));
+
+    // Pan to user location
+    this.#map.panTo(coords);
   }
 
   _showForm(mapE) {
