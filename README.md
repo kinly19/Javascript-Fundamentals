@@ -163,3 +163,27 @@
 9. DOM: Traversing
 10. The Intersection Observer API
 11. Lazy Loading
+## OOP (Object-oriented programming)
+1. What is Object-Oriented Programming
+2. OOP in Javascript
+    * 3 ways of implementing prototypal inheritance in javascript
+3. Constructor Functions and the new Operator
+4. Prototypes
+5. Prototypal Inheritance and The Prototype Chain
+6. Prototypal Inheritance on Built-In Objects
+7. Coding Challenge #1
+8. ES6 Classes
+9. Setters and Getters
+10. Static Methods
+11. Object.create
+12. Coding Challenge #2
+13. Inheritance Between "Classes": Constructor Functions
+14. Coding Challenge #3
+15. Inheritance Between "Classes": ES6 Classes
+16. Inheritance Between "Classes": Object.create
+17. Another Class Example Fake Encapsulation
+18. Encapsulation: Private Class Fields and Methods (Javascript Class field)
+19. Chaining Methods
+20. Coding Challenge #4
+## Mapty Web app
+1. Working example of oop
