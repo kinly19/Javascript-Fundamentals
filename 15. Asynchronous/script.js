@@ -231,4 +231,29 @@ const getCountryData = country => {
 
 // ===================================================================================================================================
 
+// ======================================================== Chaining Promises ========================================================
+
+const getCountryAndNeighbour2 = country => {
+  // 1st fetch
+  fetch(`https://restcountries.com/v2/name/${country}`)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    renderCountry(data[0]);
+    const neighbourCountry = data[0].borders?.[0];
+    
+    // Only fetch for a neighbour country if we have one
+    if (!neighbourCountry) return;
+    
+    // 2nd fetch
+    // Whatever we return here inside this promise, will become the fulfilled value of the promise.
+    return fetch(`https://restcountries.com/v2/alpha/${neighbourCountry}`);
+  })
+  .then(res2 => res2.json()) // this promise object comes from the returned fetch above
+  .then(data2 => renderCountry(data2, 'neighbour'));
+};
+
+// getCountryAndNeighbour2('gb');
+// ===================================================================================================================================
+
 // ===================================================================================================================================
