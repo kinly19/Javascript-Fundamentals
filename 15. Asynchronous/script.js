@@ -132,34 +132,39 @@ const getCountryAndNeighbour = country => {
 
       renderCountry(data2, 'neighbour');
 
-      // Get neighbour country of neighbour (3 request)
-        // Get neighbour country of neighbour (4 request)
-          // Get neighbour country of neighbour (5 request)
+      // Get neighbour country of neighbour (3rd request)
+        // Get neighbour country of neighbour (4th request)
+          // Get neighbour country of neighbour (5th request)
             // so on and so forth (Call back hell)
     });
   });
 }; 
 
-getCountryAndNeighbour("gb");
+// getCountryAndNeighbour("gb");
 // getCountryAndNeighbour("Australia");
 
 
 // Example 2.
 // Nasty stuff
-setTimeout(() => {
-  console.log('1 seconds passed');
+/*
   setTimeout(() => {
-    console.log('2 seconds passed');
+    console.log('1 seconds passed');
     setTimeout(() => {
-      console.log('3 seconds passed');
+      console.log('2 seconds passed');
       setTimeout(() => {
-        console.log('4 seconds passed');
+        console.log('3 seconds passed');
         setTimeout(() => {
-          console.log('5 seconds passed');
+          console.log('4 seconds passed');
+          setTimeout(() => {
+            console.log('5 seconds passed');
+          }, 1000);
         }, 1000);
       }, 1000);
     }, 1000);
   }, 1000);
-}, 1000);
+*/
+
+// ===================================================================================================================================
+
 
 // ===================================================================================================================================
