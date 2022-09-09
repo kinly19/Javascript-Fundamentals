@@ -194,4 +194,41 @@ const request3 = fetch(`https://restcountries.com/v2/alpha/gb`);
 
 // ===================================================================================================================================
 
+// ======================================================= Consuming Promises ========================================================
+/*
+  Response.json()
+  - https://developer.mozilla.org/en-US/docs/Web/API/Response/json
+  - Method of the Response interface takes a Response stream (body of the response object) and reads it to completion. 
+    It returns a promise which resolves with the result of parsing the body text as JSON.
+  - It allows us to read and use the data within the response body.
+
+  Promise.prototype.then()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+  - The then() method returns a Promise (object). It takes up to two arguments: a success handler and an error handler.
+*/
+
+const getCountryData = country => {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    // Once promise is fullied
+    .then(res => {
+      // Do something with returned object from the promise (which is the 'res' object)
+      // In order to use the data inside the body of the 'res' obj we have to use the json() method
+      // json method (async function) returns another promise with the results of parsing the body text as JSON
+      // We then return the promise from the json method in order to handle its promise.
+      return res.json();
+    })
+    .then(data => {
+      // Actual data from the body of 'res' object above.
+      console.log(data[0]);
+      // Render data into DOM
+      renderCountry(data[0]);
+    })
+};
+
+// Promises do not get rid of callbacks, we still use them but they remove callback hell...
+
+// getCountryData("gb");
+
+// ===================================================================================================================================
+
 // ===================================================================================================================================
