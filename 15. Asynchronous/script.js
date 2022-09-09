@@ -166,5 +166,32 @@ const getCountryAndNeighbour = country => {
 
 // ===================================================================================================================================
 
+// =================================================== Promises and the Fetch API ====================================================
+/*
+  Promise 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+  - Object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
+  - A promise is an object that may produce a single value some time in the future: either a resolved value, or a reason that 
+    it's not resolved (e.g., a network error occurred). A promise may be in one of 3 possible states: fulfilled, rejected, or pending.
+  - A container for a future value.
+  - No longer need to rely on events and callbacks passed into async function to handle async results (e.g XMLHttpRequest).
+  - Can chain promises for a sequence of asyn operations, avoiding nested callbacks (callback hell).
+  - A promise is only settled once.
+
+  Promise lifecycle
+    1. Pending
+    2. Settled (fulfilled or rejected)
+
+  Fetch() api
+  - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+  - The Fetch API provides an interface for fetching resources (including across the network). It will seem familiar to anyone who 
+    has used XMLHttpRequest, but the new API provides a more powerful and flexible feature set.
+  - returns a promise
+*/
+
+const request3 = fetch(`https://restcountries.com/v2/alpha/gb`);
+// console.log(request3);
+
+// ===================================================================================================================================
 
 // ===================================================================================================================================
