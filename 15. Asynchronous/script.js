@@ -290,4 +290,81 @@ const getCountryAndNeighbour3 = country => {
 };
 
 // ===================================================================================================================================
+
+// ===================================================== Throwing Errors Manually ====================================================
+
+// Helper function to handle fetch/errors
+const getJSON = (url, errMsg = "Something went wrong") => {
+  // This function will return another promise
+  return fetch(url).then(res => {
+    if (!res.ok)
+      return res.json().then(err => {
+        console.log(err)
+        throw new Error(`${errMsg}: ${err.message}`);
+      });
+    return res.json();
+  });
+};
+
+const getCountryAndNeighbour4 = country => {
+  // 1st fetch
+  getJSON(`https://restcountries.com/v2/name/${country}`)
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbourCountry = data[0].borders?.[0];
+      // Instead of returning nothing, we throw a new error for catch.
+      if (!neighbourCountry) throw new Error("No neighbour found");
+      // 2nd fetch
+      return getJSON(`https://restcountries.com/v2/alpha/${neighbourCountry}`, "Country not found");
+    })
+    .then(data2 => renderCountry(data2, 'neighbour'))
+    .catch(err => {
+      countriesContainer.insertAdjacentText('beforeend', err.message);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+
+// Without helper function
+/*
+const getCountryAndNeighbour4 = country => {
+  // 1st fetch
+  fetch(`https://restcountries.com/v2/names/${country}`)
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => {
+          throw new Error(`Something went wrong: ${err.message}`);
+        });
+      }
+      return res.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbourCountry = data[0].borders?.[0];
+      // fetch if we have
+      if (!neighbourCountry) throw new Error("No neighbour found");
+      // 2nd fetch
+      return fetch(`https://restcountries.com/v2/alpha/${neighbourCountry}`);
+    })
+    .then(res2 => {
+      if(!res2.ok) {
+        return res2.json().then(err => {
+          throw new Error(`Something went wrong: ${err.message}`);
+        })
+      }
+      return res2.json();
+    })
+    .then(data2 => renderCountry(data2, 'neighbour'))
+    .catch(err => {
+      countriesContainer.insertAdjacentText('afterbegin', err.message);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+*/
+
+btn.addEventListener('click', () => {
+  getCountryAndNeighbour4('australia');
+});
+
 // ===================================================================================================================================
