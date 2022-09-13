@@ -256,4 +256,38 @@ const getCountryAndNeighbour2 = country => {
 // getCountryAndNeighbour2('gb');
 // ===================================================================================================================================
 
+// ==================================================== Handling Rejected Promises ===================================================
+/*
+  Promise.prototype.catch() 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch 
+  - Method returns a Promise and deals with rejected cases only
+  - Any promise within our promise chain which is rejected (errors), our block of code will automatically move striaght to the 'catch' block
+
+  Promise.prototype.finally()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally
+  - Method schedules a function to be called regardless if a promise is fulfilled or rejected.
+*/
+
+const getCountryAndNeighbour3 = country => {
+  // 1st fetch
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(res => res.json())
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbourCountry = data[0].borders?.[0];
+      // fetch if we have
+      if (!neighbourCountry) return;
+      return fetch(`https://restcountries.com/v2/alphsa/${neighbourCountry}`);
+    })
+    .then(res2 => res2.json()) // this promise object comes from the returned fetch above
+    .then(data2 => renderCountry(data2, 'neighbour'))
+    // Catching any errors (rejected promises).
+    .catch(err => {
+      // Show error
+      countriesContainer.insertAdjacentText('afterbegin', err);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+// ===================================================================================================================================
 // ===================================================================================================================================
