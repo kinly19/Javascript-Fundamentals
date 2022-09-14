@@ -528,4 +528,73 @@ whereAmI(52.508, 13.381); //bi
 */
 // ===================================================================================================================================
 
+// ==================================================== The Event Loop in Practice ===================================================
+/*
+  Going of from prev notes above, below is a quick example of the event loop in practice
+
+  - Any top level code (code outside of any callback) runs first
+
+  - Even though both the setTimeout and the promise finish at the exact same time and the setTimeout is still put inside the callback queue 
+    before the promise is put inside of the microtasks queue. It would still be the promise which is executes first
+    because microtasks queues have priority over the callback queue.
+*/
+
+// Example 1.
+// Executes 1st
+console.log('======= Example 1 =======');
+console.log('Test Start (A)');
+// // Executes last
+setTimeout(() => {
+  console.log('0 sec timer (B)');
+}, 0);
+// Executes 3rd
+Promise.resolve('Resolved promise (C)').then(res => console.log(res));
+// Executes 2nd
+console.log('Test end (D)');
+
+/*
+order in which functions log to the console (for above only)
+"Test Start"
+"Test end"
+"Resolved promise 1"
+"0 sec timer"
+*/
+
+// Example 2.
+console.log('======= Example 2 =======');
+console.log('Test start 1 (E)');
+
+// setTimeout times are not guaranteed (they will never run before the timer ends, but could run way after a timer has ended).
+setTimeout(() => {
+  console.log('0 sec timer 2 (F)');
+}, 0);
+
+Promise.resolve('Resolved promise 2 (G)').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+
+  // Even though this promise above has executed, the setTimeout is still executed last, because it is put at the end of the callback queue
+  setTimeout(() => {
+    console.log('0 sec timer 3 (H)');
+  }, 0);
+});
+
+console.log('Test start 2 (I)');
+
+/*
+Order in which functions log to the console (all above)
+
+Test Start (A)
+Test end (D)
+Test start 1 (E)
+Test start 2 (I)
+Resolved promise (C)
+Resolved promise 2 (G)
+0 sec timer (B)
+0 sec timer 2 (F)
+5 sec timer (H)
+
+Only when the timer expires on a setTimeout, only then is it put into the callback queue.
+
+*/
 // ===================================================================================================================================
