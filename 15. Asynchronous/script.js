@@ -458,7 +458,74 @@ const whereAmI = (lat, lng) => {
 };
 
 whereAmI(52.508, 13.381); //bi
-whereAmI(19.037, 72.873); // gm
-whereAmI(37.090240, -95.712891); // usa
+// whereAmI(19.037, 72.873); // gm
+// whereAmI(37.090240, -95.712891); // usa
+
+// ===================================================================================================================================
+
+// ========================================== Asynchronous Behind the Scenes: The Event Loop =========================================
+/*
+  Javascript runtime environment is a container which includes all the different pieces necessary to execute javascript code.
+  The heart of javascript runtime is the engine itself, this is where code is actually executed (call stack) and where objects are stored
+  in memory (heap).
+
+  The important thing to note is javascript is only single threaded with only one thread of execution, meaning it can only do one thing at a time.
+  There is no multi task happening in javascript.
+
+  Web api environment 
+  These are APIs provided to the engine, but are not actually the javascript language itself.
+
+  Callback queue/Event queue
+  This queue holds all the ready to be executed callback functions that are attached to some event that has occurred (tasks which need to be done next)
+
+  Event loop
+  Whenever the call stack is empty, the event loop will take callbacks (tasks) from the callback queue and add them into the callstack 
+  so they can be executed. The event loop is the essential piece which makes asynchronous behavior possible in javascript. 
+  its the reason why we can have a non blocking concurrency model in JavaScript.
+
+  How it works together
+
+  el = document.querySelector("img");
+  el.src = "cat.jpg";
+  el.addEventListener("load", function () {
+    el.classList.add("fadeIn");
+  });
+  fetch("https://someurl.com/api")
+    .then(res => console.log(res));
+
+
+  1. We select an image element, which is executed inside the call stack (popped off when done).
+
+  2. We set the src attribute for that image to cat.jpg, this will now start to load this image asynchronously in the background,
+     everything which is related to the DOM is not apart of javascript but of the web APIs. Its the web APIs environment where 
+     the asynchronous tasks related to the DOM will actually run (web apis environment of the browser). If the image was loaded in a synchronous way 
+     it would do so directly inside the call stack blocking the execution of the rest of the code, this is why loading images is done asynchronously
+     inside of the web APIs environment, allowing the call stack to stay clear to continue executing other tasks. 
+
+  3. To do something after the image has finished loading, we attach an eventlistener to the load event of that image and pass a callback function.
+     In practice this means to register this callback in the web APIs environment, exactly where the image is loading. The callback will stay there
+     until the load event is emitted.
+
+  4. We make an AJAX call using the fetch api, like before the asynchronous fetch operation will happen in the web APIs environment. We use the 'then' method on 
+     the promise returned by the fetch function. This will also register a callback in the web API environment so that we can react to the future 
+     resolved value of the promise.
+
+  5. Once the image has finished loading, the load event is emmitted on that image. The callback for this event is then put into the callback queue/event queue.
+     This queue is basically an ordered list of all the callback functions that are in line to be executed. If there were any other callback functions already inside
+     the callback queue, this new callback would go straight to the end of the queue (first in first out first come first served).
+  
+  6. The event loop then looks into the call stack and determines whether it is empty or not. If the stack is empty which means theres currently no 
+     code being executed, then it will take the first callback from the callback queue and put it in the call stack to be executed. This is called the 
+     event loop tick. The event loop has the extremely important task of doing the coordination between the call stack and the callbacks in the callback queue.
+
+  7. Promises have their own queues (microtasks queue), this queue has priority over the callback queue. Even though the load event (eventlistener) was written first,
+     it would still be the fetch api which would be executed first. The event loop will actually check inside the microtasks queue first and add those tasks into the call stack before
+     it does the tasks inside the callback queue.
+
+     If one microtask adds a new microtask then that new microtask is also executed before any callbacks from the callback queue. This means that the microtasks queue 
+     can essentially starve the callback queue (block the callback queue). This is not really a problem but it could happen.
+
+*/
+// ===================================================================================================================================
 
 // ===================================================================================================================================
