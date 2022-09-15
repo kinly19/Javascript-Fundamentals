@@ -652,3 +652,58 @@ Promise.resolve('Resolve immediately').then(res => console.log(res));
 Promise.reject('Reject immediately').catch(err => console.log(err));
 
 // ===================================================================================================================================
+
+// ================================================= Promisifying the Geolocation API ================================================
+
+const getPosition = () => {
+  return new Promise((resolve, reject) => {
+    /*
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(position),
+      err => reject(err)
+    );
+    */
+
+   // getCurrentPosition() takes two arguments (success callback, error callback)
+   // Resolve and reject will be the callback functions we pass into getCurrentPoistion()
+   navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// Calling getposition will return a promise making it 'thenable' 
+getPosition()
+  .then(res => console.log(res))
+  .catch(err => console.error(err.message));
+
+// Using function above with prev example
+
+// Helper function fetch/error
+const fetchJSON2 = (url, errMsg = 'Something went wrong') => {
+  return fetch(url)
+  .then(res => {
+    if (!res.ok) throw new Error(errMsg);
+    return res.json();
+  })
+  .then(data => {
+    // Check for any error properties inside returning data object
+    if (data.error) throw new Error( errMsg = data.error.description)
+    return data;
+  })
+};
+
+const whereAmI2 = () => {
+  getPosition()
+    .then(res => {
+      const { latitude: lat, longitude: lng } = res.coords;
+      // Return another promise
+      return fetchJSON2(`https://geocode.xyz/${lat}, ${lng}?geoit=json&auth=835713086121572646369x19578`);
+    })
+    .then(data => fetchJSON2(`https://restcountries.com/v2/name/${data.country}`,'Country not found'))
+    .then(data2 => renderCountry(data2[0]))
+    .catch(err => countriesContainer.insertAdjacentText('beforeend', err.message))
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+// whereAmI2();
+
+// ===================================================================================================================================
