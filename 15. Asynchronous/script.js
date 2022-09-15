@@ -598,3 +598,57 @@ Only when the timer expires on a setTimeout, only then is it put into the callba
 
 */
 // ===================================================================================================================================
+
+// ==================================================== Building a Simple Promise ====================================================
+/*
+  The Promise constructor
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise 
+  - Is primarily used to wrap functions that do not already support promises.
+  - Promisifying means to convert callback based asynchronous behavior to promise based.
+  - Can only be constructed with 'new' keyword.
+  - When called via new, the Promise constructor returns a promise object. The promise object will become resolved when 
+    either of the functions resolutionFunc or rejectionFunc are invoked.
+
+  Syntax
+  - new Promise(executor)
+  - Executor a function to be executed by the constructor. It receives two functions as parameters (resolved, reject)
+
+*/
+
+// Creating a promise
+// As soon as this promise constructor runs, it will immediately run the callback function passed into it.
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw in process');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You Win');
+    } else {
+      reject(new Error('You lose'));
+    }
+  }, 2000);
+});
+
+// Consuming promise
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+
+// Promisifying
+const wait = seconds => {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+// Consume
+wait(2)
+  .then(() => {
+    console.log('Waited 2 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('Waited 1 second'));
+
+// Fulfill or Reject promise immediately
+Promise.resolve('Resolve immediately').then(res => console.log(res));
+Promise.reject('Reject immediately').catch(err => console.log(err));
+
+// ===================================================================================================================================
