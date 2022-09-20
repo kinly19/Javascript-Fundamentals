@@ -838,3 +838,57 @@ const whereAmI4 = async () => {
 
 // ===================================================================================================================================
 
+// ================================================== Error Handling With try...catch ================================================
+/*
+  try...catch 
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
+  - Statement is comprised of a try block and either a catch block, a finally block, or both. The code in the try block is executed first, 
+    and if it throws an exception (fails), the code in the catch block will be executed. 
+    The code in the finally block will always be executed before control flow exits the entire construct.
+  - The try, catch, and finally blocks must be blocks, instead of single statements.
+
+  Syntax
+    try {
+      try Statement
+    } catch (exceptionVar) {
+      catch Statement
+    } finally {
+      finally statements
+    }
+*/
+
+const whereAmI5 = async () => {
+  try {
+    // Get Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    // Reverse geocoding
+    const resGeo = await fetch(
+      `https://geocode.xyz/${lat}, ${lng}?geoit=json&auth=835713086121572646369x19578`
+    );
+
+    // Handle error message
+    if (!resGeo.ok) throw new Error(`Something went wrong: ${resGeo.status}`);
+    const dataGeo = await resGeo.json();
+
+    // Country data
+    const response = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.countryss}`
+    );
+    
+    // Handle error message
+    if (!response.ok) throw new Error(`Problem getting country`);
+    const data = await response.json();
+
+    // Render data
+    renderCountry(data[0]);
+
+    // Catch/display errors
+  } catch (err) {
+    countriesContainer.insertAdjacentText("afterbegin", err)
+    countriesContainer.style.opacity = 1;
+  }
+};
+
+// ===================================================================================================================================
