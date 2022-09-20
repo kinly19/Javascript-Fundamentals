@@ -782,3 +782,59 @@ createImage('img/img-1.jpg')
   .catch(err => console.log(err.message));
 
 // ===================================================================================================================================
+
+// ================================================ Consuming Promises with Async/Await ==============================================
+/*
+  The await operator
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+  - Is used to wait for a Promise and get its fulfillment value. It can only be used inside an async function or a JavaScript module.
+  - The await expression causes async function execution to pause until a promise is settled (fulfilled or rejected), 
+    and to resume execution of the async function after fulfillment. When resumed, the value of the await expression is that of the fulfilled promise.
+  - Because await is only valid inside async functions and modules, which themselves are asynchronous and return promises. 
+    The await expression never blocks the main thread and only defers execution of code that actually depends on the result, 
+    i.e. anything after the await expression.
+*/
+
+// Async function
+const whereAmI3 = async (country) => {
+  console.log('%cFetching data...', 'color: orange');
+  // Await will stop code execution at this point of the function until the promise is fulfilled ('data' has been fetched).
+  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+  console.log('%cData fetched...', 'color: green');
+  const data = await res.json();
+  renderCountry(data[0]);
+  
+  /* Await is Exactly same as below with .then method (syntactic sugar)
+    fetch(`https://restcountries.com/v2/name/${country}`)
+    .then((res) => res.json())
+    .then(data => renderCountry(data[0]))
+  */
+}
+
+// whereAmI3("gb");
+
+// Example 2.
+const whereAmI4 = async () => {
+  // Get Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+  
+  // Reverse geocoding
+  const resGeo =  await fetch(`https://geocode.xyz/${lat}, ${lng}?geoit=json&auth=835713086121572646369x19578`);
+  const dataGeo = await resGeo.json();
+  
+  // Country data
+  console.log('%cFetching data...', 'color: orange');
+  const response = await fetch(`https://restcountries.com/v2/name/${dataGeo.country}`);
+  
+  console.log('%cData fetched...', 'color: green');
+  const data = await response.json();
+  
+  // Render data
+  renderCountry(data[0]);
+};
+
+// whereAmI4();
+
+// ===================================================================================================================================
+
