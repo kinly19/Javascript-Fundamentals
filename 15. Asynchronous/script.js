@@ -892,3 +892,58 @@ const whereAmI5 = async () => {
 };
 
 // ===================================================================================================================================
+
+// =============================================== Returning Values from Async Functions =============================================
+/*
+  Async functions will always return a promise. If the return value of an async function is not explicitly a promise, 
+  it will be implicitly wrapped in a promise.
+*/
+
+  let cityData;
+
+  const whereAmI6 = async country => {
+    try {
+      const response = await fetch(`https://restcountries.com/v2/name/${country}`);
+
+      if (!response.ok) throw new Error('Something went wrong...');
+      const [data] = await response.json();
+
+      /* Store data into variable
+      cityData = data
+      */
+
+      // return data
+      // Whatever is returned will be the fulfilled value of this promise
+      return data;
+
+    } catch (err) {
+      console.log(err);
+      // Even if we had an error above, the promise returned would still be fulfilled but not rejected.
+      // Rethrowing an error allows us to propagate the error down and reject the promise.
+      throw err;
+    }
+  };
+
+  // Do something with returned data from above async function
+  // IIFE function with async
+  (async (data) => {
+    console.log("1: Will get location");
+    try {
+      const city = await whereAmI6(data);
+      // Do something with data
+      console.log("2: City location");
+    } catch (err) {
+      console.log(`2: ${err}`);
+    } finally {
+      console.log("3: Finished getting location");
+    }
+  })('usa');
+  
+  // Using .then method (same as above)
+  // whereAmI6("usa")
+  // .then(data => console.log("2: City data"))
+  // .catch(err => console.log(`2: ${err}`))
+  // .finally(() => console.log("3: Finished getting location"));
+
+// ===================================================================================================================================
+
