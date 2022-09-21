@@ -1032,3 +1032,79 @@ Promise.all([
 */
 // ===================================================================================================================================
 
+// ========================================= Other Promise Combinators: race, allSettled and any =====================================
+/*
+  The Promise.race()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race
+  - Method returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects, 
+    with the value or reason from that promise.
+  - Like a race the first promise which fulfills comes first (this also includes whether a promise is fulfilled or rejected).
+
+  The Promise.allSettled()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
+  - Method returns a promise that fulfills after all of the given promises have either fulfilled or rejected, with an array 
+    of objects that each describes the outcome of each promise.
+  - Does the same thing as Promise.all() and returns all values of each promise, but will not short circuit if a promise is rejected.
+  - Returns an array of promises which are either fullfiled or rejected. 
+
+  The Promise.any()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any
+  - Takes an iterable of Promise objects. It returns a single promise that fulfills as soon as any of the promises in the iterable fulfills, 
+    with the value of the fulfilled promise. If no promises in the iterable fulfill (if all of the given promises are rejected), 
+    then the returned promise is rejected with an AggregateError, a new subclass of Error that groups together individual errors.
+*/
+
+// Promise.race()
+(async () => {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/portugal`),
+    getJSON(`https://restcountries.com/v2/name/gb`),
+    getJSON(`https://restcountries.com/v2/name/usa`),
+  ])
+  // Only the first promise which fulfills is returned.
+  console.log(res);
+})();
+
+// Example 2.
+// Using a timeout function to reject a promise after a set amount of time.
+const timeout = s => {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error('Fetch timeout'));
+    }, s * 1000);
+  });
+};
+
+/* 
+We have the two promises (getJSON and timeout) race against each other. If the timeout happens first
+then the whole promise below is rejected and the fetch is aborted.
+*/
+Promise.race([getJSON(`https://restcountries.com/v2/name/tanzania`), timeout(2)])
+  .then(data => console.log(data[0]))
+  .catch(err => console.log(err));
+
+// Promise.allSettled()
+Promise.allSettled([
+  getJSON(`https://restcountries.com/v2/name/tanzania`),
+  getJSON(`https://restcountries.com/v2/name/south africa`),
+  getJSON(`https://restcountries.com/v2/name/south dfffdsfsf`,"Fetch failed")
+])
+.then(data => {
+  console.table(data);
+  // only do something with fullfiled promise values.
+  data.filter(item => {
+    if (item.status === "fulfilled") console.log(item.value[0]);
+  })
+})
+
+// Promise.any() ES2021
+Promise.any([
+  Promise.resolve('Success 1'),
+  Promise.reject('Error'),
+  Promise.resolve('Success 2'),
+])
+  // Returns a single promise that fulfills as soon as any of the promises above fulfills (ignores rejected promises).
+  // If all promises above fail(reject) it will return an AggregateError.
+  .then(data => console.log(data));
+
+// ===================================================================================================================================
