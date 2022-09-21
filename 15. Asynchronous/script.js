@@ -947,3 +947,88 @@ const whereAmI5 = async () => {
 
 // ===================================================================================================================================
 
+// ==================================================== Running Promises in Parallel =================================================
+/*
+  The Promise.all()
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+  - Method takes an iterable of promises as an input (array of promises), and returns a single Promise that resolves 
+    to an array of the results of the input promises.
+  - This returned promise will fulfill when all... of the input's promises have fulfilled.
+  - It rejects immediately upon any of the input promises rejecting or non-promises throwing an error, and will reject with this first rejection message / error.
+*/
+
+// Running promises in sequence.
+const get3Countries = async (c1, c2, c3) => {
+  try {
+    // Each fetch (promise) below after the first fetch has to 'wait' for the previous fetch to complete (data2 waits for data1 to finish etc).
+    // DevTools 'network' tab will show us this.
+    // This wouldnt make sense as each fetch does not depend on any data from the previous fetch.
+    // Instead of running each of these promises in sequence, we can fix this by running each promise in parallel (all at the same time).
+    const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+
+    // Return an array of capitals from each fetch above
+    console.log([data1.capital, data2.capital, data3.capital]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+get3Countries('portugal', 'south africa', 'great britain');
+
+// Running promises in parallel (all at the same time).
+const getAll3Countries = async (c1, c2, c3) => {
+  try {
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+
+    // Promise.all() returns an array of results from each promise.
+    // [[promise1 results], [promise2 results], [promise3 results]]
+    console.log(data);
+
+    // Return an array of capitals from each fetch above.
+    console.log(data.map(d => d[0].capital));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+getAll3Countries('portugal', 'south africa', 'great britain');
+
+/* Same as above With .then method (without async await)
+// Example 1.
+const getAll3Countries2 = (c1, c2, c3) => {
+  return Promise.all([
+    getJSON(`https://restcountries.com/v2/name/${c1}`),
+    getJSON(`https://restcountries.com/v2/name/${c2}`),
+    getJSON(`https://restcountries.com/v2/name/${c3}`),
+  ]);
+};
+
+getAll3Countries2('portugal', 'south africa', 'great britain')
+  .then(data => console.log(data.map(d => d[0].capital)));
+
+// Example 2.
+const promises = [
+  new Promise(resolve => resolve(getJSON(`https://restcountries.com/v2/name/portugal`))),
+  new Promise(resolve => resolve(getJSON(`https://restcountries.com/v2/name/gb`))),
+];
+
+Promise.all(promises)
+  .then(data => console.log(data.map( d => d[0].capital)));
+
+
+// or
+Promise.all([
+  getJSON(`https://restcountries.com/v2/name/portugal`),
+  getJSON(`https://restcountries.com/v2/name/gb`),
+])
+.then(data => console.log(data.map( d => d[0].capital)));
+
+*/
+// ===================================================================================================================================
+
