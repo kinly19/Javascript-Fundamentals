@@ -187,3 +187,35 @@
 20. Coding Challenge #4
 ## Mapty Web app
 1. Working example of oop
+## Asynchronous
+1. What is Asynchronous code
+2. AJAX Call: XMLHttpRequest (Old)
+3. Welcome to Callback Hell
+4. Promises and the Fetch API
+    * Fetch()
+5. Consuming Promises
+    * Response.json()
+    * Promise.prototype.then()
+6. Chaining Promises
+7. Handling Rejected Promises
+    * Promise.prototype.catch() 
+    * Promise.prototype.finally()
+8. Throwing Errors Manually
+9. Coding Challenge #1
+10. Asynchronous Behind the Scenes: The Event Loop
+11. The Event Loop in Practice
+12. Building a Simple Promise
+13. Promisifying the Geolocation API
+14. Coding Challenge #2
+15. Consuming Promises with Async/Await
+16. Error Handling With try...catch
+17. Returning Values from Async Functions
+18. Running Promises in Parallel
+    * The Promise.all()
+19. Other Promise Combinators: race, allSettled and any
+20. Coding Challenge #3
+## Modern JS Development
+1. An Overview of Modules in JavaScript
+2. Exporting and Importing in ES6 Modules
+3. Top-Level await (ES2022)
+4. The Module Pattern
