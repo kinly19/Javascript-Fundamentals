@@ -74,3 +74,42 @@ console.log(totalPrice);
 */
 
 // ===================================================================================================================================
+
+// ============================================== Top-Level await with modules only (ES2022) =========================================
+/*
+  Top-level await 
+  - Allows us to use the await keyword outside of async functions (inside modules only). 
+  - Will cause other modules who import them to wait before they start evaluating their body (code blocking with top-level await).
+  - if one module imports a module which has a top-level await, then the importing module will wait for the imported module to finish the blocking code.
+  - Note!: Top-level await only works at the top level of modules... only
+*/
+
+// Async Fetch function
+const getLastPost = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await res.json();
+
+  return { title: data.at(-1).title, text: data.at(-1).body };
+  // Async functions always return a promise.
+};
+
+/* 
+  Without top-level await
+  Attempting to use an await outside of an async function results in a SyntaxError. Many developers utilized immediately-invoked 
+  async function expressions as a way to get access to the 'await' feature.
+*/
+(async () => {
+  // Await fetched data
+  const lastPost2 = await getLastPost();
+  // Do something with data
+  console.log(lastPost2);
+})();
+
+// Top-level await allows us to do the same thing above without using an async function or IIFE in order to use 'await'. (modules only).
+// This top-level await which is outside an async function will block the entire execution of this module so keep that in mind.
+console.log("waiting fetch");
+const lastPost = await getLastPost();
+console.log(lastPost);
+console.log("Fetched");
+
+// ===================================================================================================================================
