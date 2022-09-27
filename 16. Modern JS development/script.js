@@ -113,3 +113,43 @@ console.log(lastPost);
 console.log("Fetched");
 
 // ===================================================================================================================================
+
+// ========================================================== The Module Pattern =====================================================
+/*
+  The Module Pattern is one of the important patterns in JavaScript. It is a commonly used Design Pattern which is used to wrap a set 
+  of variables and functions together in a single scope. It is used to define objects and specify the variables and the functions 
+  that can be accessed from outside the scope of the function.
+*/
+
+const shoppingCart2 = (() => {
+  const cart = [];
+  const shippingCost = 20;
+  const totalQuantity = 23;
+  // This variable is not exposed (returned) outside of this function (Private).
+  const totalPrice = 250;
+
+  const addToCart = (product, quantity) => {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to cart`);
+  };
+
+  const orderStock = (product, quantity) => {
+    console.log(`${product} ${quantity} ordered from supplier`);
+  };
+
+  // Return an object (public api) in which we want to make pulic (accessible outside of this function).
+  return {
+    cart,
+    shippingCost,
+    totalQuantity,
+    addToCart,
+  };
+})();
+
+console.log(shoppingCart2); // object
+shoppingCart2.addToCart("Mango", 75);
+console.log(shoppingCart2.cart[0]);
+// cant access private properties or functions outside of shoppingCart2
+// console.log(shoppingCart2.totalPrice); // return undefined
+// console.log(shoppingCart2.orderStock()); // return error
+// ===================================================================================================================================
