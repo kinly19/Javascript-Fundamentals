@@ -153,3 +153,72 @@ console.log(shoppingCart2.cart[0]);
 // console.log(shoppingCart2.totalPrice); // return undefined
 // console.log(shoppingCart2.orderStock()); // return error
 // ===================================================================================================================================
+
+// ========================================================== Introduction to NPM ====================================================
+/*
+  What is NPM (Node Package Manager)
+  - It is an online repository for the publishing of open-source Node.js projects.
+  - A command-line utility for interacting with said repository that aids in package installation, version management
+    and dependency management.
+*/
+
+/* 
+  Installation
+  1. Check if node is already installed with.
+  node -v (not node-v -_-)
+
+  2. Install node.js if not installed from below link.
+  https://nodejs.org/en/
+
+  Initialization
+  1. For each project in which we want to use npm, we need to initialize it.
+  npm init (follow setup info in terminal)
+
+  2. Once above is done this creates a new file called 'package.json', this file stores the entire configuration of our project.
+     Things like name of project, author, and all the dependencies needed for the project etc.
+
+  Installing a library
+  1. In the terminal install the package of your choice
+  npm install nameOfLibraryhere
+  or
+  npm i nameOfLibraryhere
+
+  2. This adds the library into our projects dependencies and creates a new folder 'node_modules'. This folder basically holds all 
+  the code used/needed for all libraries used.
+
+
+  Installing all dependencies from a projects (yours or someone elses) package.json file.
+  npm install
+
+*/
+
+// Using a libray (import a method from lodash library)
+import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+
+// Example Copying objects (Shallow copy)
+const state = {
+  cart: [
+    {product: "bread", quantity: 5},
+    {product: "pizza", quantity: 5},
+  ],
+  user: {loggedIn: true},
+}
+
+const shallowClone = Object.assign(state);
+
+console.log(state);
+console.log(shallowClone);
+
+// Changing a property from a shallow cloned object will change both objects (both objects point to the same object value in the heap).
+shallowClone.user.loggedIn = false;
+
+// Use cloneDeep function from 'lodash' library to help us make an actual deep copy of an object (This is hard expert stuff and we cant do it 😂😄😅🤣😥).
+/*
+  A deep copy of an object is a copy whose properties do not share the same references (point to the same underlying values) as the 
+  actual object from which the copy was made.
+*/
+const deepClone = cloneDeep(state);
+deepClone.user.loggedIn = true;
+console.log(deepClone); 
+// This deepClone object values now point to a different value (in the heap) from the object in which the copy was made from.
+// ===================================================================================================================================
