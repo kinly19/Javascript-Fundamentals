@@ -222,3 +222,44 @@ deepClone.user.loggedIn = true;
 console.log(deepClone); 
 // This deepClone object values now point to a different value (in the heap) from the object in which the copy was made from.
 // ===================================================================================================================================
+
+// ================================================= Bundling With Parcel and NPM Scripts ============================================
+/*
+  1. Adding a dev dependency (parcel)
+  npm i parcel --save-dev
+
+  - A dev (development) dependency is like a tool that we need to build our application. It is not a dependency which is included
+    in our final code.
+
+  2. Development/Bundling 
+  Run parcel to bundle all our files within the terminal with npx
+  npx parcel index.html
+
+  or 
+
+  Use npm scripts
+  npm run start
+
+  We can add the same command within a script and use npm to run that script which will run the command for us.
+  "scripts": {
+    "start": "parcel index.html"
+  },
+
+  This will bundle all our files together and run a local development server for us to use.
+  https://parceljs.org/features/development/
+  It also creates a 'dist' (distribution) folder, which will be the folder we use to send for production.
+
+  3. Production/Building
+  Using terminal 
+  npx parcel build index.html
+
+  or 
+
+  Using npm scripts
+  npm run build 
+
+  This compresses all our files, includes many optimizations designed to reduce bundle sizes, including automatic minification
+  tree shaking, image optimization, and more, for production.
+  https://parceljs.org/features/development/
+*/
+// ===================================================================================================================================
